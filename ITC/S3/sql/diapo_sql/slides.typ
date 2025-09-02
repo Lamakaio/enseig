@@ -1,6 +1,7 @@
 #import "@preview/polylux:0.4.0": *
 #import "@preview/metropolis-polylux:0.1.0" as metropolis
 #import "@preview/fletcher:0.5.8" as fletcher: diagram, edge, node
+#import fletcher.shapes: diamond
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
@@ -74,7 +75,6 @@
         )],
     ),
   )
-
 ]
 
 #slide[
@@ -127,11 +127,13 @@
     edge("->"),
     node((0, -0.35), ellipse(width: 510%, stroke: stroke(paint: red, thickness: 2pt)), width: 100pt),
 
-    node((1, -0.6), [Attribut]),
+    node((1, -0.6), [Attribut
+    ]),
     edge("->"),
     node((0.4, -0.57), ellipse(width: 110%, stroke: stroke(paint: red, thickness: 2pt)), width: 100pt),
   )
 ]
+_Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, ce sera entier, flottant, ou chaine de caractères.
 
 #slide[
   = Exemple de table (ou entité)
@@ -160,29 +162,36 @@
     edge("->"),
     node((-0.4, 0.57), ellipse(width: 210%, stroke: stroke(paint: green, thickness: 2pt)), width: 100pt),
   )
+
 ]
 
 #slide[
-  = Modèle Entité-Association
+  = Clé étrangére
 
   #diagram(
-    node-stroke: 2pt,
+    node((0.8, -0.9), [Clé étrangére], stroke: 0pt),
+    edge("->"),
+    node(
+      (0.03, -0.3),
+      ellipse(width: 110%, stroke: stroke(paint: blue, thickness: 2pt)),
+      width: 100pt,
+      stroke: 0pt,
+    ),
     node(name: <E>, (0, 0), [
-      Entité "Eleves"
       #table(
         columns: eleves.first().len(),
         fill: (_, y) => if calc.odd(y) { rgb("D7D9E0") },
         stroke: none,
         table.header(
           ..eleves.first().slice(0, 2).map(s => underline([*#s*])),
-          ..eleves.first().slice(2).map(s => [*#s*]),
+          underline(stroke: stroke(dash: "dashed"))[*Classe*],
+          ..eleves.first().slice(3).map(s => [*#s*]),
         ),
         table.hline(stroke: rgb("4D4C5B")),
         ..eleves.slice(8).flatten()
-      )$dots.v$]),
-    edge((0, 0), (0, 0.7), (0.5, 0.7), "<->", [$star$-1]),
+      )]),
+    edge((0, 0), (0, 0.7), (0.5, 0.7), "->"),
     node(name: <P>, (0.9, 0.6), [
-      Entité "Profs"
       #table(
         columns: profs.first().len(),
         fill: (_, y) => if calc.odd(y) { rgb("D7D9E0") },
@@ -190,7 +199,35 @@
         table.header(..profs.first().map(s => if s == "Classe" { underline([*#s*]) } else [*#s*])),
         table.hline(stroke: rgb("4D4C5B")),
         ..profs.slice(3).flatten()
-      )$dots.v$]),
+      )]),
+  )
+]
+
+#slide[
+  = Modèle Entité-Association
+  Permet de reprénter un _schéma de base de donnée_.
+  #diagram(
+    node-stroke: 2pt,
+    node-inset: 20pt,
+    node((0, 0), name: <E>)[Eleves],
+    node((0, 2), name: <P>)[Profs],
+    node((2, 2), name: <C>)[Cours],
+    node((2, 0), name: <Pa>)[Parents],
+    node((3, 1), name: <S>)[Salle],
+
+    node((1, 2), shape: diamond, inset: 10pt, name: <ens>)[enseigne],
+    node((1, 0), shape: diamond, inset: 10pt, name: <aPa>)[a pour \ parents],
+    node((1, 1), shape: diamond, inset: 10pt, name: <ass>)[assiste à],
+    node((3, 2), shape: diamond, inset: 10pt, name: <aLi>)[à lieu dans],
+
+    edge(<E>, <aPa>)[0-\*],
+    edge(<aPa>, <Pa>)[1-\*],
+    edge(<E>, <ass>)[1-\*],
+    edge(<ass>, <C>)[1-\*],
+    edge(<P>, <ens>)[1-\*],
+    edge(<ens>, <C>)[1-1],
+    edge(<C>, <aLi>)[1-1],
+    edge(<aLi>, <S>)[_?_],
   )
 ]
 

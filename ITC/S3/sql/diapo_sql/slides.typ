@@ -307,6 +307,15 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   - `AND`, `OR` et `NOT` pour combiner des opérateurs
 ]
 
+#slide[
+  = Exercices
+  #text(fill: green)[
+    Ecrivez des requêtes qui :
+    - Renvoie le nom et prenoms des élèves de MP qui ont moins de 20 ans.
+    #show: later
+    - Renvoie la liste des ages des élèves de spé, sans doublons.
+  ]
+]
 #new-section[Opérations sur plusieurs tables]
 
 #slide[
@@ -368,4 +377,109 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
     JOIN Profs AS P ON
     E.Classe = P.Classe
   ```
+]
+
+#slide[
+  = Jointure plus complexes, autojointures
+  - On peut faire une jointure sur autre chose qu'une clé :
+  ```SQL
+  SELECT * FROM Eleves JOIN Profs ON Eleves.Nom = Profs.Nom
+  ```
+  #show: later
+  - On peut joindre une table avec elle-même (c'est alors une "autojointure")
+  ```SQL
+  SELECT * FROM Eleves AS E1 JOIN Eleves AS E2 ON
+            (E1.Classe = E2.Classe) AND (E1.Age = E2.Age) AND (E1.Prenom != E2.Prenom)
+  ```
+]
+
+#slide[
+  = Requêtes imbriquées
+  Le résultat d'une requête étant une table, on peut imbriquer les requêtes :
+  ```SQL
+  SELECT DISTINCT Prenom FROM (SELECT DISTINCT Nom, Age FROM Eleves WHERE Age < 19)
+  ```
+]
+
+#slide[
+  = Exercices
+  #text(fill: green)[
+    Ecrivez des requêtes pour :
+    - Afficher le nom, le prénom, et la salle de chaque élève.
+    #show: later
+    - Afficher toutes les paires d'élèves qui ont le même prénom.
+  ]
+]
+
+
+
+#slide[
+  = Autres opérations ensemblistes
+  Les opérateurs ensemblistes classiques sont disponibles sur les tables. Ces opérateurs s'utilisent seulement sur des tables avec _les mêmes attributs_. Ils s'utilisent en général entre deux `SELECT` :
+  ```SQL
+  (SELECT Nom FROM Eleves) UNION (SELECT Nom FROM Profs)
+  ```
+  Les opérateurs sont _`UNION`_, _`INTERSECT`_ et _`EXCEPT`_. On peut aussi faire un produit cartésien avec _`CROSS JOIN`_.
+]
+#new-section[Agrégats]
+
+#slide[
+  = Agrégats
+  Les agrégats servent à rassembler des enregistrements qui ont un attribut en commun.
+  ```SQL
+  SELECT * FROM Eleves GROUP BY Age
+  ```
+  #show: later
+  On a également des _fonctions d'agrégation_ qui deviennent disponibles :
+  ```SQL
+  SELECT Age, COUNT() AS Nombre FROM Eleves GROUP BY Age
+  ```
+]
+
+#slide[
+  = Les fonctions d'agrégation
+
+  Les fonctions d'agrégation disponibles sont :
+  - _`COUNT()`_
+  - _`MIN(col)`_ / _`MAX(col)`_
+  - _`SUM(col)`_
+  - _`AVG(col)`_
+]
+
+
+#slide[
+  = Ordre des opérateurs
+  + `SELECT (DISTINCT)`
+  + `FROM`
+  + `JOIN .. ON`
+  + `WHERE`
+  + `GROUP BY`
+  + `ORDER BY`
+  + `LIMIT .. OFFSET ..`
+
+  Comment faire une restriction sur le résultat d'un agrégat ?
+]
+
+#slide[
+  = HAVING
+  + `SELECT (DISTINCT)`
+  + `FROM`
+  + `JOIN .. ON`
+  + `WHERE`
+  + `GROUP BY`
+  + _`HAVING`_
+  + `ORDER BY`
+  + `LIMIT .. OFFSET ..`
+  ```SQL
+  SELECT Nom, Prenom FROM Eleves GROUP BY Age HAVING COUNT() > 2
+  ```
+]
+
+#slide[
+  = Exercices
+  #text(fill: green)[
+    Ecrivez des requêtes pour :
+    - Afficher le nombre d'élèves par salle
+    - Afficher l'élève le plus âgé de chaque prof.
+  ]
 ]

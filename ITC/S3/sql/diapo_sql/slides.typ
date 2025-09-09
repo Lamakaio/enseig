@@ -397,7 +397,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   = Requêtes imbriquées
   Le résultat d'une requête étant une table, on peut imbriquer les requêtes :
   ```SQL
-  SELECT DISTINCT Prenom FROM (SELECT DISTINCT Nom, Age FROM Eleves WHERE Age < 19)
+  SELECT DISTINCT Nom FROM (SELECT DISTINCT Nom, Age FROM Eleves WHERE Age < 19)
   ```
 ]
 

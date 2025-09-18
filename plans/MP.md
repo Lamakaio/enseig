@@ -1,0 +1,7 @@
+- 15/09 : Cours sur les convention de code et preuve de programme, TP SQL. DS SQL et python de base + preuves.
+- 29/09 : Structures de données 1 : Listes et dictionnaire, TP SQL
+- 13/10 : Structures de données 2 : Listes et dictionnaire, implémentation. cours + TP
+- 10/11 : Graphes
+- 24/11 : Révision dichotomie, programmation dynamique (// entre les deux)
+- 08/12 : Algorithmes sur les jeux
+- Janvier : Révisions et entrainements.

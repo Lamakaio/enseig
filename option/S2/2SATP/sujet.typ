@@ -1,7 +1,7 @@
 #set page(paper: "a4", numbering: "1")
 #set document(title: "Algorithme polynomial pour le problème 2-SAT")
 #set heading(numbering: "I.1)")
-#import "utils.typtp": *
+#import "../../../utils.typtp": *
 
 
 #align(center, text(17pt)[

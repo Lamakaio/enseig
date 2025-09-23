@@ -30,7 +30,7 @@ def tri_insertion(L):
 ```
 
 #blk2[Question][
-  Proposez un partionnement de l'espace d'entrée, et des tests aux cas limites, pour :
+  Proposez des tests aux cas limites, pour :
   - *a)* la fonction `insere`
   - *b)* la fonction `tri_insertion`
 ]

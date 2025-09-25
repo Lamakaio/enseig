@@ -8,6 +8,40 @@
   *Tests et preuve de programmes*
 ])
 
+= Exponentiation rapide
+
+```python
+def exp_rapide(x, n):
+    """ Pour n un entier et x un nombre (entier ou flottant), calcule l'exponentielle de x par n en O(log(n)) opérations.
+    """
+    resultat = 1
+    while n > 0:
+        # si n est pair, on factorise un 2 dans le calcul : x ^ n = (x ^ 2) ^ (n / 2)
+        if n % 2 == 0:
+            x *= x
+            n /= 2
+        # sinon, on multiplie le résultat par x, pour enlever 1 à n.
+        else:
+            resultat *= x
+            n -= 1
+    return resultat
+```
+
+
+
+#blk2[Question][
+  Proposez un partionnement de l'espace d'entrée, et des tests aux cas limites, pour la fonction `exp_rapide`.
+]
+
+#blk2[Question][
+  Donnez un variant de boucle pour la fonction `exp_rapide`. En déduire sa terminaison.
+]
+
+#blk2[Question][
+  Donnez une pre-condition, un invariant, et une post-condition pour la fonction `exp_rapide`. En déduire sa correction.
+]
+
+
 = Tri par insertion
 
 Je vous donne le code du tri par insertion :
@@ -46,39 +80,6 @@ _Ici, la terminaison des deux fonctions est évidente, car elles ne contiennent 
   En supposant la fonction `insere` correcte, donnez une pre-condition, un invariant, et une post-condition pour la fonction `tri_insertion`. En déduire sa correction.
 ]
 
-
-= Exponentiation rapide
-
-```python
-def exp_rapide(x, n):
-    """ Pour n un entier et x un nombre (entier ou flottant), calcule l'exponentielle de x par n en O(log(n)) opérations.
-    """
-    resultat = 1
-    while n > 0:
-        # si n est pair, on factorise un 2 dans le calcul : x ^ n = (x ^ 2) ^ (n / 2)
-        if n % 2 == 0:
-            x *= x
-            n /= 2
-        # sinon, on multiplie le résultat par x, pour enlever 1 à n.
-        else:
-            resultat *= x
-            n -= 1
-    return resultat
-```
-
-
-
-#blk2[Question][
-  Proposez un partionnement de l'espace d'entrée, et des tests aux cas limites, pour la fonction `exp_rapide`.
-]
-
-#blk2[Question][
-  Donnez un variant de boucle pour la fonction `exp_rapide`. En déduire sa terminaison.
-]
-
-#blk2[Question][
-  Donnez une pre-condition, un invariant, et une post-condition pour la fonction `exp_rapide`. En déduire sa correction.
-]
 
 = Tri rapide
 

@@ -19,6 +19,8 @@
   #set text(size: .8em, weight: "light")
   Ambre Le Berre
 
+  MPSI
+
   2025/2026
 ]
 
@@ -70,7 +72,7 @@
   def recherche_lineaire(L, x):
       """Cherche un élément x dans une liste L. Renvoie True si l'élément est présent, False sinon."""
       for y in L:
-          if x == y:
+          if x = = y:
               return True
       return False
 

@@ -191,8 +191,51 @@
   #text(fill: green)[Pouvez-vous écrire une version in-place du tri par insertion ? ]
 ]
 
+
+#slide[
+  = Tri par insertion in-place
+
+  On va faire une fonction `insere` qui prend en argument une liste L dont les k premiers éléments (0, 1, ..., k-1) sont triés dans l'ordre croissant, et un indice k.
+
+  La fonction insère alors l'élément x dans les k premiers éléments de L, en écrasant l'élément d'indice k.
+
+]
+#slide[
+  = Tri par insertion in-place
+  ```python
+    def insere(L, k, x):
+        #boucle sur (k-1), (k-2), ..., 1, 0
+        for i in range(k-1, -1, -1):
+            #Si x est plus grand que l'élément actuel, on le range juste après, et on s'arrête
+            if x > L[i]:
+                L[i+1] = x
+                return
+            #sinon, on décale l'élément d'un cran pour laisser de la place à x
+            else:
+                L[i+1] = L[i]
+        #si on arrive au bout, c'est que x est le plus petit élément
+        L[0] = x
+  ```
+]
+
+#slide[
+  = Tri par insertion in-place
+  On utilise ensuite cette fonction pour réaliser le tri :
+  ```python
+    def tri_insertion(L):
+        """Trie L en ordre croissant, par insertion, in-place"""
+        #On insère le (k+1)ème élément dans les k premiers.
+        for k in range(len(L)):
+            insere(L, k, L[k])
+  ```
+]
+
 #slide[
   = Propriétés
 
   Que se passe-il dans chacun des algorithmes si la liste est déjà triée ? Si elle est "presque" triée ?
+
+  #show: later
+
+  En fait, si on regarde la fonction du tri par insertion _in-place_, en particulier l'insertion, elle qu'une seule itération si l'élément est à sa place. Donc tout se passe comme si la liste était simplement parcouru une fois, pour une complexité _dans le meilleur cas_ en O(n).
 ]

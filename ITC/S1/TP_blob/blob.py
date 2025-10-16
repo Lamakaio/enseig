@@ -31,7 +31,7 @@ with open("prenoms.csv", "r") as f:
         prenoms.append(line[:-1])
 
 
-def get_blobs(N = 10000):
+def get_blobs(N = 500):
     global prenoms
     random.seed(142857)
     if N < 20000:

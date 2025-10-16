@@ -241,18 +241,23 @@ Déroulement sur exemple
 
 
 #pseudocode-list(hooks: .5em, title: smallcaps[Algorithme de Djikstra], booktabs: true)[
-  #underline()[Entrée] : G un graphe, d un sommet de départ
+  #underline()[Entrée] : G un graphe connexe, d un sommet de départ
 
 
   #underline()[Sortie] : La distance de d à chaque sommet du graphe.
-  + Soit F une file de priorité
+  + Soit F une file de priorité, avec tous les noeuds associé à un poids $+ infinity$
   + Soit V un dictionnaire
   + Ajouter (d, 0) à F
   + *Tant que* F n'est pas vide
     + Prendre (x, l) le couple minimal de F
+    + Ajouter (x, l) à V
     + *Pour chaque* arrête (x, y, $rho$)
       + *Si* y n'est pas dans V
-        + ajouter (y, l + $rho$) à V et F.
+        + *Si* y n'est pas dans F
+          + ajouter (y, l + $rho$) F.
+        + *Sinon*
+          + mettre à jour le poids de y dans F, au minimum entre le poids actuel et l + $rho$
+
   + *Renvoyer* V
 
 ]
@@ -276,4 +281,46 @@ Dérouler sur l'exemple.
 )
 
 
-Quelle est la complexité ?
+Quelle est la complexité ? (O((|E| + |S|) log |S|))
+
+
+En python :
+
+```python
+import math
+
+def djikstra(G, d):
+    """Implemente l'algorithme de Djikstra sur un graphe par liste d'adjacence.
+    Renvoie un dictionnaire qui à chaque sommet associe sa distance à d.
+    On utilise une implémentation naive de file de priorité.
+    """
+    noeuds = {s: math.inf for s in G.keys()}
+    noeuds[d] = 0
+    V = {}
+    while len(noeuds) > 0:
+        # On trouve le plus petit élément de noeuds
+        sommet_min = None
+        distance_min = math.inf
+        for (sommet, distance) in noeuds.items():
+            if distance < distance_min:
+                distance_min = distance
+                sommet_min = sommet
+        # Si le sommet minimum est None, c'est qu'on a parcouru toute la composante connexe
+        # On peut donc renvoyer le dictionnaire;
+        if sommet_min is None:
+            return V
+        # On le supprime de la liste des noeuds et on l'ajoute au dictionnaire résultat.
+        del noeuds[sommet_min]
+        V[sommet_min] = distance_min
+
+        # On met à jour la distance des voisins
+        for (voisin, poids) in G[sommet_min]:
+            if voisin not in V:
+                noeuds[voisin] = min(noeuds[voisin], distance_min + poids)
+    return V
+```
+
+Quelle est la complexité de cette implémentation ? -> O(|V|²)
+
+
+https://visualgo.net/

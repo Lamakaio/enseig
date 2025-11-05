@@ -10,37 +10,37 @@
 
 
 #def[Graphe][
-  Un graphe simple est une paire $(S, E)$, avec $S$ l'ensemble des sommets, et $E$ l'ensemble des arrêtes.
+    Un graphe simple est une paire $(S, E)$, avec $S$ l'ensemble des sommets, et $E$ l'ensemble des arrêtes.
 
-  Un graphe est dit _orienté_ si les arrêtes ont une direction, et $E$ est alors un sous-ensemble des paires d'éléments de $S$.
+    Un graphe est dit _orienté_ si les arrêtes ont une direction, et $E$ est alors un sous-ensemble des paires d'éléments de $S$.
 
-  Sinon, le graphe est _non-orienté_, et $E subset P_2(S)$ les parties à deux éléments de $S$.
+    Sinon, le graphe est _non-orienté_, et $E subset P_2(S)$ les parties à deux éléments de $S$.
 ]
 
 
 #raw-render(
-  ```dot
-  graph {
-    a -- b
-    b -- c
-    c -- a
-    d -- b
-  }
-  ```,
+    ```dot
+    graph {
+      a -- b
+      b -- c
+      c -- a
+      d -- b
+    }
+    ```,
 )
 
 
 #raw-render(
-  ```dot
-  digraph {
-    a -> b
-    b -> a
-    b -> c
-    c -> a
-    d -> b
-    d -> c
-  }
-  ```,
+    ```dot
+    digraph {
+      a -> b
+      b -> a
+      b -> c
+      c -> a
+      d -> b
+      d -> c
+    }
+    ```,
 )
 
 
@@ -66,13 +66,13 @@ On a besoin :
 - d'une structure de donnée pour stocker des noeuds
 
 #pseudocode-list(hooks: .5em, title: smallcaps[Parcours d'un graphe], booktabs: true)[
-  #underline()[Entrée] : G un graphe, d un élément de départ
+    #underline()[Entrée] : G un graphe, d un élément de départ
 
-  + Ajouter d dans la structure
-  + *Tant que* la structure n'est pas vide
-    + Prendre x un élément de la structure
-    + (...)
-    + Ajouter ses voisins non visités à la structure.
+    + Ajouter d dans la structure
+    + *Tant que* la structure n'est pas vide
+        + Prendre x un élément de la structure
+        + (...)
+        + Ajouter ses voisins non visités à la structure.
 
 ]
 
@@ -82,14 +82,14 @@ Voici une implem en python, qui imprime simplement les sommets dans l'ordre. On 
 
 
 #raw-render(
-  ```dot
-  graph {
-    a -- b
-    b -- c
-    c -- a
-    d -- b
-  }
-  ```,
+    ```dot
+    graph {
+      a -- b
+      b -- c
+      c -- a
+      d -- b
+    }
+    ```,
 )
 
 
@@ -128,14 +128,14 @@ def parcours_profondeur(G, d):
 
 
 #raw-render(
-  ```dot
-  graph {
-    a -- b
-    b -- c [color=red]
-    c -- a [color=red]
-    d -- b [color=red]
-  }
-  ```,
+    ```dot
+    graph {
+      a -- b
+      b -- c [color=red]
+      c -- a [color=red]
+      d -- b [color=red]
+    }
+    ```,
 )
 
 Version récursive
@@ -174,14 +174,14 @@ def parcours_profondeur(G, d):
 
 
 #raw-render(
-  ```dot
-  graph {
-    a -- b [color=red]
-    b -- c [color=red]
-    c -- a
-    d -- b [color=red]
-  }
-  ```,
+    ```dot
+    graph {
+      a -- b [color=red]
+      b -- c [color=red]
+      c -- a
+      d -- b [color=red]
+    }
+    ```,
 )
 
 
@@ -194,20 +194,20 @@ Sur un graphe non pondéré, pouvez-vous faire un parcours qui permet ça ?
 
 
 #raw-render(
-  ```dot
-  graph {
-    e [color= red]
-    c [color= blue]
-    a -- b [label=1]
-    b -- c [label=5]
-    c -- a [label=7]
-    d -- b [label=1]
-    e -- a [label=2]
-    d -- c [label=2]
-    d -- a [label=3]
-    e -- d [label=5]
-  }
-  ```,
+    ```dot
+    graph {
+      e [color= red]
+      c [color= blue]
+      a -- b [label=1]
+      b -- c [label=5]
+      c -- a [label=7]
+      d -- b [label=1]
+      e -- a [label=2]
+      d -- c [label=2]
+      d -- a [label=3]
+      e -- d [label=5]
+    }
+    ```,
 )
 
 Plan, autoroutes, routes de campagnes, etc
@@ -220,20 +220,20 @@ Idée : plutôt que d'augmenter la profondeur, on augmente la pondération.
 Déroulement sur exemple
 
 #raw-render(
-  ```dot
-  graph {
-    e [color= red]
-    c [color= blue]
-    a -- b [label=1, color=red]
-    b -- c [label=5]
-    c -- a [label=7]
-    d -- b [label=1, color=red]
-    e -- a [label=2, color=red]
-    d -- c [label=2, color=red]
-    d -- a [label=3]
-    e -- d [label=5]
-  }
-  ```,
+    ```dot
+    graph {
+      e [color= red]
+      c [color= blue]
+      a -- b [label=1, color=red]
+      b -- c [label=5]
+      c -- a [label=7]
+      d -- b [label=1, color=red]
+      e -- a [label=2, color=red]
+      d -- c [label=2, color=red]
+      d -- a [label=3]
+      e -- d [label=5]
+    }
+    ```,
 )
 
 
@@ -241,24 +241,24 @@ Déroulement sur exemple
 
 
 #pseudocode-list(hooks: .5em, title: smallcaps[Algorithme de Djikstra], booktabs: true)[
-  #underline()[Entrée] : G un graphe connexe, d un sommet de départ
+    #underline()[Entrée] : G un graphe connexe, d un sommet de départ
 
 
-  #underline()[Sortie] : La distance de d à chaque sommet du graphe.
-  + Soit F une file de priorité, avec tous les noeuds associé à un poids $+ infinity$
-  + Soit V un dictionnaire
-  + Ajouter (d, 0) à F
-  + *Tant que* F n'est pas vide
-    + Prendre (x, l) le couple minimal de F
-    + Ajouter (x, l) à V
-    + *Pour chaque* arrête (x, y, $rho$)
-      + *Si* y n'est pas dans V
-        + *Si* y n'est pas dans F
-          + ajouter (y, l + $rho$) F.
-        + *Sinon*
-          + mettre à jour le poids de y dans F, au minimum entre le poids actuel et l + $rho$
+    #underline()[Sortie] : La distance de d à chaque sommet du graphe.
+    + Soit F une file de priorité, avec tous les noeuds associé à un poids $+ infinity$
+    + Soit V un dictionnaire
+    + Ajouter (d, 0) à F
+    + *Tant que* F n'est pas vide
+        + Prendre (x, l) le couple minimal de F
+        + Ajouter (x, l) à V
+        + *Pour chaque* arrête (x, y, $rho$)
+            + *Si* y n'est pas dans V
+                + *Si* y n'est pas dans F
+                    + ajouter (y, l + $rho$) F.
+                + *Sinon*
+                    + mettre à jour le poids de y dans F, au minimum entre le poids actuel et l + $rho$
 
-  + *Renvoyer* V
+    + *Renvoyer* V
 
 ]
 
@@ -266,18 +266,18 @@ Déroulement sur exemple
 Dérouler sur l'exemple.
 
 #raw-render(
-  ```dot
-  digraph {
-    a [color= red]
-    a -> b [label=1]
-    a -> c [label=4]
-    b -> c [label=2]
-    b -> d [label=3]
-    d -> e [label=5]
-    e -> c [label=1]
-    c -> e [label=2]
-  }
-  ```,
+    ```dot
+    digraph {
+      a [color= red]
+      a -> b [label=1]
+      a -> c [label=4]
+      b -> c [label=2]
+      b -> d [label=3]
+      d -> e [label=5]
+      e -> c [label=1]
+      c -> e [label=2]
+    }
+    ```,
 )
 
 
@@ -324,3 +324,18 @@ Quelle est la complexité de cette implémentation ? -> O(|V|²)
 
 
 https://visualgo.net/
+
+
+== A\*
+
+video
+
+L'idée de l'algorithme A\* est d'utiliser une *heuristique*, c'est à dire une indication sur le résultat spécifique au problème traité, souvent facile à calculer mais imprécise.
+
+En l'occurence, cette heuristique est une indication sur la distance minimum qu'il reste pour parvenir au résultat. Pour que notre algorithme reste correcte, l'heuristique doit toujours être plus petite que la vrai distance !
+
+Exemple : cas d'une carte. On peut prendre la distance "à vol d'oiseau" ! Quelque soit le chemin emprunté, on ne pourra pas aller plus vite.
+
+Supposons qu'on ai une fonction h qui code l'heuristique. Dans ce cas, on ne va plus prendre le sommet de distance à l'origine d minimale, mais celui qui minimise (d + h) ! C'est à dire celui qui a le potentiel d'être sur le chemin le plus court.
+
+La complexité de A\* n'est pas meilleure que djikstra dans le pire cas. Mais dans la majorité des cas réels, cela va beaucoup plus vite !

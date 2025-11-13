@@ -19,7 +19,7 @@ Répondez succinctement aux questions suivantes :
 + Comment définit-on un commentaire en Python ?
 + Quelle notation permet d'indiquer qu'un programme a une complexité _linéaire_ en fonction de `n`?
 + Si un programme fait $(n^3 + 5 n^2 + 8) / (n + 10)$ opérations, quelle est sa complexité en fonction de `n` ?
-+ Citez trois algorithme de tri. Le nom de l'un d'eux commence par un `i`. Détaillez les opérations effectuées par cet algorithme sur la liste `[3, 2, 5, 1]` lorsqu'on trie en ordre croissant.
++ Citez trois algorithmes de tri. Le nom de l'un d'eux commence par un `i`. Détaillez les opérations effectuées par cet algorithme sur la liste `[3, 2, 5, 1]` lorsqu'on trie en ordre croissant.
 
 = Préliminaires
 
@@ -38,8 +38,7 @@ calculer leur produit. Par contre, connaissant uniquement ce produit, il est tr�
 les deux facteurs premiers.
 Le sujet étudie différentes questions sur les nombres premiers.
 
-Il n'est pas nécessaire d'avoir réussi à écrire le code
-d'une fonction pour pouvoir s'en servir dans une autre question.
+Il n'est pas nécessaire d'avoir réussi à écrire le code d'une fonction pour pouvoir s'en servir dans une autre question.
 
 
 *Définitions, rappels et notations*
@@ -52,23 +51,23 @@ d'une fonction pour pouvoir s'en servir dans une autre question.
 - `round(x)` renvoie la valeur de l'entier le plus proche de x. Si deux entiers sont équidistants, l'arrondi se fait vers la valeur paire.
 - `floor(x)` / `ceil(x)` renvoient la valeur du plus grand / petit entier inférieur ou égal à x.
 - `log(x)` renvoie sous forme de flottant la valeur du logarithme népérien de x.
-- Pour importer une fonction d'un module, on écrit `from module import function1, function2, function3` (en remplaçant évidemment par les noms appropriés)
+- Pour importer des fonctions `f1`, `f2` et `f3`  d'un module `m`, on écrit `from m import f1, f2, f3` (en remplaçant évidemment `m`, `f1`, `f2` et `f3` par les noms appropriés).
 
 *Consignes d'écriture du code*
-- Les noms de variables doivent être explicites, et le code doit être commenté lorsque c'est nécéssaire. C'est d'autant plus nécéssaire si vous définissez des fonctions auxiliaires.
+- Les noms de variables doivent être explicites, et le code doit être commenté lorsque c'est nécessaire. C'est d'autant plus nécessaire si vous définissez des fonctions auxiliaires.
 - L'indentation de votre code doit être parfaitement claire. À cet effet, vous devez signaler les niveaux d'indentation par des lignes verticales.
 
 
 
-*Q1* – Dans un programme Python on souhaite pouvoir faire appel aux fonctions `log`, `sqrt`, `floor` et `ceil` du module `math` (`round` est disponible par défaut). Écrire des instructions permettant d'avoir accès à ces fonctions et d'afficher le logarithme népérien de 0.5.
+*Q1* – Dans un programme Python on souhaite pouvoir faire appel aux fonctions `log`, `sqrt`, `floor` et `ceil` du module `math` (`round` est disponible par défaut). Écrire des instructions permettant d'avoir accès à ces fonctions et d'afficher le logarithme népérien de 0,5.
 
 
 *Q2* – Écrire une fonction `sont_proches(x, y)` qui renvoie `True` si la condition suivante est remplie et `False` sinon
 $ |x - y| <= "atol" + |y| times "rtol" $
-où atol et rtol sont deux constantes, à définir dans le corps de la fonction, valant respectivement
+où `atol` et `rtol` sont deux constantes, à définir dans le corps de la fonction, valant respectivement
 $10^(-5)$ et $10^(-8)$. Les paramètres x et y sont des nombres quelconques.
 
-*Q3* – On donne la fonction mystere ci-dessous. Que renvoie `mystere(1001,10)` ? Le paramètre `x` est un nombre strictement positif et `b` un entier naturel non nul.
+*Q3* – On donne la fonction `mystere` ci-dessous. Que renvoie `mystere(1001,10)` ? Le paramètre `x` est un nombre strictement positif et `b` un entier naturel non nul.
 
 ```python
 def mystere(x, b):
@@ -84,7 +83,7 @@ def mystere(x, b):
 = Génération de nombres premiers
 
 Le crible d'Ératosthène est un algorithme qui permet de déterminer la liste des nombres premiers
-appartenant à l'intervalle $[|1,n|]$. Son pseudo-code s'écrit comme suit :
+appartenant à l'intervalle $[|1,N|]$. Son pseudo-code s'écrit comme suit :
 
 #figure(caption: [Crible d'd'Ératosthène])[
     #pseudocode-list(hooks: .5em, booktabs: true)[
@@ -100,18 +99,18 @@ appartenant à l'intervalle $[|1,n|]$. Son pseudo-code s'écrit comme suit :
         + *retourner* _liste_bool_
     ]]
 
-*Q5* - Donnez une majoration de la complexité de l'algorithme du crible d'd'Ératosthène en fonction de `N`. (On demande un `O(...)`)
+*Q5* - Donnez une majoration de la complexité de l'algorithme du crible d'd'Ératosthène en fonction de `N`. (On demande un `O(...)`.)
 
-*Q6* - Écrire la fonction `erato_iter(n)` qui implémente l'algorithme de la Figure 1, pour un paramètre `N` qui est un entier supérieur ou égal à 1.
+*Q6* - Écrire la fonction `crible_erato(N)` qui implémente l'algorithme de la Figure 1, pour un paramètre `N` qui est un entier supérieur ou égal à 1.
 
 
 = Compter les nombres premiers
 
 La question de la répartition des nombres premiers a été étudiée par de nombreux mathématiciens, dont Euclide, Riemann, Gauss et Legendre. On étudie dans cette partie les propriétés de la
-fonction $pi(n)$, qui renvoie le nombre de nombres premiers appartenant à $[|1,n|]$.
+fonction $pi(N)$, qui renvoie le nombre de nombres premiers appartenant à $[|1,N|]$.
 
-*Q7* - Écrire une fonction `pi(N)` qui calcule la valeur exacte de $pi(n)$ pour tout entier n de $[|1,n|]$.
-Les nombres premiers sont déduits de la liste _liste_bool_ renvoyée par la fonction `erato_iter` de la question 7. On demande que `pi(N)` renvoie son résultat sous la forme d'une liste de $[n, pi(n)]$.
+*Q7* - Écrire une fonction `pi(N)` qui calcule la valeur exacte de $pi(N)$ pour tout entier k de $[|1,N|]$.
+Les nombres premiers sont déduits de la liste _liste_bool_ renvoyée par la fonction `crible_erato` de la question 6. On demande que `pi(N)` renvoie son résultat sous la forme d'une liste de $[k, pi(k)]$ pour `k` allant de 1 à `N`.
 Par exemple `pi(4)` renvoie la liste `[[1, 0], [2, 1], [3, 2], [4, 2]]`.
 
 
@@ -119,15 +118,15 @@ Par exemple `pi(4)` renvoie la liste `[[1, 0], [2, 1], [3, 2], [4, 2]]`.
 Il a été prouvé que $n/(ln(n) - 1) < pi(n)$ pour tout $n > 5393$. On souhaite vérifier cette inégalité en se
 basant sur la fonction `pi(N)` écrite en question 8.
 
-*Q8* - Écrire une fonction `verif_pi(N)` qui renvoie `True` si l'inégalité est vérifiée jusqu'à `N` inclus, `False` sinon. Le paramètre `N` est un entier supposé supérieur ou égal à 5393.
+*Q8* - Écrire une fonction `verif_pi(N)` qui renvoie `True` si l'inégalité est vérifiée de 5393 jusqu'à `N` inclus, `False` sinon. Le paramètre `N` est un entier supposé supérieur ou égal à 5393.
 
 
 = Vérification
 
-On suppose dans cette partie qu'on nous donne une liste d'entiers, tous inférieurs à `N`, non triée.
+On suppose dans cette partie qu'on nous donne une liste d'entiers non triée.
 
-*Q9* - Écrire une fonction `est_liste_premier(L, N)` qui vérifie que tous les entiers de la liste sont premiers. Elle doit renvoyer `True` si c'est le cas, `False` sinon. On demande d'utilisez la fonction `erato_iter` de la question 7.
+*Q9* - Écrire une fonction `est_liste_premier(L)` qui vérifie que tous les entiers de la liste sont premiers. Elle doit renvoyer `True` si c'est le cas, `False` sinon. On demande d'utilisez la fonction `crible_erato` de la question 6.
 
 *Q10* - Écrire une fonction `trier_liste(L)` qui trie _en place_ la liste L donnée en argument, par ordre croissant. Vous pouvez utilisez l'algorithme de votre choix, mais on vous demande de nommer cet algorithme.
 
-*Q11* - Écrire une fonction `est_complete(L, N)` qui vérifie si la liste `L` contient _exactement_ tous les nombres premiers de $[|1, n|]$. Vous utiliserez pour cela les fonctions `trier_liste` et `erato_iter`.
+*Q11* - Écrire une fonction `est_complete(L, N)` qui vérifie si la liste `L` contient _exactement_ tous les nombres premiers de $[|1, N|]$. Vous utiliserez pour cela les fonctions `trier_liste` et `crible_erato`.

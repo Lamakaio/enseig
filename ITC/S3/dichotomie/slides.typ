@@ -237,3 +237,25 @@
     ```
 
 ]
+
+
+#slide[
+    = Tri rapide
+
+    ```py
+    def tri_rapide(L):
+        if len(L) < = 1:
+            return L[:]
+        pivot = L[0]
+        plus_petit = []
+        plus_grand = []
+        for x in L[1:]:
+            if x < pivot:
+                plus_petit.append(x)
+            else:
+                plus_grand.append(x)
+        plus_petit = tri_rapide(plus_petit)
+        plus_grand = tri_rapide(plus_grand)
+        return plus_petit + [pivot] + plus_grand
+    ```
+]

@@ -2,6 +2,7 @@ import random
 random.seed(142857)
 nb_combats = 0
 
+affiche_force = False
 
 class Blob:
     def __init__(self, nom, force):
@@ -9,10 +10,18 @@ class Blob:
         self.__force = force
 
     def __str__(self):
-        return self.nom
+        global affiche_force
+        if not affiche_force:
+            return self.nom
+        else:
+            return f"{self.nom} - {self.__force}"
 
     def __repr__(self):
-        return "Blob " + self.nom
+        global affiche_force
+        if not affiche_force:
+            return f"Blob {self.nom}"
+        else:
+            return f"Blob {self.nom} - {self.__force}"
 
     def combat(self, blob):
         global nb_combats
@@ -29,6 +38,7 @@ prenoms = []
 with open("prenoms.csv", "r") as f:
     for line in f:
         prenoms.append(line[:-1])
+
 
 
 def get_blobs(N = 500):
@@ -49,3 +59,7 @@ def reinit_compteur():
 def lire_compteur():
     global nb_combats
     return nb_combats
+
+def affiche_force_blobs():
+    global affiche_force
+    affiche_force = True

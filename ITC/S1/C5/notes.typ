@@ -107,8 +107,49 @@ Les concepteurs de sujet aiment bien tout ce qui touche aux applications physiqu
 
 On peut appliquer ce même principe de "couper en deux" sur des problèmes où c'est moins évident.
 
-Ici, si on prend x un flottant (= un nombre )
+Ici, en prenant x un flottant (= un nombre à virgule) et n un entier positif, on veut calculer $x^n$ de manière efficace.
 
+_méthode naive :_ on peut faire $ underbrace(x*x*x* dots *x*x, n "fois") $ pour un total de $n-1$ multiplications.
+
+Mais on peut faire mieux !
+
+_ex_
+- considérons $x^4$.\
+    On a $x*x*x*x = (x*x)^2$.\
+    Si on nomme $y = x*x$, il nous faut une multiplication pour calculer $y$, puis une multiplication pour calculer $y*y$.\
+    On a économisé une multiplication !
+
+- Et si n est impair ? par exemple $x^5$ \
+    Dans ce cas, on découpe comme suit : $x^5 = x * x^4$, et on calcule $x^4$ comme précédemment.
+
+#pagebreak()
+
+```py
+def exp_rapide(x, n):
+    """Calcule x^n en O(log(n)), avec x un flottant et n un entier positif"""
+    reste = 1
+    while n ! = 0:
+        if n % 2 = = 0:
+            n / = 2
+            x *= x
+        else:
+            reste *= x
+            x -= 1
+    return reste
+```
+
+
+#table(
+    columns: (1fr, 1fr, 1fr),
+    align: center,
+    [x], [n], [reste],
+    [5], [7], [1],
+    [5], [6], [5],
+    [25], [3], [5],
+    [25], [2], [125],
+    [625], [1], [125],
+    [625], [0], text(fill: red.darken(20%))[125*635],
+)
 
 
 == Tri fusion

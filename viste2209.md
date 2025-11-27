@@ -33,3 +33,25 @@
 L'idéal serait de forcer une execution séquentelle, voir de versionner la table pour ne pas pouvoir revenir en arrière (pareil en python en soi). Demande un peu de dev tout de même, mais sans doute faisable. 
 
 
+
+
+
+## 
+- demander les paramètres des fonctions
+- regarder + les élèves
+- paramètres vs arguments
+
+- exemple à préparer sur les notes
+
+- arrêter d'improviser 
+
+- execution en live (par exemple x² - 2), proposer des choix (interaction)
+
+- animations listes de taille diff 
+
+- listing de contenu vs passage d'un état à un autre 
+
+- amplitude d'un intervalle
+- image *par* la fonction
+
+- 

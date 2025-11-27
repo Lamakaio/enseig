@@ -6,8 +6,8 @@
 #set math.equation(numbering: "(1)")
 
 #align(center, text(17pt)[
-  *ITC MP, DS n°1* \
-  *Modélisation numérique d'un matériau magnétique*
+    *ITC MP, DS n°1* \
+    *Modélisation numérique d'un matériau magnétique*
 ])
 
 Ce sujet est un extrait modifié du sujet des Mines 2022.
@@ -100,7 +100,7 @@ En traçant l'aimantation $m$ en fonction de la température $t$, on obtient le 
 permettant de visualiser les domaines ferromagnétique $(t < 1)$ et paramagnétique $(t >= 1)$.
 
 #figure(caption: [aimantation réduite $m$ en fonction de la température réduite $t$])[
-  #image("figure1.png", width: 80%)
+    #image("figure1.png", width: 80%)
 ]
 
 = Recherche dans une base de données de matériaux magnétiques
@@ -145,7 +145,7 @@ Pour étudier l'effet du champ magnétique sur un matériau magnétique, on adop
 L'échantillon modélisé est une zone carrée à deux dimensions possédant $h$ _spins_ régulièrement répartis dans chaque direction, donc formant une grille carrée de $n = h^2$ _spins_. Chaque _spin_ ne possède que deux états _down_ ou _up_, ce que l'on modélise par une variable $s_i ∈ {-1, +1}$.
 
 #figure(caption: [Modèle des _spins_ dans un matériau ferromagnétique])[
-  #image("figure2.png", width: 70%)
+    #image("figure2.png", width: 70%)
 ]
 
 Pour implémenter cette configuration de _spins_ décrivant l'état microscopique du matériau, on choisit de travailler sur une liste `s`, contenant `n` entiers, chacun valant `-1` ou `1`. On notera le choix d'implémentation adoptée, qui impose de travailler sur une simple liste de `n` éléments pour modéliser une grille de taille `n = h * h`, dans l'ordre suivant : première ligne puis deuxième ligne , etc.
@@ -170,7 +170,7 @@ L'antiferromagnétisme est une propriété de certains milieux magnétiques. Con
 
 
 #figure(caption: [Modèle des _spins_ dans un matériau antiferromagnétique])[
-  #image("figure3.png", width: 70%)
+    #image("figure3.png", width: 70%)
 ]
 
 12. Écrire une fonction `initialisation_anti()` renvoyant une liste s d'initialisation des domaines contenant h _spins_ en largeur et h en hauteur en alternant les 1 et -1 comme sur la figure 3.
@@ -187,7 +187,7 @@ Malgré le caractère fini de l'échantillon, on peut utiliser une modélisation
 la figure 4)
 
 #figure(caption: [Voisinage d'un _spin_ (les voisins des _spins_ sur les cases noires sont indiqués en gris)])[
-  #image("figure4.png", width: 65%)
+    #image("figure4.png", width: 65%)
 ]
 
 13. Définir une fonction `liste_voisins(i)` qui renvoie la liste des indices des plus proches voisins du _spin_ $s_i$ d'indice `i` dans la liste `s` (dans l'ordre gauche, droite, dessous, dessus). On pourra utilement utiliser les opérations % et \/\/ de Python, qui renvoient le reste et le quotient de la division euclidienne.

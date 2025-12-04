@@ -186,3 +186,46 @@ def distance_edition(s1, s2):
 #link(
     "https://notebook.basthon.fr/?kernel=python3&ipynb=eJytVNtu2zAM_RVOe1jTaUOdNBtgoP-wd8cIFJttlciyp8uQIMj_rN-RHxsluUncJMButh9MnUPyiCK1ZRUqZVlebFmDTtTCCZZvmTPeOqxZTj-445E1d5sOWc6qtkbGmW29qYJd4yPU0jqhK5xjLZ1s9Y3NONjxKJ9poGfGwlsJVXmFoMSBD_WH_UtyAdTO0AL6NVTPQmq0ZEAljKjc_idBNgN0FJVDJ0yI0uxf3DOpCTwyO9M-GdE0IoarN1o08rvHzyl7UvJeasomlLQ9y4MTC4XCg9m_WK-ccIlpMFnwAEVxV97eKKRtjUfwEbIRPLYG5iA1GKGfMGFZwsrkHxirN4zeu6_KaRbKUKxKyrW67p1d916VFCB5H_3l0Z9O40qIQFyeE8-VxuqlI6R6W3CmlZaOxw4p1ncdCTkok5-ysliWIdqQKJatdwMm8YicmEOufKTDj6Hg3QN1QCS-0Raepq2Jepb9EPWUi8riH4UYcgeyQ-kbSWWjzfO0M54ijV63YtB5ow9uNEC4xsqHJpxXrdeO5feckWPnXZjHcsf_fiRPevdsMmdsoZc_zIxxGstFq0ksGaQzdIKKndB755Ckd0Zqd6NGlzRPTzVv-_9XWZYGWjTk5nBNXFbccaAGowGecLjnMOXwhcNXqmxByxfAgIzjcvYGDMgkLqTvCAbkPv6mbzxAptE9fQfKhBBSSfdFUl3TNtjun07gUq20V-q_HfHvJSj5IMEKjaa-77AKVr_fbkOXqJ5QQOqVTonNvAe-RQACouhy8OLpSGc70qcX1DN03cbWfTXmNAitYfl49wu8P_gH",
 )[#text(fill: blue)[lien vers un notebook contenant le code]]
+
+
+== Dernier problème : algorithme de Floyd-Warshall
+
+Petit retour sur nos amis les graphes !
+
+On va utiliser la programmation dynamique pour calculer le plus court chemin entre deux sommets d'un graphe.
+
+On va prendre des contraintes un peu différentes (par rapport à Dijkstra) :
+
+On cherche le  plus court chemin entre chaque paire de sommets pour *tous* les sommets du graphe.
+
+On se donne un graphe dirigé pondéré $G$ avec un ensemble de sommets $S = [|1, n|]$ et un ensemble d'arrêtes $A subset S times S times ZZ$ (les arrêtes peuvent avoir un poids négatif !). On suppose que G n'a pas de cycles de poids négatif.
+
+Soit la fonction $d(x, y)$ qui renvoie
+- 0 si $x = y$
+- $w$ si $x$ et $y$ sont reliés par une arrête de poids $w$
+- $+infinity$ sinon
+
+(cela correspond à la matrice d'adjacence)
+
+#blk2[Solution en programmation dynamique][
+    + *découpage en sous-problèmes* : on note $scr(C)(x, y, k)$ la taille du plus court chemin entre $x$ et $y$ deux sommets, en ne passant que par des sommets de $[|1, k|]$
+    + *relation de récurrence*
+        - $scr(C)(x, y, 0) = d(x, y)$
+        - $
+                scr(C)(x, y, k) = min cases(
+                    scr(C)(x, y, k-1) & "on ne passe pas par k",
+                    scr(C)(x, k, k-1) + scr(C)(k, y, k-1) & "on passe par k"
+                )
+            $
+
+]
+
+
+#link(
+    "https://notebook.basthon.fr/?kernel=python&ipynb=eJztW3tv47gR_yqsF22Tni3zTSq9vaLNtYsCfRzabYvCCQKtrSTa2LJryXl0ke_Sf_s5-sX6G0ryI9b53NjbB9A9IBbJ4Qw58-NwhuR96gzT8bjonA0-dSZpmYySMumcfeqU80VRpqPOGT7S526guiqfZmnnrDOcjtJOt1NMF_MhlbPJbDov2c08md3eZ3-9yEfpNUuur7PhbTq_CtXpSfVzenaRM_wbTUv2dtkj-joLnydFOc-G5dv3kHlaEV5P56zosjHL8oo8jbIynRQnDaeG6OS-y2anRDZea6llRenoJiXuJ8Vpl9Hvff07O60FzdNyMc-JGFNLH9Phosym-dVwusjLzpnodqaLcrYoSVOXz93XK6uaBCb_qZLL2RkbnKgu6ykM6UR2mTu97FZtIrTxLhOC2kAklm0ytIkuM9Sk0X_VpkIbWMlllW5YyZqTCU3PbZOVR5vst4CgTahaF_qp_m74VtTp1TwtFuNWA6H7coDpY9mfjZMsR88vlxgjGNQ4Y9MPH9NhyZKS8UchRtep4l-BazZJbtJ-cX_zxeNkTJ1_gl92n84LSHp70RERv-iwNMc0s_wGFX94_4ueR1VRJvkoGU_zFJX59KLzk68u8i-_9_Vvz9__-ZufM3Bk3_zhZ7_65Tm76PT6_T-p837_6_dfs9__8R0Tkej3f_6biw4MddG5LcvZWb__8PAQPahoOr_pv6MRZ8OiD-I-EaMjjVGIaFSOLjpBUq_H3qV5Ok9gGfbhabmymsEzGWkeCeCLCyukNBFXXBP0e72GwfusHKdn7PucfQM1FGeAX9VIw3_IRuUtqcDzWYkZ36bZzW2JCiVCBTjdZ-nDz6aPqOMR5yz8ES6OrGYggnx0gz7z4m3bNCXnnKbVEJ09jrP8rpVUxHHcD83V7G9YNgJhmDMJGY6TomgqUC7nSV7AR0xQVwyTcXoisJDYfFpCXSf8tCIYUwFD5TaCYgLjkjTy1ff5l_3qC1Wz6fjpBvq8zsZjsHtzHf4FCMynd2T-wGyWzNOc9DSbZnlJg-nprmb40wsCoBgDxciXxUCiLzr9xii8tkE9xxwLTKxNkcrrY10fKtZlNivSZqg50Lk-zjc8_CNmZDMnaABUeqLRSq8jjIPNqU06-noK5q_HRouM0Z9ekg9vp3O0TbLRaEwiNtjV3HhEhetpXvauk0k2pur32SQtukU6z66btiL7K41N6CiMrNFyM9QwPwilEfRvGh2pbR3JHTpSr9ZRbDd0JGIY7QAdLdnV3ETQ-ME6Um064j94o82Pf3BT_viFtmhnXEcUlTcQteq4vgyS8va7lUb8f-1s5LgQ3Z60QLo6BxQwVSwEaTADJR0D1HzsDWqUi5RQzPvIW4WyVJFUQtb6fLn2lnJaRC_XXSwjqWMSJ3UkhLMMejYxpxqhIqMV5JnICBEEglpy0Lzsta9JYUMn1RL3ykT-GDYNRmg1rNwGv9oBfvlq8Cu_CX74LX8A-Jfsam4yLKWDFSV3g19ug1_uBX75OvAD8oY7V4PfC31uZWSsJ6wZwphwzLhIigB3JSJnvWFGVXsDAdQy7SOtiYfwDkvHOqZ1pIxHhcHact4zTR1jIgHgsJfoQ1aMNlgDMiZmGmONY4bQwXiP1SAocNDSMFhP1uKU54Zt9dkTBZi7-Awu0LVuE7tQ4HagQB2KAvgXp4K-HDxb7PS5o3kb0qhFm-GCWQrJtEWNBh64ZwYqrUhUcErqEJtCzzEXkiwYR95bwXQMZMpgUxVp6YBDCdtyGoFSkROabXXad--3G0bV7rMtbLHt_PQO5yeO5vyO6PnUcXYI0bo5LJErtiFvdkB-rePrIF9NstvDVq45t-dNGdiQsY5ZU7YIDDk25aas4SatO8x_SYKfCLy4k0vWqi6ajWashE36Pa1Y9WqsaPxx4lvTZkW9jXKzA-X61SgX2FiOBvMVs6PiXO_Gud7Gud0L5_p1OIeXto5cOyJGAx9_7lTEjSekw3tio2eCc3LfCG_Jo2PHZELEaBKoIWg64w5Bu6CQVRkwQxCglLVMSBdZo4g9NQkPgS5ymiPEAPhjxx3b6rWvUSlbXQtwj4X7YIZWFyaWFuLbplU7TLvW8XWmhRqVpTCLQhqn4nMBa3lHjsJHKhaSgSBGu_VRbJRlcunyPOuJiHtLmymnYC02rAfH5ilo43EkuFENuUCGARMRfAxFCBp7r4SDjJEKGUqbpI94TAEBVG80xZLQulPcHxQQYNPXlnIueGAjMRmL2EvpmGocQlWAxCBEUJyGgEgAoA6B6WavfWGzueUdJyIQ34GXlkRX74WXVya6UImLaeXDYMY5ee5Q4WNZAch6wbyIrLWwoIaTcEgzEdAHDBgNNwEdc4uAzMeRFjHVwF_YEGU75KeWagSlEwQT2Mhoe1BMGANXnLJeYqa0ioOr4pZSEQHv5eAfGME3ViFOBMzxIdlWv719x2awf6yUrxUGepfb8DtgoA91GwKRteZx5Wy9sPJcGE7xvwrO1jiN1W5EFHujgivhdCghjFxBgZaZIcvTmpQIUahGWDpEsQreROgVPUAGfmAjvPVV_uWUoC4xMGYIPmHfIUApuZ5XkuPhXnpKPOF9ODyY4PBdSAtoydMxDTK7GPmJ9iGDxRiMFwdBjqZBOQ35DwcF0FGP0g5-UjraJjGzGPtmHBJkpERex4pt9doXcEb_uxIRvcvrxHvB7ZVeBxMEpkg7iG-V9NimFG0wsQ1gcSbGbq84digKcYWwkVceVaI-fyacwPCYrlY-LGqJ4IQwJ-gjDs4GnOOYAhcEC2EHFDYGa2EPilwANviZuHYtmpODs2AbzhEoUyaXRAPDjKgGi4fO5rb77YsH9Xkc0FbQXv8t7um389xdvz97fj7oRu16Pp2wCcGjvnXN8uvqwvV6PH0aXT0k8-I2GY9P3jUXpG-G0xxmWAzpuoyNUjZOiME8G6Zs9MNk9DEZpvkwrYjRcIUq9pYNBuB8yX7ExmkOZuGO9YquV99drm5mT4ouu59mRZYX4er13Y7L2YdAUVO_uKKtxQ6Ky8H9JYQ_rJrXmgpq4lVTPbdxWrDhbToBS5bmbIZFluQlfucsWQwXOSumE6gaP6gdTfP8H38Pjbt0MMroOm8IztBCLb6e85s7dvZt8mgolbSC8S6LoqjL7laquqPZz5P8Jj2pNLquozx9uCKxQe-_wYLfpfiGY7aLY0P08buI1sUPssvBR1Iy5neyVMOgJy6rli7bqry7ZF-8qL0j0tOVlGVrlMxmaT46acSdrpuyuX9viNsuefXRLqbXbfxi4dR31Bd5vcBmszkc1kVe_Uaz2UozrRfZZtdFNhZimkzQjRwGyoPBAFjBSusyR08Awnd1Zz_Ads-aRrHeEGrMqhFKX2sIf2TTWrfIun7Z9TI0fLd04Y8nPCbqQ2QL24i2hwoWcinXtkoVbqdQonKNRLGSJ3SrOF1Vkbie3JSngjj5Kmk29N1HmG6T1YjqyTVZag9R8ETAcJ5MKkyPAPLOYftay-oiZ9K6wuy_tsJaNdKikFZ9tKhjSxtHV8abWYpQkGHik9k4Zcl9OmTYy4ZPQ5SwgyOEGhUMe9lNUiJMySuXJV8-KhIbj4KWj4mo7iJ_vsjbX-fIVp27w57nuNc_z4njNP3w_-c5-z3PsXLzdY5QasfrHIT69EYH2Z__33icIySygs_5OCcIYOFutfn6zz3JCYfux7ltD12Om_W0PsVpuZDb9RTn9Rdy67o5kmI-50Uc33URt9_zm1dexAkXeUMH0R55fuzsORJ_ySl79pgw3e4jz7eOTvgcXTwbyrkjpejxSzhbiiMv6FTTqkh7kC_LoBJcrKjp5Cocawl8c7rnFsQ7FpTPazpPVHQUEcFBoKwjq_RBh0mCTh9JsDaRhVS2nCpd8XFJxwmYIa_PW2liL3rse24Avor_t9x57HqvcoQ7j-ae9Jw-NaYqtWL0bXWkY-PDt_ORsgfdP0gVGU53Cy5cEJvAtr4sZopvNFr2knrfm3b5bzTcZzz0WQXHrbmqPG0N2fy_nohS0MsGTT7BXtQhdA6VITxWoZYCar1nPvBikpNkfjeaPuQbgS_7XfriuGp5vtM5KN9Pr2s-q_yiyx677KnL7pojEcRJ-O93aX4_zdIQcIceDEH3bLzAQMANUXkO1bFHlpbsic6AoPNxFk6B1k-APi6Kvyx--I-_sbuoPuD4aVmiKybVZXkK1M7BOqUTJFZkDFNNdoT4UTW0ilF2zU7u2Nu3FMivHea8Qcd6wGlRslE2pxh6fbQr2vqwZdAcaw0xiumiGgWN6ENaYKGy0aI5P7tbil6lZ3dfiMvB4-Xg6ZIGs1Zf155tyftWCzD4vPo0KB0XiHL363rXdGVfsOokapvsbk1C6__s4I92qLQtvMrwdbvg-LCUivq35lSUsmKF6svjOqG2MeSL8XhTfZcbIjt36TyHRWfpkEq1g5g9lbfTXIEhVIVRP13VDd-EBkYt4yS_WSDPWZJ3njG-_ANlCkl1FNgUrqD06RwKef4nPVVHFQ",
+)[#text(fill: blue)[lien vers un notebook contenant le code]]
+
+
+*Note :* on utilise uniquement la valeur de $scr(C)(dot.c, dot.c, k - 1)$ pour calculer $scr(C)(dot.c, dot.c, k)$. Cela signifie que l'on est pas obligé de stocker tous les tableaux, on peut se contenter seulement du tableau précédent.
+
+En revanche, si on veut reconstruire les chemins, on a besoin de tous les tableaux.

@@ -20,6 +20,14 @@
     stroke: (left: 1.5pt + luma(30%))
   )]
 
+#let question(body) = box()[
+    #block(
+    [#underline()[ *Q#d() \)*] ] + body,
+    width: 100%,
+    above:5pt,
+    inset: 5pt
+  )]
+
 #let def(name,body) = blk1("Définition", name,body)
 
 #let blk2(type, body) = box()[

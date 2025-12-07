@@ -28,6 +28,8 @@
     inset: 5pt
   )]
 
+#let correction(body) = text(fill: green.darken(20%), body)
+
 #let def(name,body) = blk1("Définition", name,body)
 
 #let blk2(type, body) = box()[

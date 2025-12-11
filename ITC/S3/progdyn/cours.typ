@@ -229,3 +229,24 @@ Soit la fonction $d(x, y)$ qui renvoie
 *Note :* on utilise uniquement la valeur de $scr(C)(dot.c, dot.c, k - 1)$ pour calculer $scr(C)(dot.c, dot.c, k)$. Cela signifie que l'on est pas obligé de stocker tous les tableaux, on peut se contenter seulement du tableau précédent.
 
 En revanche, si on veut reconstruire les chemins, on a besoin de tous les tableaux.
+
+== Retrouver le chemin avec le tableau des prédécesseurs
+
+Utile dans le cas où le calcul de la relation de récurrence n'est pas rapide (par exemple un maximum sur n valeurs).
+
+L'idée est de créer un tableau de même dimension que le tableau de stockage du résultat, qui, pour chaque case, indique quelle case a servi à la calculer.
+
+#link(
+    "https://notebook.basthon.fr/?kernel=python3&ipynb=eJytVktu2zAQvQrLLhK3bBHZSYMKyB26twWBlsaJbIpS-SliGN52nWx6huYcvklP0iEpf2TJzQeVBUvUvHnzhpyhtKIZCKFpPF7REgzPueE0XlGjrDaQ0xhvYM08KjXLGmhMsyoHyqiurMrcOIcZyQttuMwghbwwRSXPdcSIHg7iiSR4TKj7ZVxkVgARfIcn-dnmKbgQkEbhA7D3JLvjhQSNA5JxxTOz-Y0mHREwyMpIzZVjKTdP5g7VOBwOa1XdKl6W3NPlS8nL4ruFzyF6UPK-kBiNi0I3KEsMnwrglqjNk7bCcBOQCsKI3JDx-CL5cC4A0xoOyEcSDcisUiQlhSSKy1sItijYkuBfK8ghA63BKs8xoemEvp7HIRZHiMa7md1Dtah0vEgw3uK0d3Tae5EgQfDe-xd7f1zVExQOOO8Cu0r9KoRSwHXTxKiq0LjMug3Rtq5RyE5Z8SlKxvPEsbWBfF5Z00IiDsEB2cYWMywiT0Xe3WAleeCRNneUVY7QTvQd6yEWhIZXUbSxLdlu6ssCpw2TZyEzFpgGnUSOHW_8lMWkK-WwEndhJvTPz8dtV-xz6SX2QnpyPEn80CXGSXqNtF-OYduIxiq5k8VaTrgRwT1k1jVzmlVWGhpH14yi4Noat7Ela_b2va0_KGrsbHgTOpXzH2pCGeqfVhKnDAe4bK4xhG-Mhms7D7UqpDkXA5fnDnQYpgvcjwa9iX89THzV3G9z07i98hL9DNwjmI4vGME2xe10xMglI1eMfGHkGutzjI97jM4y9I-jI6OzjPyDcO6NznLpb8M5bFmuvHs4d5CRs5ylZ4w8-5e4uWuwWDPh8vCSS9vzsUXwb55ez8c-njd4niB4uedxJt4T1xzfhaEGciwKuj7dFDOOrfpMV_TVnrRCvKzt_l-EhLUiLEBJ3GhqyNyoybhe4ieCHCEhtmwt-DJtDN-8gTiLwFeW5bd7OF2jPjnFrsSPCRpf7gcpbs-VovFw_ReSx-MU",
+)[#text(fill: blue)[lien vers un notebook]]
+
+== Utiliser des dictionnaires pour la mémoïsation
+
+Parfois, quand on ne rempli pas tout le tableau, et qu'on veut utiliser la méthode descendante (donc avec de la récursivité), on peut utiliser un dictionnaire pour stocker les valeurs intermédiaires à la place.
+
+C'est un peu plus lent, mais ça peut simplifier le code.
+
+
+#link(
+    "https://notebook.basthon.fr/?kernel=python&ipynb=eJylUm1qGzEQvcqg_vFSBeIkFCpIz1DwT8csqjR2RbUjoQ-IWfY-zTl8sc56HduhmxZa6cdqdt7Me2-YXhj0Pgu17kWHRVtdtFC9KKnmglYofuAgj6i27CMKJUywKKTIoSYzxha3kJBsbbtApB0uokODWcJKgoNHuFlKsM4EfvZDo54I-LgteKQTtIGPI_IRbhVM6fEkLDURrM4FC8c9G3B0bDcDHX-vJ9RmSn4wOkOo4DVYTOQOPxNC5I9BwFygpBBhlzRZPNNMmtZuA19gpS4k193Zyx8838CyueLfHV7o8JK0BwWBII6Vs4pYKAWaKtFnfJ-8c7RY8tTeEcEKzi5YUCMvjWbPX7yczMxMmRcBn9HU4gK1JlQqQn2WItQSaxn3ajPIf1-thLn6ostv017zSt1LeGBzn1jceGNyVBavFc2csOXttbL-9H4lzyWh7riu4DODxd0TcUC6m5KW0WL4Lztzmqh6_3ZeG_mG4AcvCe9CRDNGJzlxX74HuueG1uXo9b49Jb4eEzBmvKZd1bsLXAysj75tQ-o0Mz9cgpbXKSSh7oZfFZ1SZw",
+)[#text(fill: blue)[lien vers un notebook]]

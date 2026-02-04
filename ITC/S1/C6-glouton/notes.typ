@@ -83,9 +83,55 @@ Par exemple, ici, on peut assister à 2 conférences maximum.
 
 Comment choisir à quelles conférences assister ?
 
+On peut imaginer plusieurs algorithmes gloutons différents dans ce cas ! Dans tous les cas, il s'agira de trier les conférences selon un certain critère, et de prendre la "meilleure" conférence selon ce critère de manière répétitive.
 
-== Première solution : on les prend dans l'ordre de _début_
 
-== Deuxième solution : on prend les plus courtes d'abord
+== Première solution : on les prend dans l'ordre de _début_.
 
-== Troisième solution : on les prend dans l'ordre de _fin_
+Contre exemple : une très longue conférence dés le début, puis plein de petites qui lui sont superposées :
+
+```
+    |----------------------------------------| C1
+        |--| C2     |--| C3    |--| C4
+```
+
+== Deuxième solution : on prend les plus courtes d'abord.
+
+A priori, si une conférence est courte, elle doit être plus facile à caser dans un emploi du temps. Mais ce n'est pas optimal non plus !
+
+```
+    |---------------| C1 |---------------------| C3
+                   |-------| C2
+```
+
+Ici, C2 est la plus courte.
+
+== Celles qui interfèrent avec le moins d'autre conférences
+
+A priori, si une conférence a peu de conflits, elle est plus intéressante.
+
+```
+           |----------C1------------|
+|--| |---C2--|                    |---C3---| |--|
+  |---|                                   |---|
+  |---|                                   |---|
+  |---|                                   |---|
+```
+
+Ici, C1 a le moins de conflit. Mais elle empêche de choisir C2 et C3, ce qui nous mène a un choix avec 3 conférences (alors qu'on peut faire 4 ! )
+
+
+
+== Troisième solution : on les prend dans l'ordre de _fin_.
+
+Essayez de trouver un contre exemple. Compliqué, non ?
+
+Et bien en fait, c'est optimal !
+
+Pourquoi ?
+
+Soit $S$ l'ensemble des conférences. Considérons une allocation optimal $C^("opt")_1, ..., C^("opt")_n$. On considère les $C_1, ..., C_n$ triés temporellement. (Comme ils ne peuvent pas s'intersecter, ce n'est pas important si on trie par heure de début ou de fin.)
+
+Soit $C^g_1$ la première activité choisie par l'algorithme glouton (soit celle qui termine en dernier). Alors, $C^g_1, C^("opt")_2, ..., C^("opt")_n$ reste une allocation valide, et donc elle est aussi optimale.
+
+On peut aussi noter que $C^("opt")_2, ..., C^("opt")_n$ est une allocation optimale pour les conférences \ $S \\ {"conférences intersectant avec" C^("opt")_1}$. On peut donc appliquer le même argument n fois, et $C_g^1, ..., C_g^n$ est une allocation valide, et donc optimale.

@@ -52,7 +52,11 @@ def tri_degres(d):
 a) par récurrence
 
 - Un graphe à deux sommets est connexe ssi il a une arrête
-- Soit un $G = (S, A)$ graphe connexe avec n sommets, soit $x in S$, et soit $G[S\\{x}]$ le sous graphe induit par les sommets sauf $x$.
+- Soit un $G = (S, A)$ graphe connexe avec n sommets.
+On a deux cas :
+- soit tous les sommets de G sont reliés a au moins 2 arrêtes. Alors on a au moins n arrêtes.
+- soit il existe $x in S$ relié a exactement une arrête.
+Alors, soit $G[S\\{x}]$ le sous graphe induit par les sommets sauf $x$. $G[S\\{x}]$ est nécessairement connexe, car, pour deux sommets $y$ et $z$ $in S\\{x}$, le chemin entre $y$ et $z$ ne peut pas passer par $x$.
 
 Alors, par récurrence, $G[S\\{x}]$ a au moins n - 2 arrêtes.
 
@@ -92,5 +96,10 @@ Il reste donc, au plus, $|S| - |X| - 1$ arrêtes qui ne sont pas dans $G[X]$.
 Or, dire que G est connexe, reviens à dire que le graphe G', où on a fusionné tous les sommets de X en un seul, est connexe (car comme X est un cycle, tous ses sommets sont reliés).
 
 Or, $G'$ a $|S| - |X| + 1$ sommets et $|S| - |X| - 1$ arrêtes. Donc il ne peut pas être connexe. Donc G n'est pas connexe.
+
+
+
+
+6.
 
 

@@ -192,22 +192,121 @@ let rec hauteur a = match a with
 
 == Preuves sur les arbres binaires
 
-Soit $A$ un arbre binaire. On note $T(A)$ sa taille et $h(A)$ sa hauteur.
+#ex[
+    Soit $A$ un arbre binaire. On note $T(A)$ sa taille et $h(A)$ sa hauteur.
 
-Montrer que $T(A) <= 2^(h(A) + 1) - 1$
+    Montrer que $T(A) <= 2^(h(A) + 1) - 1$
 
-On va faire une preuve par _induction structurelle_ :
-- (cas de base) si $F$ est une feuille $T(F) = 1 <= 2^(h(F) + 1) - 1 = 1$
+    On va faire une preuve par _récurrence forte_:
+    - (cas de base) si $F$ est une feuille $T(F) = 1 <= 2^(h(F) + 1) - 1 = 1$
 
-- (induction) soit $A = (G,_, D)$ un arbre. Par induction, on a : $T(G) <= 2^(h(G) + 1) - 1$ et $T(D) <= 2^(h(D) + 1) - 1$
+    - (hérédité) soit $A = (G,_, D)$ un arbre de hauteur $n$. Comme $G$ et $D$ sont de hauteur au plus $n-1$, on a par récurrence : $T(G) <= 2^(h(G) + 1) - 1$ et $T(D) <= 2^(h(D) + 1) - 1$
 
-Donc
-$
-    T(A) & = T(G) + T(D) + 1 \
-         & <= 2^(h(G) + 1) - 1 + 2^(h(D) + 1) - 1 + 1 \
-         & <= 2^(max(h(G), h(D)) + 2) - 1 \
-         & <= 2^(h(A) - 1) - 1
-$
+    Donc
+    $
+        T(A) & = T(G) + T(D) + 1 \
+             & <= 2^(h(G) + 1) - 1 + 2^(h(D) + 1) - 1 + 1 \
+             & <= 2^(max(h(G), h(D)) + 2) - 1 \
+             & <= 2^(h(A) - 1) - 1
+    $
 
-Cela conclu la preuve.
+    Cela conclu la preuve.
+]
 
+#ex[
+    Soit $A$ un arbre binaire. On note $F(A)$ son nombre de feuilles et $h(A)$ sa hauteur.
+
+    Montrer que $F(A) <= 2^(h(A))$.
+
+    - (initialisation) Si A est une feuille, $F(A) = 1 <= 2^0$
+    - (hérédité) soit $A = (G,_, D)$ un arbre de hauteur $n$. Comme $G$ et $D$ sont de hauteur au plus $n-1$, on a par récurrence : $F(G) <= 2^(h(G))$ et $F(D) <= 2^(h(D))$.
+
+    Donc
+    $
+        F(A) & = F(G) + F(D) \
+             & <= 2^(h(G)) + 2^(h(D)) \
+             & <= 2^(h(A) - 1) + 2^(h(A) - 1) \
+             & <= 2^(h(A))
+    $
+
+    Cela conclu la preuve.
+]
+
+
+= Arbres généraux
+
+== Définition
+#def[Arbre général][
+    Un arbre général, ou simplement "arbre", stockant des données d'un ensemble $E$, est défini par induction comme :
+    - Soit l'arbre vide
+    - Soit un noeud contenant un élément de E, ainsi qu'un nombre quelconques d'arbres non vides (ses fils).
+
+    Un noeud avec aucun fils est une feuille. Un noeud avec au moins un fils est un noeud interne.
+
+    Le vocabulaire sur les arbres est identique à celui des arbres binaires.
+]
+
+#ex[
+    Arbre de décision
+
+    #canvas({
+        import draw: *
+        let encircle(i) = {
+            std.box(baseline: 2pt, std.circle(stroke: .5pt, radius: .5em)[#move(dx: -0.36em, dy: -0.5em, $#i$)])
+        }
+
+        set-style(content: (padding: 0.2em))
+        tree.tree(
+            (
+                [Je veux faire du sport],
+                (
+                    [Soleil],
+                    [Footing],
+                ),
+                ([Pluie], ([Très motivée], [Footing]), ([Moyen motivée], [Escalade]), ([Pas motivée], [Sieste])),
+                ([Neige], [Ski]),
+            ),
+        )
+    })
+]
+
+== Implémentation
+On utilise le type suivant :
+```ocaml
+type arbre =
+    |Vide
+    |N of int * arbre list
+```
+
+Cela complique un petit peu toutes les fonctions ! La dernière fois, on traitait explicitement chacun des fils de notre arbre. Ici, ce n'est pas possible !
+
+Deux solutions :
+- une fonction auxiliaire
+- être astucieux sur la récurrence
+
+
+#ex[
+    Calculer la somme des noeuds d'un arbre général.
+
+    ```ocaml
+    let rec somme (arb: arbre): int =
+        (*calcule la somme des sommes des arbres dans une liste d'arbres*)
+        let rec aux (l: arbre list) -> int =
+            |[] -> 0
+            |a::q -> (somme a) + (aux q)
+        in
+        match arb with
+            |Vide -> 0
+            |N (x, l) -> x + (somme l)
+    ;;
+    ```
+
+    ```ocaml
+    let rec somme (arb: arbre): int =
+        match arb with
+            |Vide -> 0
+            |N (x, []) -> x
+            |N (x, a::q) -> (somme a) + (somme (N (x, q)))
+    ;;
+    ```
+]

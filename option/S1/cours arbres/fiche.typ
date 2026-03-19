@@ -310,3 +310,144 @@ Deux solutions :
     ;;
     ```
 ]
+
+
+= Les parcours d'arbre
+
+Un parcours d'arbre, c'est un ordre dans lequel on va visiter les noeuds de l'arbre. Il en existe deux principaux.
+
+Cette partie est valable autant pour les arbres binaires que les arbres généraux. On traitera uniquement les concepts généraux des deux parcours principaux dans ce cours; ils seront revu plus en détails lorsqu'on parlera de graphes.
+
+voir #link("https://visualgo.net/en/dfsbfs").
+
+== Parcours en profondeur
+Le parcours en profondeur est celui que vous avez utilisé avec des fonctions récursives, par exemple la fonction `taille` d'un arbre binaire. Il s'agit d'aller le plus loin possible, et de ne faire demi-tour que lorsqu'on arrive à une feuille.
+
+
+== Parcours en largeur
+
+Au contraire, le parcours en largeur consiste à parcourir d'abord tous les noeuds de profondeur 0, puis de profondeur 1, 2, etc.
+
+Il est très compliqué à implémenter de manière récursive, et de même de manière impérative ce n'est pas simple.
+
+== Utilité
+
+Globalement, le parcours en profondeur a l'avantage principal d'être plus simple à implémenter, et c'est donc celui qu'on utilise quand l'ordre des sommets parcouru n'a pas d'importance.
+
+Le parcours en largeur a des avantages en revanche, en particulier sur des arbres très grands : si notre arbre a une hauteur extrêmement grande, mais qu'on ne veut parcourir que les sommets proches de la racine, c'est lui qu'on utilisera.
+
+= Implémentation d'un dictionnaire avec un arbre binaire de recherche
+
+== Définition
+
+#def[Arbre binaire de recherche][
+    Un arbre binaire de recherche est un arbre binaire étiqueté par un ensemble ordonné $E$, qui, si $e$ est l'étiquette d'un noeud $s$ :
+    - pour tout noeud descendant du fils gauche de $s$ d'étiquette $e_g$, $e_g < e$
+    - pour tout noeud descendant du fils droit de $s$ d'étiquette $e_g$, $e_d > e$
+]
+
+
+#ex[
+    Arbre binaire de recherche contenant les entiers $1, 5, 6, 7, 8, 10, 11, 12, 28, 34$
+
+    #canvas({
+        import draw: *
+        let encircle(i) = {
+            std.box(baseline: 2pt, std.circle(stroke: .5pt, radius: .5em)[#move(dx: -0.36em, dy: -0.5em, $#i$)])
+        }
+
+        set-style(content: (padding: 0.2em))
+        tree.tree(
+            (
+                [7],
+                (
+                    [5],
+                    [1],
+                    [6],
+                ),
+                ([12], ([10], [8], [11]), ([34], [28], [])),
+            ),
+        )
+    })
+]
+
+== Implémentation OCaml
+
+```ocaml
+(*le type ocaml d'un arbre binaire de recherche sur les entiers*)
+type abr =
+    |Vide
+    |N of abr * int * abr;;
+
+
+(*recherche d'une valeur dans un arbre binaire de recherche*)
+let rec recherche (a: abr) (x: int): bool = match a with
+    |Vide -> false
+    |N (ag, y, ad) -> if x = y then true
+        else if x < y then recherche ag x
+        else recherche ad x;;
+
+(*ajout d'une valeur dans un abr*)
+let rec ajout (a: abr) (x: int): abr = match a with
+    |Vide -> N (Vide, x, Vide)
+    |N (ag, y, ad) -> if x = y then a
+        else if x < y then N (ajout ag x, y, ad)
+        else N (ag, y, ajout ad x);;
+```
+
+On peut également construire un arbre binaire de recherche à partir d'une liste ne réalisant des ajouts successifs à partir de l'arbre vide.
+
+== Complexité des opérations
+
+Les opérations d'ajout et de suppression s'appellent récursivement une fois pour chaque niveau de l'arbre. Si on note $h$ la hauteur de l'arbre, elles sont donc en $O(h)$.
+
+#underline[*Cas 1 : l'arbre est complet*]
+
+Supposons qu'on ai un arbre A, tel que toutes les feuilles soient à la même profondeur. On dit qu'il est complet. Exprimer la hauteur $h$ de l'arbre en fonction de $t$ sa taille.
+
+$h = log_2(n + 1) - 1$
+
+#underline[Preuve par récurrence]
+- (h = 0) alors, n = 1, et la relation est vérifiée
+- On suppose la propriété vrai pour les arbres complets de hauteur plus petite que h > 0. Soit A un arbre de hauteur h. \
+    Soit $A_g$ et $A_d$ ses sous arbres. Ils sont complets, et de hauteur $h-1$
+
+    On a donc :
+    $
+                     n & = 1 + n_g + n_d        &                               \
+          log_2(n + 1) & = log_2(n_g + n_d + 2) &               "or," n_g = n_d \
+                       & = log_2(2*(n_g + 1))   &                               \
+                       & = log_2(n_g + 1) + 1   &                               \
+                       & = h - 1 + 1 + 1        & "(on applique la récurrence)" \
+        log_2(n+1) - 1 & = h                    &
+    $
+    Ce qui conclut la récurrence.
+
+Dans ce cas, les opérations sur l'arbre binaire de recherche se font en $O(log(n))$ où $n$ est la taille de l'arbre. C'est efficace !
+
+
+#underline[*Cas 2 : l'arbre est une branche*]
+
+Reprenons l'exemple 21, mais en insérant simplement les entiers dans l'ordre croissant.
+
+#canvas({
+    import draw: *
+    let encircle(i) = {
+        std.box(baseline: 2pt, std.circle(stroke: .5pt, radius: .5em)[#move(dx: -0.36em, dy: -0.5em, $#i$)])
+    }
+
+    set-style(content: (padding: 0.2em))
+    tree.tree(
+        (
+            [1],
+            [],
+            ([5], [], ([6], [], ([7], [], ([8], [], [...])))),
+        ),
+    )
+})
+
+Dans ce cas, la hauteur de l'arbre est égale à sa taille. On a des opérations en temps linéaire, pas mieux qu'une simple liste !
+
+#underline[*Cas 3 : et en général ?*]
+
+En pratique, avec des éléments aléatoires, on va souvent se retrouver dans un cas proche du 1. Mais pour le garantir, il existe des algorithmes avancés, qui permettent de toujours avoir un arbre équilibré, et d'avoir des complexité en $O(log(n))$ quoi qu'il arrive.

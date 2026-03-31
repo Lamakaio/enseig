@@ -15,20 +15,71 @@
     *Correction DS3*
 ])
 
-
+Ce document contient des éléments de correction pour le sujet 2025 des mines. Cela reste assez succin, donc n'hésitez pas à me poser des questions par mail si besoin.
 
 =
+==
+```py
+def degreMax(d):
+    m = 0
+    for s, l in d.items():
+        if len(l) > m:
+            m = len(l)
+    return m
+```
+
+==
+
+```py
+
+def graphInv(d):
+    dinv = {v: [] for v, _ in d.items()}
+    for s1, l in d.items():
+        for s2 in l:
+            dinv[s2].append(s1)
+    return dinv
+```
+
+==
+
+```py
+def colorationValide(d, L):
+    for s1, l in d.items():
+        for s2 in l:
+            if L[s1] == L[s2]:
+                return False
+    return True
+```
+
+==
+O(N+M)
+
+==
+```sql
+SELECT nomfilm, duree FROM films JOIN locations
+ON films.codefilm = locations.codefilm ORDER BY duree DESC LIMIT 1
+```
+
+==
+```sql
+SELECT F.codefilm, nomfilm, AVG(duree) as duree_moyenne FROM films as F JOIN locations as L
+ON F.codefilm = L.codefilm GROUP BY codefilm HAVING duree_moyenne < 2 ORDER BY duree_moyenne DESC
+```
+=
+==
 ```sql
 SELECT idC, val / taille as rentabilite FROM Conteneurs WHERE
 portDepC = "Marseille" AND portDestC = "Barcelone" AND dateDisp < 2025-01-01
 ORDER BY rentabilite DESC;
 ```
 
-=
+==
+
+Il n'y avais pas besoin de `JOIN`, tout était dans `Conteneurs`
 ```sql
 SELECT idN, COUNT() as nbC FROM Conteneurs GROUP BY idN WHERE idN != 0;
 ```
-=
+==
 
 ```python
 def profit(obj, S):
@@ -39,7 +90,7 @@ def profit(obj, S):
 
 ```
 
-=
+==
 
 ```python
 def contrainte(obj, S, b):
@@ -49,22 +100,22 @@ def contrainte(obj, S, b):
     return capacite <= b
 
 ```
-=
+==
 ```
 1 0 1
 1 1 0
 ```
 
-=
-$2^n$ feuilles, donc $O(n 2^n)$
+==
+$2^n$ feuilles, donc $O(n 2^n)$. Attention, le `n` ne disparait pas !
 
-=
+==
 
 ```
 1 1 0
 ```
 
-=
+==
 ```
 Lqi.append(obj[i][1] / obj[i][0])
 ...
@@ -74,31 +125,33 @@ Li[j] = i
 ```
 
 
-=
+==
 
 $O(n)$ $(O(n^2))$
 
-=
+==
 ```python
 while j < len(obj):
     if obj[Li[j]][0] <= b:
         S[Li[j]] = 1
-        b = b - obj[Li[j]][0]
+        b = b - objx    [Li[j]][0]
     j += 1
 ```
 
-=
-=
-=
+==
+La solution optimale est 0 1 1, le glouton n'est donc pas optimal. On pouvait commenter sur la différence de poids choisie, qui était assez faible.
+==
+==
 $O(b n)$
-=
-=
+==
+La complexité n'était pas modifiée.
+==
 ```python
 def est_feuille(a):
     return a['g'] == {}
 ```
 
-=
+==
 
 ```python
 
@@ -111,7 +164,7 @@ def possible(obj, Sk, b):
 
 ```
 
-=
+==
 
 ```python
 else:
@@ -121,14 +174,14 @@ else:
         KPpse(arbre['d'], obj, b)
 ```
 
-=
+==
 
 ```python
 for i in range(len(T)):
     T[i] *= rho
 ```
 
-=
+==
 
 ```python
 kmax = 0
@@ -140,7 +193,7 @@ for i in range(len(S)):
         Pmax = P
 ```
 
-=
+==
 
 ```python
 for i in range(len(T)):
@@ -150,7 +203,7 @@ for i in range(len(T)):
         T[i] = min(T[i], Tmax)
 ```
 
-=
+==
 ```python
 o0 = randint(0, n-1)
 ...
@@ -158,7 +211,7 @@ S[k][o0] = 1
 b2 -= obj[o0][0]
 ```
 
-=
+==
 ```python
 prob = {}
 ...
@@ -169,7 +222,7 @@ oi = candidats[i]
 prob[oi] /= s
 ```
 
-=
+==
 ```python
 prob = construitProb(obj, candidats, b, T)
 c = choixCandidats(candidats, prob)
@@ -181,3 +234,8 @@ for cc in candidats:
         candidats_2.append(cc)
 candidats = candidats_2
 ```
+
+==
+Il n'y a pas une seule bonne réponse à ce genre de questions, mais il fallait remarquer que l'algorithme de progdyn allait vite et était optimal. Les algorithmes d'approximation peuvent aller encore plus vite si on accepte un résultat légèrement sous-optimal (en particulier la colonie de fourmis, qui a l'avantage d'être adaptable)
+
+

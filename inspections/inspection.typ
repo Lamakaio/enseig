@@ -14,13 +14,16 @@
     *Contexte et documents en vue de l'inspection du 09/04/2026*
 ])
 
+
+= Documents liés au cours inspecté
+
 Le cours du jeudi 9 avril à 13h est un cours d'informatique tronc commun de MPSI. Je vois cette classe seulement 1h toutes les deux semaines.
 
 Ils ont également 2h de TP une semaine sur deux, en groupes (la classe est coupée en 3). Les TPs sont encadrés par M. Marino, M. Caldara et M. Guillaume, des collègues de mathématiques et physique. Nous nous partageons la conception des sujets de TP : j'en adapte ou écris des nouveaux dans un peu plus de la moitié des cas, et le reste du temps mes collègues réutilisent des sujets qu'ils ont donné les années passées.
 
 Nous travaillons actuellement sur les graphes. Un premier cours a eu lieu le 26 mars, dans lequel j'ai donné quelques définitions sur les graphes (non pondérés pour l'instant), et où j'ai abordé l'implémentation sous forme de liste / dictionnaire d'adjacence.
 
-Vous pouvez retrouver
+Au niveau des documents de cours, je tape des notes assez détaillées que j'utilise pour faire le cours au tableau. Je rend disponible aux étudiants ces notes en fin de chapitre. Vous pouvez retrouvez ces notes pour le cours sur les graphes #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/notes_graphes.pdf")[#text(fill: blue)[ici]].
 
 
 Au 9 avril, toute la classe aura fait le premier TP sur les graphes, que vous pouvez retrouver, avec sa correction, ici :
@@ -35,3 +38,12 @@ Au 9 avril, toute la classe aura fait le premier TP sur les graphes, que vous po
 )[#text(fill: blue)[TP sur les graphes (sur navigateur)]]
 
 Les TPs sont partagés aux élèves avec l'application Capytale de l'ENT, mais, par facilité de partage, je vous les ai hébergé séparément.
+
+= Autres documents
+
+Voici également :
+- Une fiche récapitulative du cours sur les automates, à destination des MP option info : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/fiche_automates.pdf")[#text(fill: blue)[pdf]]
+- Au niveau des exercices, je donne très souvent des sujets de concours que je sélectionne. Voici un exemple donné récemment en MP option info, sur la logique et en révision des automates : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/Extrait_logique_automates.pdf")[#text(fill: blue)[pdf]]
+- Toujours en option informatique, je donne des TPs de OCaml sous forme de notebook également : #link("https://notebook.basthon.fr/?kernel=ocaml&from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP2%20-%20Arbres.ipynb")[#text(fill: blue)[lien]]
+
+

@@ -12,7 +12,7 @@
 
 #align(center, text(17pt)[
     *ITC MPSI* \
-    *Notes de cours graphes*
+    *Notes de cours sur les graphes*
 ])
 
 Les _graphes_ sont une manière, en informatique, de représenter des données avec des liens.
@@ -34,7 +34,7 @@ Les _graphes_ sont une manière, en informatique, de représenter des données a
 #def[Graphes][
     Un _graphe_ est un couple $G = (S, A)$, où $S$ est un ensemble fini de _sommets_ (ou _noeuds_) et $A in S times S$ est l'ensemble des _arrêtes_. Chaque arrête relie deux sommets _distincts_.
 
-    On dit que le graphe est _orienté_ si les arrêtes ont un sens ("que ce sont des fleches"). On les appelles alors souvent _arcs_.
+    On dit que le graphe est _orienté_ si les arrêtes ont un sens ("que ce sont des flèches"). On les appelles alors souvent _arcs_.
 ]
 
 #def[Voisin][
@@ -55,6 +55,8 @@ Les _graphes_ sont une manière, en informatique, de représenter des données a
       I -> G;
       L
     }```
+
+    Ici, les voisins de `H` sont `J` et `I`.
 ]
 
 #def[Degrés d'un sommet][
@@ -69,10 +71,12 @@ Les _graphes_ sont une manière, en informatique, de représenter des données a
 ]
 
 
-== Chemins, cycles et connexité
+= Chemins, cycles et connexité
 
 #def[Chemin][
-    Un _chemin_ dans un graphe est une suite finie d'arrêtes consécutives $a_1, ..., a_n$, telles que si $a_i = (s, s')$, alors $a_(i+1) = (s', s'')$.
+    Un _chemin_ dans un graphe est une suite finie d'arrêtes consécutives $(s_1, s_2), (s_2, s_3), ..., (s_(n-1), s_n)$.
+
+    On parle de chemin _élémentaire_ lorsque les sommets $s_1, ..., s_n$ sont distincts, et de chemin _simple_ lorsque les arrêtes sont distinctes (ces mots de vocabulaire ne sont pas au exigibles).
 ]
 
 #ex[
@@ -90,7 +94,7 @@ Les _graphes_ sont une manière, en informatique, de représenter des données a
 ]
 
 #def[Cycle][
-    Un _cycle_ est un chemin dont le premier et le dernier sommet sont les mêmes.
+    Un _cycle_ est un chemin simple dont le premier et le dernier sommet sont les mêmes.
 ]
 
 #ex[
@@ -130,46 +134,6 @@ Les _graphes_ sont une manière, en informatique, de représenter des données a
     La notion de connexité est hors-programme pour les graphes orientés. Pour donner une idée, on parlera de graphe _fortement connexe_ si il existe un chemin de $s_1$ à $s_2$ et de $s_2$ à $s_1$.
 ]
 
-
-== Applications
-
-Les graphes se retrouvent un peu partout en informatique :
-- Pour tout ce qui est carte. Une carte de transports en commun est un graphe par exemple.
-- Internet, à deux niveaux :
-    - l'architecture physique d'internet est un grand graphe, avec des serveurs, des routeurs et des terminaux reliés par de la fibre optique, des ondes, etc
-    - le web : les pages webs, et les liens entre elles, sont bien représentées par des graphes.
-
-Dans tous ces exemples, des algorithmes sur les graphes (on en étudiera quelques uns) sont utilisés. Par exemple, la recherche d'itinéraire de votre appli de carte préférée, le programme qui décide comment acheminer votre message whatsapp, ou encore les moteurs de recherche (Google).
-
-
-Dans beaucoup de ces applications, toutes les arrêtes ne sont pas égales. Par exemple, un trajet en train peut prendre deux fois plus longtemps qu'un autre.
-
-== Graphes pondérés
-
-Pour représenter ces différences, on va introduire la _pondération_.
-
-#def[Graphe pondéré][
-    Un graphe pondéré est un graphe $G = (S, A)$, orienté ou non, auquel on associe une fonction de pondération $omega: A -> E$ qui associe un _poids_ (ou étiquette) à chaque arrête.
-
-    $E$ est ici un ensemble quelconque, mais en pratique, ce sera souvent $NN$ ou $RR^+$.
-]arrête
-
-#ex[
-    ```dot-render
-    graph {
-      A -- B [label=3];
-      A -- C [label=1];
-      B -- C [label=8];
-      B -- D [label=0];
-      D -- E [label=5];
-      A -- E [label=1];
-    }```
-]
-
-#rq[
-    On peut alors parler du poids d'un chemin, d'un cycle, ...
-]
-
 = Représentation informatique
 
 Il y a plusieurs manières de représenter les graphes en Python. On va en voir deux principales.
@@ -195,23 +159,17 @@ g = {
 }
 ```
 
-Pour les graphes pondérés, on peut stocker les poids directement dans la liste d'adjacence :
 
-```python
-g = {
-    'A': [('B', 3), ('C', 1), ('E', 1)],
-    'B': [('A', 3), ('C', 8), ('D', 0)],
-    'C': [('A', 1), ('B', 8)],
-    'D': [('B', 0), ('E', 5)],
-    'E': [('A', 1), ('D', 5)]
-}
-```
 
 Exercice : faire la même chose avec l'exemple 2.
 
 
 #rq[
     Dans le cas où les sommets sont numérotés de 0 à n-1, on peut utiliser une liste à la place d'un dictionnaire.
+]
+
+#rq[
+    La représentation par liste d'adjacence est très adaptée lorsqu'on veut souvent accéder aux voisins d'un sommet particulier, par exemple lors d'une exploration du graphe.
 ]
 
 == Matrice d'adjacence
@@ -230,12 +188,88 @@ g = [[0, 1, 1, 0, 1],
      [1, 0, 0, 1, 0]]
 ```
 
-Pour les graphes pondérés, on peut mettre le poids de l'arrête à la place de "1", et utiliser une valeur qui n'est pas dans les poids à la place de "0" (par exemple "-1").
+#rq[
+    La matrice d'adjacence d'un graphe non-orienté est symétrique.
+]
 
-```python
-g = [[-1, 3, 1,-1, 1],
-     [ 3,-1, 8, 0,-1],
-     [ 1, 8,-1,-1,-1],
-     [-1, 0,-1,-1, 5],
-     [ 1,-1,-1, 5,-1]]
-```
+Exercice : faire la même chose avec l'exemple 2.
+
+#rq[
+    La représentation par matrice d'adjacence est adaptée lorsqu'on a souvent besoin de tester si deux sommets sont adjacents.
+]
+
+= Pondération
+
+== Applications
+
+Les graphes se retrouvent un peu partout en informatique :
+- Pour tout ce qui est carte. Une carte de transports en commun est un graphe par exemple.
+- Internet, à deux niveaux :
+    - l'architecture physique d'internet est un grand graphe, avec des serveurs, des routeurs et des terminaux reliés par de la fibre optique, des ondes, etc
+    - le web : les pages webs, et les liens entre elles, sont bien représentées par des graphes.
+
+Dans tous ces exemples, des algorithmes sur les graphes (on en étudiera quelques uns) sont utilisés. Par exemple, la recherche d'itinéraire de votre appli de carte préférée, le programme qui décide comment acheminer votre message whatsapp, ou encore les moteurs de recherche (Google).
+
+
+Dans beaucoup de ces applications, toutes les arrêtes ne sont pas égales. Par exemple, un trajet en train peut prendre deux fois plus longtemps qu'un autre.
+
+
+== Graphes pondérés
+
+Pour représenter ces différences, on va introduire la _pondération_.
+
+#def[Graphe pondéré][
+    Un graphe pondéré est un graphe $G = (S, A)$, orienté ou non, auquel on associe une fonction de pondération $omega: A -> E$ qui associe un _poids_ (ou étiquette) à chaque arrête.
+
+    $E$ est ici un ensemble quelconque, mais en pratique, ce sera souvent $NN$ ou $RR^+$.
+]
+
+#ex[
+    ```dot-render
+    graph {
+      A -- B [label=3];
+      A -- C [label=1];
+      B -- C [label=8];
+      B -- D [label=0];
+      D -- E [label=5];
+      A -- E [label=1];
+    }```
+]
+
+#rq[
+    On peut alors parler du poids d'un chemin, d'un cycle, ...
+]
+
+
+
+== Implémentation des graphes pondérés
+
+=== Liste d'adjacence
+On peut stocker les poids directement dans la liste d'adjacence, en mettant des couples (voisin, poids) au lieu des simples voisins :
+
+#ex[
+    ```python
+    g = {
+        'A': [('B', 3), ('C', 1), ('E', 1)],
+        'B': [('A', 3), ('C', 8), ('D', 0)],
+        'C': [('A', 1), ('B', 8)],
+        'D': [('B', 0), ('E', 5)],
+        'E': [('A', 1), ('D', 5)]
+    }
+    ```
+]
+
+
+=== Matrice d'adjacence
+On peut mettre le poids de l'arrête à la place de "1", et utiliser une valeur qui n'est pas dans les poids à la place de "0" (par exemple $+ infinity$, où, si ce n'est pas une option, $-1$).
+
+#ex[
+    ```python
+    g = [[-1, 3, 1,-1, 1],
+         [ 3,-1, 8, 0,-1],
+         [ 1, 8,-1,-1,-1],
+         [-1, 0,-1,-1, 5],
+         [ 1,-1,-1, 5,-1]]
+    ```
+]
+

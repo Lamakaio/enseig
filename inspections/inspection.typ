@@ -42,8 +42,13 @@ Les TPs sont partagés aux élèves avec l'application Capytale de l'ENT, mais, 
 = Autres documents
 
 Voici également :
-- Une fiche récapitulative du cours sur les automates, à destination des MP option info : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/fiche_automates.pdf")[#text(fill: blue)[pdf]]
-- Au niveau des exercices, je donne très souvent des sujets de concours que je sélectionne. Voici un exemple donné récemment en MP option info, sur la logique et en révision des automates : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/Extrait_logique_automates.pdf")[#text(fill: blue)[pdf]]
-- Toujours en option informatique, je donne des TPs de OCaml sous forme de notebook également : #link("https://notebook.basthon.fr/?kernel=ocaml&from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP2%20-%20Arbres.ipynb")[#text(fill: blue)[lien]]
+- Une fiche récapitulative du cours sur les automates, à destination des MP option informatique : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/fiche_automates.pdf")[#text(fill: blue)[pdf]]
+- Au niveau des exercices, je donne très souvent des sujets de concours que je sélectionne. Voici un exemple donné récemment en MP option informatique, sur la logique et en révision des automates : #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/Extrait_logique_automates.pdf")[#text(fill: blue)[pdf]]
+- Toujours en option informatique, je donne des TPs de OCaml sous forme de notebook également. Par exemple voici un TP de MPSI option informatique centré sur les arbres binaires, avec un exemple d'étude de l'arbre phylogénétique du vivant : #link("https://notebook.basthon.fr/?kernel=ocaml&from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP2%20-%20Arbres.ipynb")[#text(fill: blue)[lien]]
+- Un exemple d'un TP d'informatique tronc commun plus ancien, visant à travailler les boucles imbriquées, autour du thème de l'étude du jeu de la vie de Conway, avec des animations ludiques : #link("https://notebook.basthon.fr/?kernel=python3-legacy&from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/Le%20jeu%20de%20la%20vie%20-%20listes%20et%20boucles%20imbrique%CC%81es.ipynb&module=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/tp.py
+")[#text(fill: blue)[tp]] et sa #link("https://notebook.basthon.fr/?kernel=python3-legacy&from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/Le%20jeu%20de%20la%20vie%20-%20listes%20et%20boucles%20imbrique%CC%81es%20(corrige%CC%81).ipynb&module=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/tp.py")[#text(fill: blue)[correction]].
+
+
+
 
 

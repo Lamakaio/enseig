@@ -227,13 +227,16 @@ Pour représenter ces différences, on va introduire la _pondération_.
 #ex[
     ```dot-render
     graph {
-      A -- B [label=3];
-      A -- C [label=1];
-      B -- C [label=8];
-      B -- D [label=0];
-      D -- E [label=5];
-      A -- E [label=1];
+      Caen -- Paris [label=2];
+      Caen -- Rennes [label=3.5];
+      Rennes -- Paris [label=2];
+      Paris -- Tours [label=1.3];
+      Caen -- Tours [label=3];
+      Tours -- Lyon [label=3];
+      Paris -- Lyon [label=2];
     }```
+
+    Exemple de quelques villes et le temps de trajet en train entre elles. Quels sont les chemins possibles entre Caen et Lyon ? Quel est leur poids ?
 ]
 
 #rq[
@@ -250,11 +253,11 @@ On peut stocker les poids directement dans la liste d'adjacence, en mettant des 
 #ex[
     ```python
     g = {
-        'A': [('B', 3), ('C', 1), ('E', 1)],
-        'B': [('A', 3), ('C', 8), ('D', 0)],
-        'C': [('A', 1), ('B', 8)],
-        'D': [('B', 0), ('E', 5)],
-        'E': [('A', 1), ('D', 5)]
+        'Caen': [('Rennes', 3.5), ('Tours', 3.0), ('Paris', 2.0)],
+        'Rennes': [('Caen', 3.5), ('Paris', 2.0)],
+        'Paris': [('Caen', 2.0), ('Rennes', 2.0), ('Tours', 1.3), ('Lyon', 2.0)],
+        'Tours': [('Caen', 3.0), ('Paris', 1.3), ('Lyon', 3.0)],
+        'Lyon': [('Paris', 2.0), ('Tours', 3.0)]
     }
     ```
 ]
@@ -265,11 +268,11 @@ On peut mettre le poids de l'arrête à la place de "1", et utiliser une valeur 
 
 #ex[
     ```python
-    g = [[-1, 3, 1,-1, 1],
-         [ 3,-1, 8, 0,-1],
-         [ 1, 8,-1,-1,-1],
-         [-1, 0,-1,-1, 5],
-         [ 1,-1,-1, 5,-1]]
+    g = [[ 0.0, 3.5, 2.0, 3.0,-1.0],
+         [ 3.5, 0.0, 2.0,-1.0,-1.0],
+         [ 2.0, 2.0, 0.0, 1.3, 2.0],
+         [ 3.0,-1.0, 1.3, 0.0, 3.0],
+         [-1.0,-1.0, 2.0, 3.0, 0.0]]
     ```
 ]
 

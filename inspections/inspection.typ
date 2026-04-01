@@ -15,27 +15,30 @@
 ])
 
 
-= Documents liés au cours inspecté
+= Documents (et contexte) liés au cours inspecté
 
 Le cours du jeudi 9 avril à 13h est un cours d'informatique tronc commun de MPSI. Je vois cette classe seulement 1h toutes les deux semaines.
 
-Ils ont également 2h de TP une semaine sur deux, en groupes (la classe est coupée en 3). Les TPs sont encadrés par M. Marino, M. Caldara et M. Guillaume, des collègues de mathématiques et physique. Nous nous partageons la conception des sujets de TP : j'en adapte ou écris des nouveaux dans un peu plus de la moitié des cas, et le reste du temps mes collègues réutilisent des sujets qu'ils ont donné les années passées.
+Ils ont également 2h de TP une semaine sur deux, en groupes (la classe est coupée en 3, car ils sont 48). Les TPs sont encadrés par M. Marino, M. Caldara et M. Guillaume, des collègues de mathématiques et physique. Nous nous partageons la conception des sujets de TP : j'en adapte ou écris des nouveaux dans un peu plus de la moitié des cas, et le reste du temps mes collègues réutilisent des sujets qu'ils ont donné les années passées.
 
-Nous travaillons actuellement sur les graphes. Un premier cours a eu lieu le 26 mars, dans lequel j'ai donné quelques définitions sur les graphes (non pondérés pour l'instant), et où j'ai abordé l'implémentation sous forme de liste / dictionnaire d'adjacence.
+Nous travaillons actuellement sur les graphes. Un premier cours a eu lieu le 26 mars, dans lequel j'ai donné quelques définitions sur les graphes (non pondérés pour l'instant), et où j'ai abordé l'implémentation sous forme de liste / dictionnaire d'adjacence. Le 9 avril, j'ai prévu de finir la partie sur la représentation informatique des graphes, puis de traiter les graphes pondérés, via un exemple.
 
-Au niveau des documents de cours, je tape des notes assez détaillées que j'utilise pour faire le cours au tableau. Je rend disponible aux étudiants ces notes en fin de chapitre. Vous pouvez retrouvez ces notes pour le cours sur les graphes #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/notes_graphes.pdf")[#text(fill: blue)[ici]].
+Ensuite, je prévois un cours sur les files et piles, suivi d'un cours sur les parcours de graphe et enfin un cours sur la recherche du plus court chemin.
+
+Au niveau des documents de cours, je tape des notes assez détaillées que j'utilise pour faire le cours au tableau. Je rend disponible aux étudiants ces notes en fin de chapitre. Vous pouvez retrouvez ces notes pour #link("https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/notes_graphes.pdf")[#text(fill: blue)[le cours sur les graphes ici]].
 
 
 Au 9 avril, toute la classe aura fait le premier TP sur les graphes, que vous pouvez retrouver, avec sa correction, ici :
 
 #link(
+    "https://notebook.basthon.fr/?from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP%20graphe%20MPSI.ipynb&module=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/lib.py&aux=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TrainNormandie.db",
+)[#text(fill: blue)[TP sur les graphes (sur navigateur)]]
+
+#link(
     "https://notebook.basthon.fr/?from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP%20graphe%20MPSI%20corrige%CC%81.ipynb&module=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/lib.py&aux=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TrainNormandie.db",
 )[#text(fill: blue)[Correction du TP sur les graphes (sur navigateur)]]
 
-
-#link(
-    "https://notebook.basthon.fr/?from=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TP%20graphe%20MPSI.ipynb&module=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/lib.py&aux=https://raw.githubusercontent.com/Lamakaio/enseig/main/inspections/TrainNormandie.db",
-)[#text(fill: blue)[TP sur les graphes (sur navigateur)]]
+À noter qu'il s'agit d'une correction à destination des professeurs, qui ensuite interviennent au tableau pour donner une correction plus détaillée.
 
 Les TPs sont partagés aux élèves avec l'application Capytale de l'ENT, mais, par facilité de partage, je vous les ai hébergé séparément.
 

@@ -1,0 +1,9 @@
+Codes TP capytale
+
+TP intro OCaml dea5-9251985
+
+TP arbres 53d0-9628886
+
+TP trie b7da-9946582 correction b216-9914200
+
+TP graphes 035f-10303113

@@ -63,10 +63,6 @@ Pour deux formules $f_1, f_2$ définie l'opérateur "nand" $arrow.b$ par la tabl
 "nand" est ce qu'on appelle un opérateur universel. Il en existe d'autres : par exemple, le "nor".
 
 
-= Forme normale
-
-Montrer que toute formule est équivalente à une formule de hauteur 3.
-
 = Lemme de substitution
 
 Soit $f$ une formule. Pour $x in X$ une variable, et $g$ une autre formule, on note $f[x -> g]$ la formule $f$ dans laquelle on a substitué $x$ par $g$.

@@ -125,3 +125,32 @@ Tout ça pour arriver au point intéressant : oui, on peut faire des boucles en 
 )[lien notebook]
 
 
+== Fonctions anonymes et d'ordre supérieur
+
+On peut faire ce qu'on appelle des _fonction anonymes_ en ocaml, c'est à dire des fonctions qui n'ont pas de nom.
+Par exemple :
+```ocaml
+
+fun x y -> x + y
+
+```
+
+L'avantage principale est lorsque'on a besoin de fonctions très simples pour les placer dans des _fonctions d'ordre supérieur_, c'est à dire des fonctions qui prennent en argument des fonctions.
+
+Celles que vous pouvez utiliser sont principalement les fonctions `init`, `map` et `iter` sur les listes et array.
+
+Par exemple :
+
+```ocaml
+List.init len f (* renvoie [f 0; f 1; f 2; ...; f (len - 1)]*)
+let l = List.init 10 (fun i -> 2 * i) (*renvoie [0; 2; 4; ...; 18]*)
+
+
+List.iter (fun i -> print_int i) l (*print la liste l*)
+
+List.map (fun i -> Array.make i 0) l (*renvoie une liste contenant des tableaux de taille 0, 2, 4, ..., 18, en suivant la liste l*)
+```
+
+Quasiment toutes les collections OCaml ont ces fonctions quasiment à l'identique !
+
+

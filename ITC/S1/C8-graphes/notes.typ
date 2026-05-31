@@ -486,7 +486,7 @@ def parcours_profondeur(G, d, deja_vu):
 
 from collections import deque
 
-def parcours_profondeur(G, d):
+def parcours_largeur(G, d):
     file = deque()
     file.appendleft(d)
     deja_vu = {d: True}

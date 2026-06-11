@@ -123,3 +123,51 @@ Dans chaque appel à parcours_tab i , on appelle une fois parcours_list pour cha
 Au total, on a donc 2 appels à parcours_list par arrête, et un appel à parcours_tab par sommet.
 
 Soit un $O(|S| + |A|)$
+
+
+=
+
+```ocaml
+let rec min_arete l = match l with
+    |[(w, a, b)] -> (w, a, b)
+    |(w, a, b)::q = let (wmin, amin, bmin) = min_arete q in
+        if w < wmin then (w, a, b) else (wmin, amin, bmin)
+;;
+```
+
+=
+
+Elle explore le graphe en partant d'un sommet, et note tous les sommets rencontrés à `k`.
+
+=
+
+```ocaml
+let composantes_connexes g =
+    let n = Array.length g in
+    let cc = Array.make n (-1) in
+    let k = ref 0 in
+
+    for i = 0 to n - 1 do
+        if cc.(i) < 0 then begin
+            explorer g cc (!k) i;
+            incr k
+        end
+    done
+
+    cc;;
+```
+
+=
+
+```ocaml
+
+let est_connexe g =
+    let cc = composantes_connexes g in
+    let connexe = ref true in
+    let n = Array.length g in
+    for i = 0 to n-1 do
+        connexe := (!connexe) && cc.(i) = 0
+    done;
+    !connexe
+
+```

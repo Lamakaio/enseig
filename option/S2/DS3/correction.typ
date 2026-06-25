@@ -114,7 +114,7 @@ let toutes_les_aretes g =
             |(j, w)::q when i < j -> (w, i, j)::(parcours_list q)
             |(j, w)::q -> parcours_list q
         in
-        parcours_list g.(i)
+        (parcours_list g.(i))
     in
     parcours_tab 0;;
 ```

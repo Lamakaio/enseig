@@ -39,7 +39,7 @@
 
   #show: later
 
-  On écrit toujours les noms de variables en _`snake_case`_ :
+  La convention en Python est de chosir les noms de ses variables en _`snake_case`_ :
   - tout en minuscule (sauf les acronymes)
   - un underscore `_` entre les mots
   - soit tout en français _sans accent_, soit tout en anglais, pas de mélange
@@ -66,7 +66,7 @@
 #slide[
   = Les commentaires
 
-  Les commentaires n'ont aucun impact sur le programme : il sert simplement à comprendre le code plus simplement
+  Les commentaires n'ont aucun impact sur le programme : il servent simplement à comprendre le code plus simplement
 
   ```Python
   # Les commentaires commencent par "#"
@@ -271,7 +271,7 @@
 ]
 
 
-#new-section[Modules et graphes]
+#new-section[Modules et graphiques]
 
 #slide[
   = Le module numpy : import

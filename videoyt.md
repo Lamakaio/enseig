@@ -18,6 +18,9 @@ Recherche dichotomique
 
 Recursion 
 - https://www.youtube.com/watch?v=ngCos392W4w
+
+
+
 # Option
 
 Vidéo assez poussée sur SAT et ses implications 

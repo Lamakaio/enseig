@@ -17,7 +17,7 @@
   #set text(size: .8em, weight: "light")
   Ambre Le Berre
 
-  2025/2026
+  2026/2027
 ]
 
 #slide[
@@ -39,7 +39,7 @@
 
   #show: later
 
-  La convention en Python est de chosir les noms de ses variables en _`snake_case`_ :
+  La convention en Python est de choisir les noms de ses variables en _`snake_case`_ :
   - tout en minuscule (sauf les acronymes)
   - un underscore `_` entre les mots
   - soit tout en français _sans accent_, soit tout en anglais, pas de mélange
@@ -146,6 +146,7 @@
   ```Python
   def tape(personne):
     #code pour taper une personne
+    points_de_degats = 1
     return point_de_degats
 
   vie = tape("Mon voisin de table")
@@ -191,7 +192,7 @@
   Le type `list` de `Python` sert justement à représenter de tels objets.
 
   ```Python
-  fruits = ["Pomme", "Poire", "Fraise", "Tomate"]
+  fruits = ["Pomme", "Poire", "Fraise", "Tomate", "Abricot"]
   ```
 ]
 
@@ -212,12 +213,16 @@
   = Comment on s'en sert ? Les `slice`
 
   On peut aussi directement récupérer une _sous-liste_, avec ce qu'on appelle le _slicing_.
+    ```Python
+trois_premiers = fruits[:3]
+trois_derniers = fruits[-3:]
+milieu = fruits[2:4]
+  ```
+  #show: later
 
   ```Python
-  trois_premiers = fruits[:3]
-  trois_derniers = fruits[-3:]
-  milieu = fruits[2:4]
   un_sur_deux = fruits[::2]
+  a_lenvers = fruits[::-1]
   ```
 
   En fait, le slicing s'écrit `liste[start:end:step]`, avec exactment les mêmes arguments que la fonction `range` !

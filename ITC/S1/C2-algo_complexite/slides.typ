@@ -11,7 +11,7 @@
 
 
   #text(size: 1.3em)[
-    *Algorithme et complexité*
+    *Fonctions classiques, et complexité*
   ]
 
   #metropolis.divider
@@ -21,7 +21,7 @@
 
   MPSI
 
-  2025/2026
+  2026/2027
 ]
 
 #slide[
@@ -212,3 +212,24 @@
 
   On a `len(L)` itéations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
 ]
+
+#slide[
+  = Autre exemple
+
+  ```python
+  def indice_max(L):
+      """Cherche l'élément d'indice maximal dans L"""
+      i_max = 0
+      val_max = L[0]
+      for i in range(1, len(L)):
+        if L[i] > val_max: 
+          val_max = L[i]
+          i_max = i
+      return i_max
+
+  ```
+  #show: later
+
+  On a `len(L)` itéations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
+]
+

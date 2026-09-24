@@ -30,17 +30,18 @@ La base de données possède la structure suivante :
 
 Les requêtes demandées dans cette partie sont à écrire en langage SQL.
 
-6. Écrire une requête permettant d'obtenir le nom de tous les matériaux qui ont une température de Curie strictement inférieure à 500 kelvins.
+1. Écrire une requête permettant d'obtenir le nom de tous les matériaux qui ont une température de Curie strictement superieure à 500 kelvins.
 
-Un client potentiel souhaite acheter 4,5 kilogrammes de nickel et sélectionner le fournisseur le moins cher.
+2. Écrire une requête permettant d'obtenir la température de curie du plomb.
 
+3. Écrire une requête permettant d'obtenir la liste des materiaux vendus par le fournisseur "Worldwide Materials".
 
-7. Écrire une requête permettant d'obtenir l'identifiant du nickel.
+4. Écrire une requête permettant d'obtenir le nombre de fournisseurs de chaque materiaux. On se contentera d'identifier les materiaux par leur `id`, pas besoin de leur nom. 
 
-Par la suite, on pourra utiliser cet identifiant, `8713`, dans les requêtes.
+Un client potentiel souhaite acheter 7,5 kilogrammes de plomb et sélectionner le fournisseur le moins cher.
 
-8. Écrire une requête permettant d'obtenir les noms de tous les fournisseurs proposant du nickel et le prix proposé par chacun pour 4,5 kilogrammes de nickel.
+5. Écrire une requête permettant d'obtenir les noms de tous les fournisseurs proposant du plomb et le prix proposé par chacun pour 7,5 kilogrammes de plomb.
 
-9. Modifier ou compléter la requête précédente afin d'obtenir le nom du fournisseur de nickel le moins cher ainsi que le prix à payer chez ce fournisseur pour ces 4,5 kilogrammes de nickel.
+6. Modifier ou compléter la requête précédente afin d'obtenir le nom du fournisseur de plomb le moins cher ainsi que le prix à payer chez ce fournisseur pour ces 7,5 kilogrammes de plomb.
 
-10. Écrire une requête permettant d'obtenir le nom de tous les matériaux et le prix moyen pour un kilogramme de chacun de ces matériaux (la moyenne étant calculée pour tous les fournisseurs proposant ce matériau), en se limitant aux prix moyens strictement inférieurs à 50 euros par kilogramme.
+7. Écrire une requête permettant d'obtenir le nom de tous les matériaux et le prix moyen pour un kilogramme de chacun de ces matériaux (la moyenne étant calculée pour tous les fournisseurs proposant ce matériau), en se limitant aux prix moyens strictement inférieurs à 50 euros par kilogramme.

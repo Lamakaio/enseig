@@ -1,5 +1,5 @@
 #set page(paper: "a4", numbering: "1")
-#set document(title: "Cours arbres")
+#set document(title: "Programmation impérative en OCaml")
 #set heading(numbering: "I.1)")
 #import "../../../utils.typtp": *
 #import "@preview/diagraph:0.3.6": *
@@ -15,13 +15,13 @@
 
 = Principes de base : référence vs valeur, mutable vs immutable
 
-Ces principes sont valables autant en Python que en OCaml.
+Ces principes sont valables autant en Python qu'en OCaml.
 
 == Valeurs
 
 On va voir un ordinateur comme un _processeur_ accompagné d'une _mémoire_.
 
-La mémoire, c'est genre une grande armoire, ou sont rangées toutes les valeurs de vos variables.
+La mémoire, c'est genre une grande armoire, où sont rangées toutes les valeurs de vos variables.
 
 Quand le processeur a besoin de faire un calcul sur une valeur, il la sort de l'armoire, fait ce qu'il a à faire, et la remet.
 
@@ -30,7 +30,7 @@ a = 3 + 4
 c = a
 ```
 
-Mais le processeur par défaut il est pas très organisé ! Donc il ne retiens pas où sont rangés les objets. Donc si on change de "contexte", il oublie tout ! Par exemple, en entrant dans une fonction ...
+Mais le processeur par défaut il est pas très organisé ! Donc il ne retient pas où sont rangés les objets. Donc si on change de "contexte", il oublie tout ! Par exemple, en entrant dans une fonction ...
 
 ```python
 def plop(a):
@@ -45,7 +45,7 @@ print(a)
 )[lien notebook]
 
 
-Il se souviens que il a un 3 sur lui en entrant, mais il a complètement oublié où allait le 3 original ! Et donc il est incapable de le modifier.
+Il se souvient qu'il a un 3 sur lui en entrant, mais il a complètement oublié où allait le 3 original ! Et donc il est incapable de le modifier.
 
 En OCaml, on interdit au processeur d'écrire dans les variables directement : comme ça, pas d'ambiguïté.
 
@@ -55,14 +55,14 @@ Maintenant, parfois on aimerait bien modifier des variables même dans des fonct
 
 Le principe, c'est qu'au lieu de donner la valeur directement, on donne sa localisation dans la mémoire. Comme ça, même si le processeur la prend pour faire des calculs avec, il saura où la ranger ensuite !
 
-Des objets fonctionnant sur ce principe, vous en connaissez : les listes et les dictionnaires en python, les tableaux et les tables de hashage en OCaml.
+Des objets fonctionnant sur ce principe, vous en connaissez : les listes et les dictionnaires en python, les tableaux et les tables de hachage en OCaml.
 
-Comme c'est des objets très gros, le processeur peux pas prendre toute la valeur de l'objet d'un coup, donc il retiens juste où sont stockés les éléments !
+Comme c'est des objets très gros, le processeur peut pas prendre toute la valeur de l'objet d'un coup, donc il retient juste où sont stockés les éléments !
 
 
-En python, les références sont implicites. C'est un peu confus, mais globalement, il n'y a que les listes et les dictionnaire qu'on peut modifier depuis une autre fonction. En particulier, les tuples ne sont pas passés par référence !
+En python, les références sont implicites. C'est un peu confus, mais globalement, il n'y a que les listes et les dictionnaires qu'on peut modifier depuis une autre fonction. En particulier, les tuples ne sont pas modifiables : on ne peut donc pas les modifier depuis une autre fonction !
 
-En OCaml, on peut faire des références _explicites_, c'est à dire qu'on dit à OCaml "ceci est une référence, laisse moi la modifier stp" et il est d'accord.
+En OCaml, on peut faire des références _explicites_, c'est-à-dire qu'on dit à OCaml "ceci est une référence, laisse-moi la modifier stp" et il est d'accord.
 #link(
     "https://notebook.basthon.fr/?kernel=ocaml&ipynb=eJy9kc9OwzAMxl_F82kTnbTx55JqXHgAHgCmyqTeVpE4VeoIptF3Jx2DiRtCWn3y59j-Rf4OaNm5Ds3TAT0r1aSE5oAaU6dco8kJ98Wxq9J9y2jQhpqxwC6kaAftWIFgBZE3sCjL_MTvbJM2QSobkigaSc4VGJK2SQfYui_-zyMwK7gZA3RxwuTyiMGdyBZs8K1yBMlOeVK7y9lbozt4FsjxsYD5PUxnJyWDOh56QnAFy_Jnfirz5WyE43_z7kZgjWDD3wDr4hfglaOw61q2gxLyw6Zgybu8rm661tG-OpUfH77KjmSbaHvu7PPP5GUTYnYdze1ZVL6RENFc95-xT2Ey",
 )[lien notebook]
@@ -88,24 +88,24 @@ On peut faire une référence de n'importe quoi ! Par exemple, une référence d
 
 == Instruction vs expression
 
-En informatique, on distingue souvent les _expressions_ des _instructions_. En python, la distinction est assez clair : une instruction, c'est une ligne entière. Une expression, c'est un truc qui a une valeur.
+En informatique, on distingue souvent les _expressions_ des _instructions_. En python, la distinction est assez claire : une instruction, c'est une ligne entière. Une expression, c'est un truc qui a une valeur.
 
 ```python
 a = 1 + max(2, 3)
 ```
 Ici, on a une instruction, et `1 + max(2, 3)` est une expression.
 
-Une instruction peut être simplement composé d'une expression : par exemple, un appel de fonction.
+Une instruction peut être simplement composée d'une expression : par exemple, un appel de fonction.
 
-En OCaml, c'est un petit peu plus compliqué : en vérité, on a uniquement des expressions, mais on appelle _instruction_ les expressions qui renvoient `()` c'est à dire le type `unit` (en gros, rien).
+En OCaml, c'est un petit peu plus compliqué : en vérité, on a uniquement des expressions, mais on appelle _instruction_ les expressions qui renvoient `()` c'est-à-dire le type `unit` (en gros, rien).
 
 Par exemple :
 - `tableau.(i) <- 3` mettre une valeur dans un tableau
 - `print_string "bonjour"` les fonctions d'impression
 - `a := 8` les assignations de références
-- et toute les fonctions qui renvoient `unit`
+- et toutes les fonctions qui renvoient `unit`
 
-La particulier des instructions, c'est qu'on peut mettre un `;` après, ce qui permet d'enchainer sur d'autres instructions. Tout à la fin de la suite d'instruction, on peut mettre une expression, qui sera "renvoyée" en quelque sorte.
+La particularité des instructions, c'est qu'on peut mettre un `;` après, ce qui permet d'enchainer sur d'autres instructions. Tout à la fin de la suite d'instructions, on peut mettre une expression, qui sera "renvoyée" en quelque sorte.
 
 
 Par exemple :
@@ -113,7 +113,7 @@ Par exemple :
 ```ocaml
 let b = (a := 3; 3);;
 ```
-On a une instruction `a := 3` à l’intérieur d'une expression, et la valeur de cette expression est "3". Cette expression a des effets sur la variable `a`, elle la modifie. On dira que c'est une expression avec des _effets de bords_.
+On a une instruction `a := 3` à l’intérieur d'une expression, et la valeur de cette expression est "3". Cette expression a des effets sur la variable `a`, elle la modifie. On dira que c'est une expression avec des _effets de bord_.
 
 == Boucles en OCaml
 
@@ -127,7 +127,7 @@ Tout ça pour arriver au point intéressant : oui, on peut faire des boucles en 
 
 == Fonctions anonymes et d'ordre supérieur
 
-On peut faire ce qu'on appelle des _fonction anonymes_ en ocaml, c'est à dire des fonctions qui n'ont pas de nom.
+On peut faire ce qu'on appelle des _fonctions anonymes_ en ocaml, c'est-à-dire des fonctions qui n'ont pas de nom.
 Par exemple :
 ```ocaml
 
@@ -135,7 +135,7 @@ fun x y -> x + y
 
 ```
 
-L'avantage principale est lorsque'on a besoin de fonctions très simples pour les placer dans des _fonctions d'ordre supérieur_, c'est à dire des fonctions qui prennent en argument des fonctions.
+L'avantage principal est lorsqu'on a besoin de fonctions très simples pour les placer dans des _fonctions d'ordre supérieur_, c'est-à-dire des fonctions qui prennent en argument des fonctions.
 
 Celles que vous pouvez utiliser sont principalement les fonctions `init`, `map` et `iter` sur les listes et array.
 

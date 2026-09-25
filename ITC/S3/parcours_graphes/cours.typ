@@ -10,11 +10,11 @@
 
 
 #def[Graphe][
-    Un graphe simple est une paire $(S, E)$, avec $S$ l'ensemble des sommets, et $E$ l'ensemble des arrêtes.
+    Un graphe simple est une paire $(S, E)$, avec $S$ l'ensemble des sommets, et $E$ l'ensemble des arêtes.
 
-    Un graphe est dit _orienté_ si les arrêtes ont une direction, et $E$ est alors un sous-ensemble des paires d'éléments de $S$.
+    Un graphe est dit _orienté_ si les arêtes ont une direction, et $E$ est alors un sous-ensemble des couples d'éléments de $S$ ($E subset.eq S times S$).
 
-    Sinon, le graphe est _non-orienté_, et $E subset P_2(S)$ les parties à deux éléments de $S$.
+    Sinon, le graphe est _non orienté_, et $E subset P_2(S)$ les parties à deux éléments de $S$.
 ]
 
 
@@ -46,16 +46,16 @@
 
 Applications :
 
-- plans : les routes sont des arrêtes, les intersection sont des sommets
+- plans : les routes sont des arêtes, les intersections sont des sommets
 - internet : les différents routeurs, serveurs, connexions forment un (très) grand graphe
 - et les sites internet et les liens qui les relient aussi !
 - et bien plus.
 
 
 
-Dans tous ces cas, on aimerais pouvoir
+Dans tous ces cas, on aimerait pouvoir
 - avoir accès aux composantes connexes du graphe (les parties reliées entre elles)
-- avoir accès au plus cours chemin entre deux points
+- avoir accès au plus court chemin entre deux points
 - explorer une partie du graphe (par exemple, un crawler web)
 
 = Les parcours
@@ -63,7 +63,7 @@ Dans tous ces cas, on aimerais pouvoir
 == Anatomie d'un parcours
 
 On a besoin :
-- d'une structure de donnée pour stocker des noeuds
+- d'une structure de données pour stocker des noeuds
 
 #pseudocode-list(hooks: .5em, title: smallcaps[Parcours d'un graphe], booktabs: true)[
     #underline()[Entrée] : G un graphe, d un élément de départ
@@ -78,7 +78,7 @@ On a besoin :
 
 == Parcours en profondeur : la pile
 
-Voici une implem en python, qui imprime simplement les sommets dans l'ordre. On suppose que le graphe est implémenté par un dictionnaire de listes d'adjacence :
+Voici une implémentation en python, qui imprime simplement les sommets dans l'ordre. On suppose que le graphe est implémenté par un dictionnaire de listes d'adjacence :
 
 
 #raw-render(
@@ -95,7 +95,7 @@ Voici une implem en python, qui imprime simplement les sommets dans l'ordre. On 
 
 ```python
 
-G = { "a": ["b", "d"],
+G = { "a": ["b", "c"],
       "b": ["d", "a", "c"],
       "d": ["b"],
       "c": ["b", "a"]}
@@ -142,7 +142,9 @@ Version récursive
 ```python
 
 def parcours_profondeur(G, d, deja_vu):
-    for voisin in G[x]:
+    # premier appel : parcours_profondeur(G, d, {d: True})
+    print(d)
+    for voisin in G[d]:
         if voisin not in deja_vu:
             deja_vu[voisin] = True
             parcours_profondeur(G, voisin, deja_vu)
@@ -156,18 +158,18 @@ def parcours_profondeur(G, d, deja_vu):
 
 from collections import deque
 
-def parcours_profondeur(G, d):
+def parcours_largeur(G, d):
     file = deque()
     file.appendleft(d)
     deja_vu = {d: True}
-    while len(pile) > 0:
-        x = pile.pop()
+    while len(file) > 0:
+        x = file.pop()
         print(x)
-        # On ajoute les voisins à la pile
+        # On ajoute les voisins à la file
         for voisin in G[x]:
             if voisin not in deja_vu:
-                pile.appendleft(voisin)
-                #Evite d'ajouter les mêmes sommets à la pile plusieurs fois
+                file.appendleft(voisin)
+                #Evite d'ajouter les mêmes sommets à la file plusieurs fois
                 deja_vu[voisin] = True
 
 ```
@@ -210,7 +212,7 @@ Sur un graphe non pondéré, pouvez-vous faire un parcours qui permet ça ?
     ```,
 )
 
-Plan, autoroutes, routes de campagnes, etc
+Plan, autoroutes, routes de campagne, etc
 
 BFS : on augmente la profondeur graduellement : d'abord 1 de distance, puis 2, etc.
 
@@ -237,24 +239,24 @@ Déroulement sur exemple
 )
 
 
-== Algorithme de Djikstra
+== Algorithme de Dijkstra
 
 
-#pseudocode-list(hooks: .5em, title: smallcaps[Algorithme de Djikstra], booktabs: true)[
+#pseudocode-list(hooks: .5em, title: smallcaps[Algorithme de Dijkstra], booktabs: true)[
     #underline()[Entrée] : G un graphe connexe, d un sommet de départ
 
 
     #underline()[Sortie] : La distance de d à chaque sommet du graphe.
-    + Soit F une file de priorité, avec tous les noeuds associé à un poids $+ infinity$
+    + Soit F une file de priorité vide
     + Soit V un dictionnaire
     + Ajouter (d, 0) à F
     + *Tant que* F n'est pas vide
         + Prendre (x, l) le couple minimal de F
         + Ajouter (x, l) à V
-        + *Pour chaque* arrête (x, y, $rho$)
+        + *Pour chaque* arête (x, y, $rho$)
             + *Si* y n'est pas dans V
                 + *Si* y n'est pas dans F
-                    + ajouter (y, l + $rho$) F.
+                    + ajouter (y, l + $rho$) à F.
                 + *Sinon*
                     + mettre à jour le poids de y dans F, au minimum entre le poids actuel et l + $rho$
 
@@ -289,10 +291,10 @@ En python :
 ```python
 import math
 
-def djikstra(G, d):
-    """Implemente l'algorithme de Djikstra sur un graphe par liste d'adjacence.
+def dijkstra(G, d):
+    """Implemente l'algorithme de Dijkstra sur un graphe par liste d'adjacence.
     Renvoie un dictionnaire qui à chaque sommet associe sa distance à d.
-    On utilise une implémentation naive de file de priorité.
+    On utilise une implémentation naïve de file de priorité.
     """
     noeuds = {s: math.inf for s in G.keys()}
     noeuds[d] = 0
@@ -320,7 +322,7 @@ def djikstra(G, d):
     return V
 ```
 
-Quelle est la complexité de cette implémentation ? -> O(|V|²)
+Quelle est la complexité de cette implémentation ? -> O(|S|²)
 
 
 https://visualgo.net/
@@ -330,12 +332,12 @@ https://visualgo.net/
 
 video
 
-L'idée de l'algorithme A\* est d'utiliser une *heuristique*, c'est à dire une indication sur le résultat spécifique au problème traité, souvent facile à calculer mais imprécise.
+L'idée de l'algorithme A\* est d'utiliser une *heuristique*, c'est-à-dire une indication sur le résultat spécifique au problème traité, souvent facile à calculer mais imprécise.
 
-En l'occurence, cette heuristique est une indication sur la distance minimum qu'il reste pour parvenir au résultat. Pour que notre algorithme reste correcte, l'heuristique doit toujours être plus petite que la vrai distance !
+En l'occurrence, cette heuristique est une indication sur la distance minimum qu'il reste pour parvenir au résultat. Pour que notre algorithme reste correct, l'heuristique doit toujours être plus petite que la vraie distance !
 
-Exemple : cas d'une carte. On peut prendre la distance "à vol d'oiseau" ! Quelque soit le chemin emprunté, on ne pourra pas aller plus vite.
+Exemple : cas d'une carte. On peut prendre la distance "à vol d'oiseau" ! Quel que soit le chemin emprunté, on ne pourra pas aller plus vite.
 
-Supposons qu'on ai une fonction h qui code l'heuristique. Dans ce cas, on ne va plus prendre le sommet de distance à l'origine d minimale, mais celui qui minimise (d + h) ! C'est à dire celui qui a le potentiel d'être sur le chemin le plus court.
+Supposons qu'on ait une fonction h qui code l'heuristique. Dans ce cas, on ne va plus prendre le sommet de distance à l'origine d minimale, mais celui qui minimise (d + h) ! C'est-à-dire celui qui a le potentiel d'être sur le chemin le plus court.
 
-La complexité de A\* n'est pas meilleure que djikstra dans le pire cas. Mais dans la majorité des cas réels, cela va beaucoup plus vite !
+La complexité de A\* n'est pas meilleure que dijkstra dans le pire cas. Mais dans la majorité des cas réels, cela va beaucoup plus vite !

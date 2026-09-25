@@ -1,5 +1,5 @@
 #set page(paper: "a4", numbering: "1")
-#set document(title: "Algorithme polynomial pour le problème 2-SAT")
+#set document(title: "Fiche récap automates")
 #set heading(numbering: "I.1)")
 #import "../../../utils.typtp": *
 #import "@preview/diagraph:0.3.6": *
@@ -15,7 +15,7 @@
 On se donne un alphabet $Sigma$.
 
 #def[Expression régulière][
-    On défini inductivement une expression régulière comme :
+    On définit inductivement une expression régulière comme :
     - $emptyset$ l'expression vide
     - $epsilon$ le mot vide
     - $x, x in Sigma$ une lettre
@@ -26,18 +26,18 @@ On se donne un alphabet $Sigma$.
     - $e_1^star$ l'étoile
 ]
 
-#def[Language associé à une expression][
-    On défini le language associé à une expression régulière inductivement
+#def[Langage associé à une expression][
+    On définit le langage associé à une expression régulière inductivement
     - $L(emptyset) = emptyset$
     - $L(epsilon) = {epsilon}$
     - $forall x in Sigma, L(x) = {x}$
     Pour $e_1$, $e_2$ deux expressions régulières,
     - $L(e_1 | e_2) = L(e_1) union L(e_2)$
     - $L(e_1 e_2) = {m_1 m_2 | m_1 in L(e_1), m_2 in L(e_2)}$
-    - $L(e_1^star) = {m_1 m_2 dots m_n | m_1, dots, m_n in L(e_1)}$ (à noter que $epsilon in L(e_1^star)$)
+    - $L(e_1^star) = {m_1 m_2 dots m_n | n in NN, m_1, dots, m_n in L(e_1)}$ (à noter que $epsilon in L(e_1^star)$)
 ]
 
-On appelle language _régulier_ un language reconnu par une expression régulière.
+On appelle langage _régulier_ un langage dénoté par une expression régulière.
 
 = Automates
 == Déterministes
@@ -53,13 +53,13 @@ On appelle language _régulier_ un language reconnu par une expression réguliè
 
 
 #def[$delta^star$][
-    On défini inductivement la fonction $delta^star : Q times Sigma^star -> Q$ de la manière suivante :
+    On définit inductivement la fonction $delta^star : Q times Sigma^star -> Q$ de la manière suivante :
     - $forall q in Q, delta^star (q, epsilon) = q$
     - $forall q in Q, x u in Sigma^+, delta^star (q, x u) = delta^star (delta (q, x), u)$
 ]
 
-#def[Language reconnu par un automate][
-    On défini le language reconnu par un automate $A = (Q, Sigma, q_0, F, delta)$ comme :
+#def[Langage reconnu par un automate][
+    On définit le langage reconnu par un automate $A = (Q, Sigma, q_0, F, delta)$ comme :
     $ L(A) = {u in Sigma^star | delta^star (q_0, u) in F} $
 ]
 
@@ -76,32 +76,32 @@ On appelle language _régulier_ un language reconnu par une expression réguliè
 
 
 #def[$delta^star$][
-    On défini inductivement la fonction $delta^star : #text(fill: red)[$scr(P)(Q)$] times Sigma^star -> #text(fill: red)[$scr(P)(Q)$]$ de la manière suivante :
+    On définit inductivement la fonction $delta^star : #text(fill: red)[$scr(P)(Q)$] times Sigma^star -> #text(fill: red)[$scr(P)(Q)$]$ de la manière suivante :
     - $forall E subset Q, delta^star (E, epsilon) = E$
-    - $forall E subset Q, x u in Sigma^+, delta^star (E, x u) = delta^star (delta (E, x), u)$
+    - $forall E subset Q, x u in Sigma^+, delta^star (E, x u) = delta^star (union.big_(q in E) delta (q, x), u)$
 ]
 
-#def[Language reconnu par un automate][
-    On défini le language reconnu par un automate $A = (Q, Sigma, q_0, F, delta)$ comme :
+#def[Langage reconnu par un automate][
+    On définit le langage reconnu par un automate $A = (Q, Sigma, Q_0, F, delta)$ comme :
     $ L(A) = {u in Sigma^star | #text(fill: red)[$delta^star (Q_0, u) inter F != emptyset$]} $
 ]
 
 == Propriétés
-#blk1[Propriété][Determination][
-    Soit $scr(L)_"dfa"$ l'ensemble des languages reconnaissables par un automate déterministe. \
-    Soit $scr(L)_"nfa"$ l'ensemble des languages reconnaissables par un automate non-déterministe.
+#blk1[Propriété][Déterminisation][
+    Soit $scr(L)_"dfa"$ l'ensemble des langages reconnaissables par un automate déterministe. \
+    Soit $scr(L)_"nfa"$ l'ensemble des langages reconnaissables par un automate non-déterministe.
 
     Alors : $scr(L)_"dfa" = scr(L)_"nfa"$
 ]
 
-#def[Language rationnel][
-    On appelle language rationnel tout language $L$ tel que $exists A$ un automate, $L = L(A)$
+#def[Langage rationnel][
+    On appelle langage rationnel tout langage $L$ tel que $exists A$ un automate, $L = L(A)$
 ]
 
 #def[Automate des parties][
-    Soit $A_n = (Q_n, Sigma, Q_0^n, F_n, delta_n)$ un automate non deterministe.
+    Soit $A_n = (Q_n, Sigma, Q_0^n, F_n, delta_n)$ un automate non déterministe.
 
-    On défini $A_p$ l'automate des parties correspondant à $A_n$, de la manière suivante :
+    On définit $A_p$ l'automate des parties correspondant à $A_n$, de la manière suivante :
 
     - $Q_p = scr(P)(Q_n)$ (les parties de $Q_n$)
     - $Sigma = Sigma$
@@ -111,11 +111,11 @@ On appelle language _régulier_ un language reconnu par une expression réguliè
 ]
 
 #blk1[Propriété][][
-    $A_n$ et $A_p$ reconnaissent le même language.
+    $A_n$ et $A_p$ reconnaissent le même langage.
 ]
 
-#blk1[Opération sur les languages rationnels][][
-    Soit $L_1, L_2$ deux languages rationnels. Alors $L_1 union L_2, L_1 L_2, L_1 inter L_2, L_2 \\ L_2 "et" L_1^star$ le sont aussi.
+#blk1[Opérations sur les langages rationnels][][
+    Soit $L_1, L_2$ deux langages rationnels. Alors $L_1 union L_2, L_1 L_2, L_1 inter L_2, L_1 \\ L_2 "et" L_1^star$ le sont aussi.
 ]
 
 On le montre en construisant les automates correspondants, par exemple à l'aide de l'automate des parties.
@@ -123,7 +123,7 @@ On le montre en construisant les automates correspondants, par exemple à l'aide
 = Lien entre les deux
 
 #blk1[Théorème][De Kleene][
-    Les languages rationnels sont exactement les mêmes que les languages réguliers.
+    Les langages rationnels sont exactement les mêmes que les langages réguliers.
 ]
 
 
@@ -137,7 +137,7 @@ On étiquette les transitions par des expressions régulières plutôt que des l
 Exemple : $(a + b a^star b)^star b a^star$
 
 On construit l'automate de Glushkov :
-+ On _linéarise_ l'expression régulière, c'est à dire qu'on numérote chaque lettre. On note $Sigma' = {a_1, a_2, a_3, b_1, b_2, b_3}$ le nouvel alphabet.
++ On _linéarise_ l'expression régulière, c'est-à-dire qu'on numérote chaque lettre. On note $Sigma' = {a_1, a_2, a_3, b_1, b_2, b_3}$ le nouvel alphabet.
 
     $ (a_1 + b_1 a_2^star b_2)^star b_3 a_3^star $
 
@@ -150,7 +150,7 @@ On construit l'automate de Glushkov :
     $
 
 
-+ On construit l'automate correspondant au language linéarisé $A = (Q = Sigma union {epsilon}, Sigma, epsilon, "derniers", delta)$, où :
++ On construit l'automate correspondant au langage linéarisé $A = (Q = Sigma' union {epsilon}, Sigma', epsilon, "derniers", delta)$, où :
     - $forall x in "premiers", delta(epsilon, x) = x$
     - $forall x y in "facteurs", delta(x, y) = y$
     - $delta$ n'est pas définie sinon.
@@ -174,6 +174,7 @@ On construit l'automate de Glushkov :
           b_1 -> a_2 [label=a_2]
           b_1 -> b_2 [label=b_2]
           a_2 -> a_2 [label=a_2]
+          a_2 -> b_2 [label=b_2]
           b_2 -> a_1 [label=a_1]
           b_2 -> b_1 [label=b_1]
           b_2 -> b_3 [label=b_3]
@@ -201,6 +202,7 @@ On construit l'automate de Glushkov :
           b_1 -> a_2 [label=a]
           b_1 -> b_2 [label=b]
           a_2 -> a_2 [label=a]
+          a_2 -> b_2 [label=b]
           b_2 -> a_1 [label=a]
           b_2 -> b_1 [label=b]
           b_2 -> b_3 [label=b]
@@ -211,6 +213,6 @@ On construit l'automate de Glushkov :
     )
 ]
 
-À noter qu'on obtient un automate non-déterministe, qui contient autant d'état que la taille de l'expression régulière source.
+À noter qu'on obtient un automate non-déterministe, qui contient autant d'états que la taille de l'expression régulière source.
 
 

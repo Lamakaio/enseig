@@ -3,13 +3,14 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
   #set page(header: none, footer: none, margin: 3em)
 
 
   #text(size: 1.3em)[
-    *Le language Python*
+    *Le langage Python*
   ]
 
   #metropolis.divider
@@ -56,7 +57,7 @@
   ```
 
   #show: later
-  On met toujours des _espaces_ avant et après un opérateurs binaire. Pour un opérateurs unaire on ne met pas d'espace.
+  On met toujours des _espaces_ avant et après un opérateur binaire. Pour un opérateur unaire on ne met pas d'espace.
   ```Python
   calcul = 3 * 5
   nombre_negatif = -7
@@ -66,7 +67,7 @@
 #slide[
   = Les commentaires
 
-  Les commentaires n'ont aucun impact sur le programme : il servent simplement à comprendre le code plus simplement
+  Les commentaires n'ont aucun impact sur le programme : ils servent simplement à comprendre le code plus simplement
 
   ```Python
   # Les commentaires commencent par "#"
@@ -82,7 +83,7 @@
   ```
   - commentaire utile :
   ```Python
-  cpt = 0 # la variable cpt compte le nombre de bouteille dans la mer
+  cpt = 0 # la variable cpt compte le nombre de bouteilles dans la mer
   ```
 ]
 
@@ -97,7 +98,7 @@
   print("la valeur de a est : ", a)
   ```
   #show: later
-  Un `print` affiche autant de valeur que l'on veut (séparées par des virgules) sur la même ligne, puis reviens à la ligne.
+  Un `print` affiche autant de valeurs que l'on veut (séparées par des virgules) sur la même ligne, puis revient à la ligne.
 
 ]
 
@@ -136,18 +137,18 @@
 #slide[
   = Laquelle utiliser ?
   On utilise :
-  - Une boucle _`for`_ quand on sait à l'avance combien de tour de boucles on va faire
+  - Une boucle _`for`_ quand on sait à l'avance combien de tours de boucle on va faire
   - Une boucle _`while`_ sinon
 ]
 
 #slide[
   = Les fonctions
-  Les fonctions sont des blocs de code réutilisable :
+  Les fonctions sont des blocs de code réutilisables :
   ```Python
   def tape(personne):
     #code pour taper une personne
     points_de_degats = 1
-    return point_de_degats
+    return points_de_degats
 
   vie = tape("Mon voisin de table")
   vie = tape("La prof")
@@ -169,7 +170,7 @@
   def tape(personne):
     """
     Prend en argument une personne et la tape.
-    Renvoie la quantité de dégats effectuée.
+    Renvoie la quantité de dégâts effectuée.
     """
     # code pour taper une personne
   ```
@@ -225,7 +226,7 @@ milieu = fruits[2:4]
   a_lenvers = fruits[::-1]
   ```
 
-  En fait, le slicing s'écrit `liste[start:end:step]`, avec exactment les mêmes arguments que la fonction `range` !
+  En fait, le slicing s'écrit `liste[start:end:step]`, avec exactement les mêmes arguments que la fonction `range` !
 ]
 
 
@@ -246,8 +247,8 @@ milieu = fruits[2:4]
       print(fruits[i])
 
 
-    for i in range(len(fruits)):
-      print(fruits[i])
+    for fruit in fruits:
+      print(fruit)
   ```
 ]
 
@@ -302,7 +303,7 @@ milieu = fruits[2:4]
 #slide[
   = Le module numpy : matrices
 
-  Les tableau peuvent avoir plusieurs dimensions (pensez aux matrices). On peut alors accéder à l'élément (i, j) avec
+  Les tableaux peuvent avoir plusieurs dimensions (pensez aux matrices). On peut alors accéder à l'élément (i, j) avec
   ```Python
   element_ij = tableau[i, j]
   ```
@@ -320,7 +321,7 @@ milieu = fruits[2:4]
   On importe le module matplotlib avec :
 
   ```Python
-  import matplotlib.pyplot as pyplot
+  import matplotlib.pyplot as plt
   ```
 ]
 
@@ -335,12 +336,12 @@ milieu = fruits[2:4]
   ```
 
   Le "b-" est optionnel. Il est constitué
-  - de l'initial de la couleur souhaitée en anglais (b, r, g, etc)
+  - de l'initiale de la couleur souhaitée en anglais (b, r, g, etc)
   - du type de point (+, \*, ., -, etc)
 
   #show: later
 
-  Si vous avez des probèmes de courbes qui se superposent, utilisez au début `plt.clf()`.
+  Si vous avez des problèmes de courbes qui se superposent, utilisez au début `plt.clf()`.
 ]
 
 

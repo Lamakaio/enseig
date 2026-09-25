@@ -116,7 +116,7 @@ b)
     )
 ]
 
-#question[Donnez un automate deterministe correspondant aux langages suivants : ]
+#question[Donnez un automate déterministe correspondant aux langages suivants : ]
 a) Le langage des mots contenant le facteur `aba`.
 
 b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de `b`.
@@ -179,17 +179,17 @@ b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de 
 
 
 
-= Racine carré d'un language (CCP 2019)
+= Racine carrée d'un langage (CCP 2019)
 
 == Définitions
 
-#def[Carré d'un language][
-    Soit $L$ un language. On note $L^2$ l'ensemble ${u u| u in L}$
+#def[Carré d'un langage][
+    Soit $L$ un langage. On note $L^2$ l'ensemble ${u u| u in L}$
 ]
 
 
-#def[Racine carré d'un language][
-    Soit $L$ un language. On note $sqrt(L)$ l'ensemble ${u | u u in L}$
+#def[Racine carrée d'un langage][
+    Soit $L$ un langage. On note $sqrt(L)$ l'ensemble ${u | u u in L}$
 ]
 
 
@@ -212,7 +212,6 @@ b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de 
     $sqrt(L) ~ a^star | b^star$
 ]
 
-==
 #def[Automates][
     Soient $A = (Q, Sigma, q_0, F, delta)$ un automate fini déterministe, $q'$ un élément de $Q$ et $F'$ une
     partie de Q. L'automate $(Q, Sigma, q', F', delta)$ est noté $A_(q',F')$ . Si on note $L$ le langage reconnu par $A$, $L_(q',F')$
@@ -220,7 +219,7 @@ b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de 
 ]
 
 
-Ici, $L$ désigne le language reconnu par l'automate $A$ suivant :
+Ici, $L$ désigne le langage reconnu par l'automate $A$ suivant :
 
 #image("a1.png")
 
@@ -235,35 +234,35 @@ Ici, $L$ désigne le language reconnu par l'automate $A$ suivant :
 ]
 
 
-== Propriétés de la racine carré d'un language
+== Propriétés de la racine carrée d'un langage
 
 Ici, on fixe $L$ un langage rationnel sur un alphabet $Sigma$ et $A = (Q, Sigma, q_0, F, delta)$ un automate fini reconnaissant celui-ci.
 
 #question[
-    Soit $u in Sigma^star$. Montrez que $u in sqrt(L)$ si et seulement si il existe $q in Q$ tel que $u in L_(q_0, {q})$ et $u in L_(q, F)$.
+    Soit $u in Sigma^star$. Montrez que $u in sqrt(L)$ si et seulement s'il existe $q in Q$ tel que $u in L_(q_0, {q})$ et $u in L_(q, F)$.
 ]
 
 #correction[
-    => si $u in L_(q_0, {q}) inter L_(q, F)$, alors $delta^star (q_0, u) = q$ et $delta^star (q, u) in F$.
+    ($arrow.l.double$) Si $u in L_(q_0, {q}) inter L_(q, F)$, alors $delta^star (q_0, u) = q$ et $delta^star (q, u) in F$.
 
-    Donc $delta^star (q_0, u^2) in F$, et $u in sqrt(L)$
+    Donc $delta^star (q_0, u^2) in F$, et $u in sqrt(L)$.
 
 
-    <= si $u in sqrt(L)$, alors $u^2 in L$. Soit $q_0 -> q_1 -> dots -> q_(2|u|) in F$ un chemin acceptant pour $u^2$.
+    ($arrow.r.double$) Si $u in sqrt(L)$, alors $u^2 in L$. Soit $q_0 -> q_1 -> dots -> q_(2|u|) in F$ un chemin acceptant pour $u^2$.
 
-    Alors $u in L_(q_0, q_(|u|)$, et $u in L_(q_(|u|), q_(2|u|)) subset L_(q_(|u|) F)$
+    Alors, avec $q = q_(|u|)$, $u in L_(q_0, {q})$, et $u in L_(q, {q_(2|u|)}) subset L_(q, F)$.
 ]
 
 #question[
-    En déduire que $sqrt(L)$ est un language rationnel.
+    En déduire que $sqrt(L)$ est un langage rationnel.
 ]
 
 #correction[
-    Par définition, les languages $L_(q', F')$ sont rationnels.
+    Par définition, les langages $L_(q', F')$ sont rationnels.
 
     Or, on a montré que $u in sqrt(L) <=> exists q, u in L_(q_0, {q}) inter L_(q, F)$.
 
-    Donc $sqrt(L) = union.big_()$
+    Donc $sqrt(L) = union.big_(q in Q) (L_(q_0, {q}) inter L_(q, F))$ : c'est une union finie d'intersections de langages rationnels, donc un langage rationnel.
 
 ]
 #question[
@@ -329,15 +328,15 @@ On considère, pour les questions 9 à 12, l'automate de la figure suivante, où
 #question[Donner sans justification $L_2 (cal(A)_{q_0})$.]
 
 #correction[
-    $ L_2 (cal(A)_{q_0}) = {b^k a a | k >= 1}. $
+    $ L_2 (cal(A)_{q_0}) = {b^k a a | k >= 0}. $
 ]
 
 #question[Donner, en justifiant votre réponse, $L_2 (cal(A)_{q_1})$.]
 
 #correction[
-    Si on boucle plus de une fois sur les états $q_0$ ou $q_2$, alors le calcul est $q_0 q_0 q_0 q_1$, et avec $i = 0$, la condition n'est pas respectée (de même pour $q_2$).
+    Si on boucle plus d'une fois sur les états $q_0$ ou $q_2$, alors le calcul commence par $q_0 q_0 q_0 q_1$, et avec $i = 0$, la condition n'est pas respectée (de même pour $q_2$).
 
-    Donc $L_2(cal(A)_{\{q_1\}} = \{a a, b a a, a a b, b a a b\}$.
+    Donc $L_2 (cal(A)_{q_1}) = {a a, b a a, a a b, b a a b}$.
 ]
 
 #question[

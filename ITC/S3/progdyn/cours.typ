@@ -1,17 +1,17 @@
 #import "@preview/lovelace:0.3.0": *
 #import "../../../utils.typtp": *
-#set page(paper: "a4", numbering: "I.1.a")
+#set page(paper: "a4", numbering: "1")
 #set heading(numbering: "I.1.a)")
 
 = Programmation dynamique
 
 
-Dans les grandes lignes, la programmation dynamique est une méthode de programmation qui permet d'éviter de répéter certain calculs en stockant les résultats intermédiaires.
+Dans les grandes lignes, la programmation dynamique est une méthode de programmation qui permet d'éviter de répéter certains calculs en stockant les résultats intermédiaires.
 
 Les étapes pour résoudre un problème à l'aide de la programmation dynamique sont :
-- décomposer le problèmes en sous-problèmes
+- décomposer le problème en sous-problèmes
 - établir une relation de récurrence entre ces sous-problèmes
-- résoudre les sous-problèmes dans l'ordre en utilisant la relation de récurrence, et en stockant le résultat de chaque sous problème pour une potentielle utilisation future.
+- résoudre les sous-problèmes dans l'ordre en utilisant la relation de récurrence, et en stockant le résultat de chaque sous-problème pour une potentielle utilisation future.
 
 == Exemple "simpliste" : suite de Fibonacci
 
@@ -24,12 +24,12 @@ Si on utilise une fonction récursive simple pour calculer une telle suite, on t
 ```py
 def fib(n):
     if n <= 1:
-        return 0
+        return 1
     else:
         return fib(n - 1) + fib(n - 2)
 ```
 
-Cette fonction va faire $2^(n-1)$ appels récursifs !
+Cette fonction va faire un nombre exponentiel d'appels récursifs (de l'ordre de $phi^n$, où $phi$ est le nombre d'or) !
 
 
 La version en programmation dynamique consiste à calculer non plus $"fib" (n)$ directement, mais toute la suite en partant de 0, en stockant les résultats dans un tableau (une liste).
@@ -48,7 +48,7 @@ Cette fois, la complexité est en $O(n)$. C'est bien mieux !
 == Un vrai problème à résoudre en programmation dynamique : le rendu de monnaie
 === Exemples
 #ex[
-    On a un système monétaire qui contient des coupure de 1, 2, 5 et 10. Combien de coupure, au minimum, pour rendre 17 ?
+    On a un système monétaire qui contient des coupures de 1, 2, 5 et 10. Combien de coupures, au minimum, pour rendre 17 ?
 
 
     Réponse : on peut appliquer un algorithme "glouton" : on prend toujours la plus grande coupure qui ne dépasse pas le total. Ici, cela donne 10, 5, 2.
@@ -70,13 +70,13 @@ Cette fois, la complexité est en $O(n)$. C'est bien mieux !
 ]
 
 #blk2[Solution en programmation dynamique][
-    + *sous-problèmes* : pour $1 <= i <= n, 1 <= sigma <= S$ on prend $m_i (s)$ le nombre minimal de coupures parmi $v_1, ..., v_i$ pour arriver à une somme de $s$.
+    + *sous-problèmes* : pour $1 <= i <= n, 0 <= s <= S$ on prend $m_i (s)$ le nombre minimal de coupures parmi $v_1, ..., v_i$ pour arriver à une somme de $s$.
     + *relation de récurrence* :
-        - $forall i in [|1, n|], m_i (1) = 1$
+        - $forall i in [|1, n|], m_i (0) = 0$
         - $forall s in [|0, S|], m_1 (s) = s$
         - $
                 "sinon", m_i (s) = min cases(
-                    1 + m_i (s - v_i) "si" v_i < s "      " & "On utilise la pièce i",
+                    1 + m_i (s - v_i) "si" v_i <= s "      " & "On utilise la pièce i",
                     m_(i-1)(s) & "On n'utilise pas la pièce i"
                 )
             $
@@ -86,19 +86,19 @@ Cette fois, la complexité est en $O(n)$. C'est bien mieux !
 ```py
 
 def rendu_monnaie(pieces, S):
-    #initialisation du tableau résultat
-    resultat = [[0]*S for _ in pieces]
-    for i in range(len(pieces)):
-        resultat[i][0] = 1
+    #initialisation du tableau résultat : resultat[i][s] = m_(i+1)(s)
+    #(la colonne s = 0 reste à 0 : on rend 0 avec 0 pièce)
+    resultat = [[0]*(S + 1) for _ in pieces]
 
-    for s in range(S):
-        resultat[0][s] = s + 1
+    #avec seulement la pièce de 1, il faut s pièces pour rendre s
+    for s in range(S + 1):
+        resultat[0][s] = s
 
     #remplissage du tableau par s et i croissants
-    for s in range(1, S):
+    for s in range(1, S + 1):
         for i in range(1, len(pieces)):
-            #cas ou la dernière pièce est trop grande
-            if pieces[i] > s+1:
+            #cas où la dernière pièce est trop grande
+            if pieces[i] > s:
                 resultat[i][s] = resultat[i-1][s]
             #cas général : on prend la dernière pièce ou non
             else:
@@ -113,7 +113,7 @@ Cette fonction a une complexité $O(n S)$ (la taille du tableau).
 
 #link(
     "https://notebook.basthon.fr/?kernel=python&ipynb=eJytVV1um0AQvspo84Ib0hjbyQNqc4ZKfsQIbWDirLosaH_aRJbvk5zDF-usAQMOiaqmlh925_-b_WbYsRylNCxOdqxEywtuOYt3zGpnLBYspgPuw6NVZp9rZDHLqwJZyEzldO7vBT6ARlW4rKyU4gKDWmCOJoT1LN4ooN-FUMIKLoXhVlQKCgeW30vkDvTh1ThpuW0sNTY3-A5JMk-_rOGh0pCBUNBETRs7LxVeqrnaYiBRtVlnXc5htESkFIxiRhvV-5vefz3pNU8T470MXPaeFxrLmpAYvsUhkJr7iGiprFxXXq-smUwWDTozgYXU78A5ps-5gcqB5FCgVuLwopFac3jJEdBYsLqqYUuRChw7ioe2g9QMuANzGZ1FPm_YEXovuIq8aKKY7eFVHV41lxADvW3tuTBZHlWtKjWOgNLg39RRChVE9AwjBVz1kNLwbZTJ3zmiWUc867Q6aYng-IS583TN8sopy-JlyCpna2f9vKT78N9HZsDy8eQk9PjLEFZpCLczz7iNqrVQNtgwcW0AIoAFwBJgBXADcLthZOX5EwhizcyTCJUrUXOLQZelo1ATiQw3jP7efgrlaohy1547IMZq5CW5WXwi23eKUnPK5qEsGjQh3BAe4k7Uy0_aBckXI3lz8HJKpHjZJC6oErb_VNubTUUT4n6hzrr2nPoUwpvFZeiF1kSzqLkKug5ms1fwzL8jUZ3WVjsjvx-FRPK4gznQNFIoOg2o_nYegd7xnJ3wDT6m_dnw-ArJtRceBwzGRua40wZRxuoOzFde13QITmbjUenMpkh08x9H5YP3Go3LVB23H5G5scY28Dvup5qJ8Ne15EKRZ0JJlymj0gew9p8j51R-5aQcdzIdpWQ_acfSC9eY-1s7K_WzfazUkgIWwlDJz1mr-HFUgNdI-tQ4-oKdzNme6lP3tEtK3myB7pLR7q00ixf7P6Wukys",
-    text(fill: blue)[lien vers un notebook pour executer ce code],
+    text(fill: blue)[lien vers un notebook pour exécuter ce code],
 )
 
 === Retrouver la répartition
@@ -124,13 +124,13 @@ On peut suivre en remontant le chemin qu'a pris le résultat : si `1 + resultat[
 
 == Un autre problème : la distance d'édition
 
-Lorsqu'on veut mesurer la différence entre deux chaines de caractères, il n'est pas toujours adapté de simplement comparer les lettres une à une : par exemple, "bonjour" et "onjour" sont des chaines proches, mais n'ont aucune lettre en commun (et à la même position).
+Lorsqu'on veut mesurer la différence entre deux chaines de caractères, il n'est pas toujours adapté de simplement comparer les lettres une à une : par exemple, "bonjour" et "onjour" sont des chaines proches, mais n'ont aucune lettre en commun (à la même position).
 
 La distance d'édition est une solution à ce problème.
 
 
 #blk2[Problème][
-    On défini trois opérations d'éditions :
+    On définit trois opérations d'édition :
     - *suppression* : on supprime un caractère dans la chaine
     - *ajout* : on ajoute un caractère dans la chaine
     - *modification* : on remplace un caractère par un autre
@@ -149,7 +149,7 @@ La distance d'édition est une solution à ce problème.
                 d(i, j) = min cases(
                     1 + d(i-1, j) & "(suppression)",
                     1 + d(i, j-1) & "(ajout)",
-                    d(i-1, j-1) + II_(s_1[i] != s_2[j]) & "(modification)"
+                    d(i-1, j-1) + II_(s_1[i-1] != s_2[j-1]) & "(modification)"
                 )
             $
 ]
@@ -158,7 +158,7 @@ La distance d'édition est une solution à ce problème.
 ```py
 
 def distance_edition(s1, s2):
-    """calcule la distance d'édition entre deux chaines de caractère s1 et s2, par la méthode de la programmation dynamique."""
+    """calcule la distance d'édition entre deux chaines de caractères s1 et s2, par la méthode de la programmation dynamique."""
     #initialisation du tableau résultat
     resultat = [[0]*(len(s2) + 1) for _ in range(len(s1) + 1)]
     for k in range(len(s2) + 1):
@@ -198,17 +198,17 @@ On va prendre des contraintes un peu différentes (par rapport à Dijkstra) :
 
 On cherche le  plus court chemin entre chaque paire de sommets pour *tous* les sommets du graphe.
 
-On se donne un graphe dirigé pondéré $G$ avec un ensemble de sommets $S = [|1, n|]$ et un ensemble d'arrêtes $A subset S times S times ZZ$ (les arrêtes peuvent avoir un poids négatif !). On suppose que G n'a pas de cycles de poids négatif.
+On se donne un graphe orienté pondéré $G$ avec un ensemble de sommets $S = [|1, n|]$ et un ensemble d'arêtes $A subset S times S times ZZ$ (les arêtes peuvent avoir un poids négatif !). On suppose que G n'a pas de cycles de poids négatif.
 
 Soit la fonction $d(x, y)$ qui renvoie
 - 0 si $x = y$
-- $w$ si $x$ et $y$ sont reliés par une arrête de poids $w$
+- $w$ si $x$ et $y$ sont reliés par une arête de poids $w$
 - $+infinity$ sinon
 
 (cela correspond à la matrice d'adjacence)
 
 #blk2[Solution en programmation dynamique][
-    + *découpage en sous-problèmes* : on note $scr(C)(x, y, k)$ la taille du plus court chemin entre $x$ et $y$ deux sommets, en ne passant que par des sommets de $[|1, k|]$
+    + *découpage en sous-problèmes* : on note $scr(C)(x, y, k)$ le poids du plus court chemin entre $x$ et $y$ deux sommets, en ne passant que par des sommets de $[|1, k|]$
     + *relation de récurrence*
         - $scr(C)(x, y, 0) = d(x, y)$
         - $
@@ -226,9 +226,9 @@ Soit la fonction $d(x, y)$ qui renvoie
 )[#text(fill: blue)[lien vers un notebook contenant le code]]
 
 
-*Note :* on utilise uniquement la valeur de $scr(C)(dot.c, dot.c, k - 1)$ pour calculer $scr(C)(dot.c, dot.c, k)$. Cela signifie que l'on est pas obligé de stocker tous les tableaux, on peut se contenter seulement du tableau précédent.
+*Note :* on utilise uniquement la valeur de $scr(C)(dot.c, dot.c, k - 1)$ pour calculer $scr(C)(dot.c, dot.c, k)$. Cela signifie que l'on n'est pas obligé de stocker tous les tableaux, on peut se contenter seulement du tableau précédent.
 
-En revanche, si on veut reconstruire les chemins, on a besoin de tous les tableaux.
+Pour reconstruire les chemins, il suffit de stocker en plus un tableau des prédécesseurs (voir ci-dessous).
 
 == Retrouver le chemin avec le tableau des prédécesseurs
 
@@ -242,7 +242,7 @@ L'idée est de créer un tableau de même dimension que le tableau de stockage d
 
 == Utiliser des dictionnaires pour la mémoïsation
 
-Parfois, quand on ne rempli pas tout le tableau, et qu'on veut utiliser la méthode descendante (donc avec de la récursivité), on peut utiliser un dictionnaire pour stocker les valeurs intermédiaires à la place.
+Parfois, quand on ne remplit pas tout le tableau, et qu'on veut utiliser la méthode descendante (donc avec de la récursivité), on peut utiliser un dictionnaire pour stocker les valeurs intermédiaires à la place.
 
 C'est un peu plus lent, mais ça peut simplifier le code.
 

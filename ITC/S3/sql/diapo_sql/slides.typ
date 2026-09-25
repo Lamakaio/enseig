@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 
 
@@ -28,7 +29,7 @@
   #set text(size: .8em, weight: "light")
   Ambre Le Berre
 
-  2025/2026
+  2026/2027
 ]
 
 #slide[
@@ -42,7 +43,7 @@
   = Introduction
   Les bases de données servent à ... *stocker des données*.
   - Stocker beaucoup de données
-  - Pouvoir y accéder et faire des opération dessus rapidement
+  - Pouvoir y accéder et faire des opérations dessus rapidement
 ]
 #slide[
   = SGBD
@@ -59,12 +60,12 @@
       (1, 1),
       [SGBD \
         (Système de Gestion \
-        de Base de Donnée)],
+        de Base de Données)],
     ),
     edge("r", "-|>", label-pos: 0.1),
     node(
       (2, 1),
-      [Base de donnée "Classe.db"\
+      [Base de données "Classe.db"\
         (souvent un fichier) \
 
         #diagram(
@@ -132,8 +133,9 @@
     edge("->"),
     node((0.4, -0.57), ellipse(width: 110%, stroke: stroke(paint: red, thickness: 2pt)), width: 100pt),
   )
+
+  _Domaine d'un attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, ce sera entier, flottant, ou chaine de caractères.
 ]
-_Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, ce sera entier, flottant, ou chaine de caractères.
 
 #slide[
   = Exemple de table (ou entité)
@@ -166,10 +168,10 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 ]
 
 #slide[
-  = Clé étrangére
+  = Clé étrangère
 
   #diagram(
-    node((0.8, -0.9), [Clé étrangére], stroke: 0pt),
+    node((0.8, -0.9), [Clé étrangère], stroke: 0pt),
     edge("->"),
     node(
       (0.03, -0.3),
@@ -205,7 +207,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 
 #slide[
   = Modèle Entité-Association
-  Permet de reprénter un _schéma de base de donnée_.
+  Permet de représenter un _schéma de base de données_.
   #diagram(
     node-stroke: 2pt,
     node-inset: 20pt,
@@ -218,7 +220,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
     node((1, 2), shape: diamond, inset: 10pt, name: <ens>)[enseigne],
     node((1, 0), shape: diamond, inset: 10pt, name: <aPa>)[a pour \ parents],
     node((1, 1), shape: diamond, inset: 10pt, name: <ass>)[assiste à],
-    node((3, 2), shape: diamond, inset: 10pt, name: <aLi>)[à lieu dans],
+    node((3, 2), shape: diamond, inset: 10pt, name: <aLi>)[a lieu dans],
 
     edge(<E>, <aPa>)[0-\*],
     edge(<aPa>, <Pa>)[1-\*],
@@ -234,13 +236,13 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 #new-section[Requêtes simples sur les bases de données]
 
 #slide[
-  = Le language SQL
+  = Le langage SQL
   #grid(
     columns: (1fr, 1fr),
     image("logo.png"),
     [
-      - Language simple mais puissant
-      - Permet d'accéder, de trier, de regrouper, de croiser ... Les données dans une base de donnée
+      - Langage simple mais puissant
+      - Permet d'accéder, de trier, de regrouper, de croiser ... les données dans une base de données
     ],
   )
 ]
@@ -249,7 +251,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   = Projection
 
   La première opération sur les bases de données est la *projection*. \
-  Cela permet de séléctionner seulement certains attributs (colonnes) d'une table.
+  Cela permet de sélectionner seulement certains attributs (colonnes) d'une table.
 
   #show: later
 
@@ -278,7 +280,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   SELECT * FROM Eleves ORDER BY Age DESC
   ```
   #show: later
-  - Afficher seulement certaines donénes
+  - Afficher seulement certaines données
   ```SQL
   SELECT * FROM Eleves LIMIT 3 OFFSET 2
   ```
@@ -290,8 +292,8 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 ]
 
 #slide[
-  = Séléction
-  Si la projection permettait de séléctionner des colonnes, la séléction, elle, permet de séléctionner des enregistrements, soit des lignes.
+  = Sélection
+  Si la projection permettait de sélectionner des colonnes, la sélection, elle, permet de sélectionner des enregistrements, soit des lignes.
 
   ```SQL
   SELECT * FROM Eleves WHERE Age = 19
@@ -300,9 +302,9 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 
 
 #slide[
-  = Opérateurs de séléction
-  Les opérateurs de séléction sont les suivants :
-  - `=` et `! =` pour l'égalité
+  = Opérateurs de sélection
+  Les opérateurs de sélection sont les suivants :
+  - `=` et `!=` pour l'égalité
   - `>`, `<`, `>=`, `<=` pour les comparaisons
   - `AND`, `OR` et `NOT` pour combiner des opérateurs
 ]
@@ -310,17 +312,17 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 #slide[
   = Exercices
   #text(fill: green)[
-    Ecrivez des requêtes qui :
-    - Renvoie le nom et prenoms des élèves de MP qui ont moins de 20 ans.
+    Écrivez des requêtes qui :
+    - Renvoient le nom et le prénom des élèves de MP qui ont moins de 20 ans.
     #show: later
-    - Renvoie la liste des ages des élèves de spé, sans doublons.
+    - Renvoient la liste des âges des élèves de spé, sans doublons.
   ]
 ]
 #new-section[Opérations sur plusieurs tables]
 
 #slide[
   = Jointures
-  Les jointures permettent de croiser les données de plusieurs table, en général en fonction d'une clé étrangére.
+  Les jointures permettent de croiser les données de plusieurs tables, en général en fonction d'une clé étrangère.
   #diagram(
     node-stroke: 2pt,
     node(name: <E>, (0, 0), [
@@ -359,7 +361,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
     Eleves.Classe = Profs.Classe
   ```
 
-  Que fait cette requète à votre avis ?
+  Que fait cette requête à votre avis ?
 ]
 
 
@@ -380,7 +382,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 ]
 
 #slide[
-  = Jointure plus complexes, autojointures
+  = Jointures plus complexes, autojointures
   - On peut faire une jointure sur autre chose qu'une clé :
   ```SQL
   SELECT * FROM Eleves JOIN Profs ON Eleves.Nom = Profs.Nom
@@ -404,7 +406,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
 #slide[
   = Exercices
   #text(fill: green)[
-    Ecrivez des requêtes pour :
+    Écrivez des requêtes pour :
     - Afficher le nom, le prénom, et la salle de chaque élève.
     #show: later
     - Afficher toutes les paires d'élèves qui ont le même prénom.
@@ -427,12 +429,12 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   = Agrégats
   Les agrégats servent à rassembler des enregistrements qui ont un attribut en commun.
   ```SQL
-  SELECT * FROM Eleves GROUP BY Age
+  SELECT Age FROM Eleves GROUP BY Age
   ```
   #show: later
   On a également des _fonctions d'agrégation_ qui deviennent disponibles :
   ```SQL
-  SELECT Age, COUNT() AS Nombre FROM Eleves GROUP BY Age
+  SELECT Age, COUNT(*) AS Nombre FROM Eleves GROUP BY Age
   ```
 ]
 
@@ -440,7 +442,7 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   = Les fonctions d'agrégation
 
   Les fonctions d'agrégation disponibles sont :
-  - _`COUNT()`_
+  - _`COUNT(*)`_
   - _`MIN(col)`_ / _`MAX(col)`_
   - _`SUM(col)`_
   - _`AVG(col)`_
@@ -471,14 +473,14 @@ _Domaine d'un Attribut_ : valeurs possibles qu'il peut prendre. Dans notre cas, 
   + `ORDER BY`
   + `LIMIT .. OFFSET ..`
   ```SQL
-  SELECT Nom, Prenom FROM Eleves GROUP BY Age HAVING COUNT() > 2
+  SELECT Age, COUNT(*) FROM Eleves GROUP BY Age HAVING COUNT(*) > 2
   ```
 ]
 
 #slide[
   = Exercices
   #text(fill: green)[
-    Ecrivez des requêtes pour :
+    Écrivez des requêtes pour :
     - Afficher le nombre d'élèves par salle
     - Afficher l'élève le plus âgé de chaque prof.
   ]

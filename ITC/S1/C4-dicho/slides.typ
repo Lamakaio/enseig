@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
     #set page(header: none, footer: none, margin: 3em)
@@ -21,7 +22,7 @@
 
     MPSI
 
-    2025/2026
+    2026/2027
 ]
 
 #slide[
@@ -33,7 +34,7 @@
 #new-section[Maximum, minimum]
 
 #slide[
-    = Recherche simple de maximum
+    = Recherche simple de minimum
 
     C'est _très courant_ de chercher le maximum / minimum d'une liste.
     #show: later
@@ -70,7 +71,7 @@
         return (val_min, i_min)
     ```
 
-    Modifiez le code précédent pour trouver le deuxième maximum.
+    Modifiez le code précédent pour trouver le deuxième minimum.
 
 ]
 
@@ -149,16 +150,16 @@
     ```py
     def recherche_dicho(L, x):
         """Si L est une liste triée dans l'ordre croissant, renvoie l'indice de x dans L, ou bien None si x n'est pas dans L."""
-        i = 0 #borne inf inclue
+        i = 0 #borne inf incluse
         j = len(L) #borne sup exclue
 
-        while (j - i) > 1:
+        while (j - i) > 0:
             milieu = (i + j) // 2
-            if L[milieu] > x:
+            if L[milieu] < x:
                 i = milieu + 1
-            elif L[milieu] < x:
+            elif L[milieu] > x:
                 j = milieu
-            else: #cas ou L[milieu] == x
+            else: #cas où L[milieu] == x
                 return milieu
         return None
     ```
@@ -167,7 +168,7 @@
 #slide[
     = Complexité
 
-    Combien de tour de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
+    Combien de tours de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
 
     #show: later
 
@@ -179,7 +180,7 @@
 #slide[
     = Recherche du 0 d'une fonction
 
-    Supposons qu'on ai une fonction $f$ quelconque et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, tel que $f(a) < 0$ et $f(b) > 0$.
+    Supposons qu'on ait une fonction $f$ quelconque et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, tel que $f(a) < 0$ et $f(b) > 0$.
 
     On peut appliquer le même principe !
 ]
@@ -189,9 +190,9 @@
 
     ```py
     def recherche_zero(f, a, b, eps):
-        """Si f(a) < 0 et f(b) > 0, renvoie un zero de f sur [a, b] à eps près."""
+        """Si f(a) < 0 et f(b) > 0, renvoie un zéro de f sur [a, b] à eps près."""
         while b - a > eps:
-            milieu = a + b / 2
+            milieu = (a + b) / 2
             if f(milieu) < 0:
                 a = milieu
             else:

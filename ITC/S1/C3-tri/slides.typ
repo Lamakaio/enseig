@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
     #set page(header: none, footer: none, margin: 3em)
@@ -21,7 +22,7 @@
 
     MPSI
 
-    2025/2026
+    2026/2027
 ]
 
 #slide[
@@ -37,15 +38,15 @@
 
     _Trier_ une liste ou une collection d'éléments, ça consiste à les réordonner pour qu'ils soient en ordre croissant ou décroissant.
 
-    On peut écrire une condition nécéssaire et suffisante pour qu'une liste $l_0, ..., l_n$ soit triée dansl'ordre croissant :
-    $ forall i in [|0, n-1|] l_i <= l_(i+1) $
+    On peut écrire une condition nécessaire et suffisante pour qu'une liste $l_0, ..., l_n$ soit triée dans l'ordre croissant :
+    $ forall i in [|0, n-1|], l_i <= l_(i+1) $
 
 ]
 
 #slide[
     = Fonction de tri
 
-    On va en général définir des fonctions de tri, qui prennent en argument une liste et la trie. On distingue deux sortes de fonction :
+    On va en général définir des fonctions de tri, qui prennent en argument une liste et la trient. On distingue deux sortes de fonctions :
     - les tris _in-place_ qui modifient la liste originale en réordonnant les éléments, afin qu'elle soit triée
     - les tris qui renvoient une nouvelle liste, triée, qui contient exactement les mêmes éléments que la liste originale.
 
@@ -88,12 +89,12 @@
 #slide[
     = Le tri à bulle
 
-    Idée : à chaque étape, on compare deux éléments adjacents. Si ils sont dans le bon ordre, on les laisse. Sinon, on les échange.
+    Idée : à chaque étape, on compare deux éléments adjacents. S'ils sont dans le bon ordre, on les laisse. Sinon, on les échange.
 
     ```python
       def tri_bulle(L):
           """Trie la liste L "in place" avec l'algorithme du tri à bulle"""
-          for i range(len(L) - 1):
+          for i in range(len(L) - 1):
               for j in range(len(L) - 1 - i):
                   if L[j] > L[j+1]:
                       L[j], L[j+1] = L[j+1], L[j]
@@ -108,27 +109,27 @@
 
     #text(
         fill: green,
-    )[Réfléchisser à d'autres manières de trier une liste. Comment procédez-vous, naturellement, si on vous demande de trier la liste [4, 1, 2, 8, 3, 1, 9] ? ]
+    )[Réfléchissez à d'autres manières de trier une liste. Comment procédez-vous, naturellement, si on vous demande de trier la liste [4, 1, 2, 8, 3, 1, 9] ? ]
 ]
 
 
 #slide[
-    = Tri par séléction
+    = Tri par sélection
 
     Idée : On prend d'abord le minimum de la liste, et on le place au début. Puis on répète sur le reste de la liste.
 
     ```python
       def tri_selection(L):
-          """Trie la liste L "in place" avec l'algorithme du tri par séléction"""
-          for i range(len(L) - 1):
+          """Trie la liste L "in place" avec l'algorithme du tri par sélection"""
+          for i in range(len(L) - 1):
               el_min = L[i]
-              for j in range(i + 1, len(L) - 1):
+              for j in range(i + 1, len(L)):
                   if L[j] < el_min:
                       el_min, L[j] = L[j], el_min
               L[i] = el_min
     ```
 
-    #text(fill: green)[Quelle est la complexité du tri par séléction ? Avec n = len(L).]
+    #text(fill: green)[Quelle est la complexité du tri par sélection ? Avec n = len(L).]
 ]
 
 
@@ -142,13 +143,14 @@
     ```python
       def insere(L_triee, x):
           """Insère l'élément x à sa place dans la liste triée L_triee in-place"""
-          for i in range(len(L)):
+          for i in range(len(L_triee)):
               if L_triee[i] > x:
                   L_triee.insert(i, x)
                   return
+          L_triee.append(x)
     ```
 
-    #text(fill: green)[Quelle est la complexité de la fonction insere ? Avec n = len(L).]
+    #text(fill: green)[Quelle est la complexité de la fonction insere ? Avec n = len(L_triee).]
 ]
 
 
@@ -176,10 +178,11 @@
     ```python
 
       def insere(L_triee, x):
-          for i in range(len(L)):
+          for i in range(len(L_triee)):
               if L_triee[i] > x:
                   L_triee.insert(i, x)
                   return
+          L_triee.append(x)
 
       def tri_insertion(L):
           L_triee = []
@@ -195,7 +198,7 @@
 #slide[
     = Tri par insertion in-place
 
-    On va faire une fonction `insere` qui prend en argument une liste L dont les k premiers éléments (0, 1, ..., k-1) sont triés dans l'ordre croissant, et un indice k.
+    On va faire une fonction `insere` qui prend en argument une liste L dont les k premiers éléments (0, 1, ..., k-1) sont triés dans l'ordre croissant, un indice k et un élément x.
 
     La fonction insère alors l'élément x dans les k premiers éléments de L, en écrasant l'élément d'indice k.
 
@@ -233,9 +236,9 @@
 #slide[
     = Propriétés
 
-    Que se passe-il dans chacun des algorithmes si la liste est déjà triée ? Si elle est "presque" triée ?
+    Que se passe-t-il dans chacun des algorithmes si la liste est déjà triée ? Si elle est "presque" triée ?
 
     #show: later
 
-    En fait, si on regarde la fonction du tri par insertion _in-place_, en particulier l'insertion, elle qu'une seule itération si l'élément est à sa place. Donc tout se passe comme si la liste était simplement parcouru une fois, pour une complexité _dans le meilleur cas_ en O(n).
+    En fait, si on regarde la fonction du tri par insertion _in-place_, en particulier l'insertion, elle ne fait qu'une seule itération si l'élément est à sa place. Donc tout se passe comme si la liste était simplement parcourue une fois, pour une complexité _dans le meilleur cas_ en O(n).
 ]

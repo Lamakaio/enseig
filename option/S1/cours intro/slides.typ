@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
     #set page(header: none, footer: none, margin: 3em)
@@ -21,27 +22,27 @@
 
     MPSI - option info
 
-    2025/2026
+    2026/2027
 ]
 
-#new-section[Le language OCaml]
+#new-section[Le langage OCaml]
 #slide[
     = Présentation générale
 
     #image("ocaml_logo.png", height: 20%)
 
-    OCaml est un language *fonctionnel*, basé en partie sur la récursivité, qui est utilisé en option informatique en prépa.
+    OCaml est un langage *fonctionnel*, basé en partie sur la récursivité, qui est utilisé en option informatique en prépa.
 
 ]
 
 #slide[
-    = Syntaxe de base du language
+    = Syntaxe de base du langage
     Capytale avec le code 1aed-9321855
 ]
 
 
 #slide[
-    = Etude de cas : les formules
+    = Étude de cas : les formules
 
     On étudie des _formules_  limitées :
     - des variables (qui sont des lettres)
@@ -74,7 +75,7 @@
 
     On se donne un ensemble de variables $V$. Une formule est
     - soit une variable $v in V$
-    - soit si $f_1$ est une formule
+    - soit, si $f_1$ et $f_2$ sont des formules
         - $-f_1$ la négation de $f_1$
         - $f_1 + f_2$ l'addition
         - $f_1 * f_2$ la multiplication

@@ -1,5 +1,5 @@
 #set page(paper: "a4", numbering: "1")
-#set document(title: "Devoir Surveillé n°2")
+#set document(title: "Devoir Surveillé n°1")
 #set heading(numbering: "I.1)")
 #import "../../../utils.typtp": *
 #import "@preview/diagraph:0.3.6": *
@@ -55,24 +55,24 @@ b)
     )
 ]
 
-#question[Donnez un automate deterministe correspondant aux langages suivants : ]
+#question[Donnez un automate déterministe correspondant aux langages suivants : ]
 a) Le langage des mots contenant le facteur `aba`.
 
 b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de `b`.
 
 
 
-= Racine carré d'un language (CCP 2019)
+= Racine carrée d'un langage (CCP 2019)
 
 == Définitions
 
-#def[Carré d'un language][
-    Soit $L$ un language. On note $L^2$ l'ensemble ${u u| u in L}$
+#def[Carré d'un langage][
+    Soit $L$ un langage. On note $L^2$ l'ensemble ${u u| u in L}$
 ]
 
 
-#def[Racine carré d'un language][
-    Soit $L$ un language. On note $sqrt(L)$ l'ensemble ${u | u u in L}$
+#def[Racine carrée d'un langage][
+    Soit $L$ un langage. On note $sqrt(L)$ l'ensemble ${u | u u in L}$
 ]
 
 
@@ -85,7 +85,6 @@ b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de 
     Décrire $sqrt(L)$ lorsque $Sigma = {a, b}$ et $L$ est décrit par l'expression rationnelle $b^star a^star b^star$
 ]
 
-==
 #def[Automates][
     Soient $A = (Q, Sigma, q_0, F, delta)$ un automate fini déterministe, $q'$ un élément de $Q$ et $F'$ une
     partie de Q. L'automate $(Q, Sigma, q', F', delta)$ est noté $A_(q',F')$ . Si on note $L$ le langage reconnu par $A$, $L_(q',F')$
@@ -93,7 +92,7 @@ b) Le langage des mots avec un nombre pair de `a` et un nombre multiple de 3 de 
 ]
 
 
-Ici, $L$ désigne le language reconnu par l'automate $A$ suivant :
+Ici, $L$ désigne le langage reconnu par l'automate $A$ suivant :
 
 #image("a1.png")
 
@@ -103,16 +102,16 @@ Ici, $L$ désigne le language reconnu par l'automate $A$ suivant :
 ]
 
 
-== Propriétés de la racine carré d'un language
+== Propriétés de la racine carrée d'un langage
 
 Ici, on fixe $L$ un langage rationnel sur un alphabet $Sigma$ et $A = (Q, Sigma, q_0, F, delta)$ un automate fini reconnaissant celui-ci.
 
 #question[
-    Soit $u in Sigma^star$. Montrez que $u in sqrt(L)$ si et seulement si il existe $q in Q$ tel que $u in L_(q_0, {q})$ et $u in L_(q, F)$.
+    Soit $u in Sigma^star$. Montrez que $u in sqrt(L)$ si et seulement s'il existe $q in Q$ tel que $u in L_(q_0, {q})$ et $u in L_(q, F)$.
 ]
 
 #question[
-    En déduire que $sqrt(L)$ est un language rationnel.
+    En déduire que $sqrt(L)$ est un langage rationnel.
 ]
 
 #question[
@@ -153,7 +152,7 @@ L'ensemble $O$ introduit la notion de _calcul réussi au seuil $s$_.
     Soit $cal(A)_O$ un automate augmenté et $s in NN$. Le _langage reconnu par_ $cal(A)_O$ _au seuil_ $s$, noté $L_s (cal(A)_O)$, est l'ensemble des calculs réussis par $cal(A)_O$ au seuil $s$.
 ]
 
-On considère, pour les questions 1 à 4, l'automate de la figure suivante, où $Q = {q_0, q_1, q_2}$, $Sigma = {a, b}$, $I = {q_0}$ et $F = {q_2}$.
+On considère, pour les questions 9 à 12, l'automate de la figure suivante, où $Q = {q_0, q_1, q_2}$, $Sigma = {a, b}$, $I = {q_0}$ et $F = {q_2}$.
 
 #figure(caption: [Automate exemple])[
     #raw-render(

@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
   #set page(header: none, footer: none, margin: 3em)
@@ -41,13 +42,13 @@
   #pseudocode-list(hooks: .5em, title: smallcaps[Recherche linéaire( L, x )], booktabs: true)[
     #underline()[Entrée] : L une liste, x un élément.
 
-    #underline()[Sortie] : true si x est dans le liste, false sinon.
+    #underline()[Sortie] : true si x est dans la liste, false sinon.
 
     + *Pour chaque* élément y dans la liste L
-    + *Si* x = y
-      + *Renvoyer* true
+      + *Si* x = y
+        + *Renvoyer* true
 
-    + *Renvoyer* faux
+    + *Renvoyer* false
   ]
 ]
 
@@ -55,7 +56,7 @@
 #slide[
   = Implémentation d'un algorithme
 
-  Une _implémentation_ d'un algorithme est une traduction de l'algorithme dans un language de programmation. Cela peut impliquer une réfléxion et des choix supplémentaires.
+  Une _implémentation_ d'un algorithme est une traduction de l'algorithme dans un langage de programmation. Cela peut impliquer une réflexion et des choix supplémentaires.
 
   #show: later
 
@@ -72,7 +73,7 @@
   def recherche_lineaire(L, x):
       """Cherche un élément x dans une liste L. Renvoie True si l'élément est présent, False sinon."""
       for y in L:
-          if x = = y:
+          if x == y:
               return True
       return False
 
@@ -85,12 +86,12 @@
 #slide[
   = Introduction
 
-  La _complexité_ d'un algorithme est une estimation du temps qu'il faut pour qu'il s'execute.
+  La _complexité_ d'un algorithme est une estimation du temps qu'il faut pour qu'il s'exécute.
 
   #show: later
 
   #def[Opération élémentaire][
-    On appelle _opération élémentaire_ toute opération "de base" d'un language : addition, multiplication, division, comparaisons, modulo ...
+    On appelle _opération élémentaire_ toute opération "de base" d'un langage : addition, multiplication, division, comparaisons, modulo ...
   ]
 
   On va compter les opérations élémentaires dans un programme ou un algorithme.
@@ -102,13 +103,13 @@
   #pseudocode-list(hooks: .5em, title: smallcaps[Recherche linéaire( L, x )], booktabs: true)[
     #underline()[Entrée] : L une liste, x un élément.
 
-    #underline()[Sortie] : true si x est dans le liste, false sinon.
+    #underline()[Sortie] : true si x est dans la liste, false sinon.
 
     + *Pour chaque* élément y dans la liste L
-    + *Si* x = y
-      + *Renvoyer* true
+      + *Si* x = y
+        + *Renvoyer* true
 
-    + *Renvoyer* faux
+    + *Renvoyer* false
   ]
 
   #show: later
@@ -122,7 +123,7 @@
   #table(
     columns: (1fr, 1fr),
     align: center,
-    [_Opération_], [_Cycles d'execution_],
+    [_Opération_], [_Cycles d'exécution_],
     [Addition, soustraction], [1],
     [Multiplication], [5],
     [If], [1 - 20],
@@ -137,7 +138,7 @@
 #slide[
   = Complexité asymptotique
 
-  On va seulement prendre l'ordre de grandeur du nombre d'opérations élémentaire, en fonction de la taille de l'entrée (en général nommée `n`).
+  On va seulement prendre l'ordre de grandeur du nombre d'opérations élémentaires, en fonction de la taille de l'entrée (en général nommée `n`).
 
   On utilise la notation _$O(...)$_, pour dire "au plus de l'ordre de ..."
 ]
@@ -160,10 +161,10 @@
 #slide[
   = Définition formelle
   #def[Notation $O()$][
-    On dit qu'une fonction $f$ est un "grand $O$" d'une fonction $g$ lorsque, si \
+    On dit qu'une fonction $f$ est un "grand $O$" d'une fonction $g$ lorsque \
     $exists C in NN, N_0 in NN "   tels que   " forall n >= N_0, " " f(n) < C dot g(n)$ \
 
-    Soit : Il existe une constante $C$, telle que, pour $n$ suffisemment grand, $g(n)$ soit majorée par $C dot g(n)$
+    Soit : Il existe une constante $C$, telle que, pour $n$ suffisamment grand, $f(n)$ soit majorée par $C dot g(n)$
   ]
 ]
 
@@ -210,7 +211,7 @@
   ```
   #show: later
 
-  On a `len(L)` itéations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
+  On a `len(L)` itérations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
 ]
 
 #slide[
@@ -218,7 +219,7 @@
 
   ```python
   def indice_max(L):
-      """Cherche l'élément d'indice maximal dans L"""
+      """Renvoie l'indice de l'élément maximal de L"""
       i_max = 0
       val_max = L[0]
       for i in range(1, len(L)):
@@ -230,6 +231,6 @@
   ```
   #show: later
 
-  On a `len(L)` itéations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
+  On a `len(L)` itérations de la boucle, et chaque itération est en $O(1)$. Donc $O("len(L)")$ au total.
 ]
 

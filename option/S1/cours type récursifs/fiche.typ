@@ -1,5 +1,5 @@
 #set page(paper: "a4", numbering: "1")
-#set document(title: "Algorithme polynomial pour le problème 2-SAT")
+#set document(title: "Cours types récursifs")
 #set heading(numbering: "I.1)")
 #import "../../../utils.typtp": *
 #import "@preview/diagraph:0.3.6": *
@@ -16,7 +16,7 @@ Idée : définir un ensemble d'objets "par récurrence".
 
 #def[Ensemble inductif][
     Un ensemble inductif E est défini par :
-    - Un ensemble K de _cas de bases_.
+    - Un ensemble K de _cas de base_.
     - Un ensemble $C$ de constructeurs, qui sont des fonctions $c: E^(k_c) -> E$ où $k_c in NN$.
 
 
@@ -27,7 +27,7 @@ Idée : définir un ensemble d'objets "par récurrence".
     Alors, on a $E = union.big_(n in NN) E_n$.
 ]
 
-En français : on peut appliquer les constructeurs autant de fois que nécessaires (en se limitant à un nombre fini) à partir des cas de base, pour obtenir tous les éléments de E.
+En français : on peut appliquer les constructeurs autant de fois que nécessaire (en se limitant à un nombre fini) à partir des cas de base, pour obtenir tous les éléments de E.
 
 
 #ex[
@@ -39,7 +39,7 @@ En français : on peut appliquer les constructeurs autant de fois que nécessair
 #ex[
     On peut définir les arbres comme :
     - soit une feuille `F`
-    - soit un noeud, composé de deux ou plus arbres !
+    - soit un noeud, composé de deux arbres ou plus !
 ]
 
 
@@ -61,7 +61,7 @@ Une valeur de type "classe" peut alors prendre une des 5 valeurs définies (et r
 
 #ex[
     ```ocaml
-        let ma_classe: classe = MPSI;;
+        let ma_classe: classe = MPSI_1;;
     ```
 ]
 
@@ -74,7 +74,7 @@ type classe =
     | MP_1
     | MP_2
     | MP_ET
-    | Autre of str
+    | Autre of string;;
 ```
 
 #ex[
@@ -94,13 +94,13 @@ La construction `match` est alors très utile, car elle permet de traiter sépar
         | MP_1 -> 38
         | MP_2 -> 36
         | MP_ET -> 40
-        | Autre nom -> (failwith "classe inconnue !" ^ nom)
+        | Autre nom -> failwith ("classe inconnue : " ^ nom)
     ```
 ]
 
 === Types récursifs
 
-On peut également faire des types récursifs, c'est à dire, utiliser le type "classe" dans sa propre définition !
+On peut également faire des types récursifs, c'est-à-dire, utiliser le type "classe" dans sa propre définition !
 
 Bien sûr, il faut que certains variants n'utilisent pas de type récursif, pour qu'on puisse "s'arrêter".
 
@@ -118,7 +118,7 @@ let classe5 = DoubleNiveau (DoubleNiveau (MP, PC), Autre "MPI");;
 == Petit point sur les listes
 
 
-En OCaml, on pourrait définir nous même un type de liste : 
+En OCaml, on pourrait définir nous-mêmes un type de liste : 
 
 ```ocaml
 type liste = Vide | El of int * liste;;

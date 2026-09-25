@@ -21,7 +21,7 @@ https://clogique.fr/nsi/premiere/gloutons/
 
 Les algorithmes _gloutons_ sont des algorithmes souvent simples, qui donnent une solution pas forcément exacte à un problème. C'est un peu "la solution évidente qui en fait ne fonctionne pas" dans la plupart des cas.
 
-Pour certaines applications, on va se satisfaire d'un tel algorithmes.
+Pour certaines applications, on va se satisfaire d'un tel algorithme.
 
 On va présenter deux exemples d'algorithmes gloutons.
 
@@ -70,12 +70,12 @@ L'exemple a peut-être l'air un petit peu "construit", mais des systèmes non ca
 
 Réponse : 48
 
-On ne connait de condition nécessaire et suffisante pour qu'un système soit canonique.
+On ne connaît pas de condition nécessaire et suffisante simple pour qu'un système soit canonique.
 
 
 = Construction d'emploi du temps
 
-Vous allez dans une convention / séminaire / etc, où un certain nombre d'événements et de conférences se produisent. Vous souhaitez assister a un maximum de conférences.
+Vous allez dans une convention / séminaire / etc, où un certain nombre d'événements et de conférences se produisent. Vous souhaitez assister à un maximum de conférences.
 
 #image("edt1.png")
 
@@ -88,7 +88,7 @@ On peut imaginer plusieurs algorithmes gloutons différents dans ce cas ! Dans t
 
 == Première solution : on les prend dans l'ordre de _début_.
 
-Contre exemple : une très longue conférence dés le début, puis plein de petites qui lui sont superposées :
+Contre-exemple : une très longue conférence dès le début, puis plein de petites qui lui sont superposées :
 
 ```
     |----------------------------------------| C1
@@ -106,7 +106,7 @@ A priori, si une conférence est courte, elle doit être plus facile à caser da
 
 Ici, C2 est la plus courte.
 
-== Celles qui interfèrent avec le moins d'autre conférences
+== Troisième solution : celles qui interfèrent avec le moins d'autres conférences
 
 A priori, si une conférence a peu de conflits, elle est plus intéressante.
 
@@ -118,20 +118,20 @@ A priori, si une conférence a peu de conflits, elle est plus intéressante.
   |---|                                   |---|
 ```
 
-Ici, C1 a le moins de conflit. Mais elle empêche de choisir C2 et C3, ce qui nous mène a un choix avec 3 conférences (alors qu'on peut faire 4 ! )
+Ici, C1 a le moins de conflits. Mais elle empêche de choisir C2 et C3, ce qui nous mène à un choix avec 3 conférences (alors qu'on peut faire 4 ! )
 
 
 
-== Troisième solution : on les prend dans l'ordre de _fin_.
+== Quatrième solution : on les prend dans l'ordre de _fin_.
 
-Essayez de trouver un contre exemple. Compliqué, non ?
+Essayez de trouver un contre-exemple. Compliqué, non ?
 
-Et bien en fait, c'est optimal !
+Eh bien en fait, c'est optimal !
 
 Pourquoi ?
 
-Soit $S$ l'ensemble des conférences. Considérons une allocation optimal $C^("opt")_1, ..., C^("opt")_n$. On considère les $C_1, ..., C_n$ triés temporellement. (Comme ils ne peuvent pas s'intersecter, ce n'est pas important si on trie par heure de début ou de fin.)
+Soit $S$ l'ensemble des conférences. Considérons une allocation optimale $C^("opt")_1, ..., C^("opt")_n$. On considère les $C_1, ..., C_n$ triés temporellement. (Comme ils ne peuvent pas s'intersecter, ce n'est pas important si on trie par heure de début ou de fin.)
 
-Soit $C^g_1$ la première activité choisie par l'algorithme glouton (soit celle qui termine en dernier). Alors, $C^g_1, C^("opt")_2, ..., C^("opt")_n$ reste une allocation valide, et donc elle est aussi optimale.
+Soit $C^g_1$ la première activité choisie par l'algorithme glouton (soit celle qui termine en premier). Alors, $C^g_1, C^("opt")_2, ..., C^("opt")_n$ reste une allocation valide, et donc elle est aussi optimale.
 
-On peut aussi noter que $C^("opt")_2, ..., C^("opt")_n$ est une allocation optimale pour les conférences \ $S \\ {"conférences intersectant avec" C^("opt")_1}$. On peut donc appliquer le même argument n fois, et $C_g^1, ..., C_g^n$ est une allocation valide, et donc optimale.
+On peut aussi noter que $C^("opt")_2, ..., C^("opt")_n$ est une allocation optimale pour les conférences \ $S \\ {"conférences intersectant avec" C^g_1}$. On peut donc appliquer le même argument n fois, et $C^g_1, ..., C^g_n$ est une allocation valide, et donc optimale.

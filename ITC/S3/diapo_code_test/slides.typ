@@ -3,6 +3,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
   #set page(header: none, footer: none, margin: 3em)
@@ -17,7 +18,7 @@
   #set text(size: .8em, weight: "light")
   Ambre Le Berre
 
-  2025/2026
+  2026/2027
 
   MP
 ]
@@ -37,9 +38,9 @@
   #show: later
 
   - Les noms des variables et fonctions sont en _`snake_case`_ en Python :
-  - tout en minuscule (sauf les acronymes)
-  - un underscore `_` entre les mots
-  - soit tout en français _sans accent_, soit tout en anglais, pas de mélange
+    - tout en minuscule (sauf les acronymes)
+    - un underscore `_` entre les mots
+    - soit tout en français _sans accent_, soit tout en anglais, pas de mélange
 ]
 
 #slide[
@@ -48,12 +49,12 @@
   On peut faire des calculs entre des valeurs ou des variables.
 
   ```Python
-  a = 3 + je_suis_une_variable
+  a = 3 + 4
   b = 13039 % 12
   ```
 
   #show: later
-  On met toujours des _espaces_ avant et après un opérateurs binaire. Pour un opérateurs unaire on ne met pas d'espace.
+  On met toujours des _espaces_ avant et après un opérateur binaire. Pour un opérateur unaire on ne met pas d'espace.
   ```Python
   calcul = 3 * 5
   nombre_negatif = -7
@@ -81,8 +82,8 @@
   ```Python
   def salue(personne):
     """
-    Prend en argument une personne (chaine de caractère) et la salue.
-    Renvoie un booléen, `true` si la salutation a été retournée.
+    Prend en argument une personne (chaine de caractères) et la salue.
+    Renvoie un booléen, `True` si la salutation a été retournée.
     """
     # code pour saluer une personne
   ```
@@ -107,14 +108,14 @@
 #slide[
   = Pré-conditions, post-conditions, invariant
 
-  Comment faire pour être certain qu'une boucle, ou qu'un bloc d'instruction, est correct ?
+  Comment faire pour être certain qu'une boucle, ou qu'un bloc d'instructions, est correct ?
 
   #show: later
 
   On écrit des conditions de la forme suivante :
   - une _pré-condition_ est respectée avant l'entrée dans la boucle.
-  - pendant toute l'execution de la boucle, un _invariant_ reste vrai.
-  - si c'est deux propriétés sont respectées, on en déduit une _post-condition_ qui sera vrai à la sortie de la bouvle.
+  - pendant toute l'exécution de la boucle, un _invariant_ reste vrai.
+  - si ces deux propriétés sont respectées, on en déduit une _post-condition_ qui sera vraie à la sortie de la boucle.
 ]
 
 #slide[
@@ -123,7 +124,7 @@
   ```python
   def somme(L):
       """
-      Cette fonction prend en argument une liste d'entier, et calcule et renvoie sa somme.
+      Cette fonction prend en argument une liste d'entiers, et calcule et renvoie sa somme.
       """
       S = 0
       # pré-condition
@@ -145,7 +146,7 @@
       ...
 
   def tri_insertion(L):
-      """Cette fonction prend en argument une liste d'entier, et renvoie une nouvelle liste triée avec l'algorithme du tri par insertion."""
+      """Cette fonction prend en argument une liste d'entiers, et renvoie une nouvelle liste triée avec l'algorithme du tri par insertion."""
       L_triee = []
       # pré-condition
       for i in range(len(L)):
@@ -159,10 +160,10 @@
 #slide[
   = Assertions
 
-  Les _assertions_ permettent de tester les conditions et invariants pendant l'execution du code.
+  Les _assertions_ permettent de tester les conditions et invariants pendant l'exécution du code.
 
   ```python
-  # pre-condition : la liste n'est pas vide
+  # pré-condition : la liste n'est pas vide
   assert len(L) > 0
   ```
 
@@ -176,13 +177,13 @@
   ```python
   def somme(L):
       """
-      Cette fonction prend en argument une liste d'entier, et calcule et renvoie sa somme.
+      Cette fonction prend en argument une liste d'entiers, et calcule et renvoie sa somme.
       """
       S = 0
-      #pre-condition : L est une liste d'entiers
+      #pré-condition : L est une liste d'entiers
       assert type(L) == list
       for i in range(len(L)):
-          # invariant : L[i] est un entier et S contient la somme de L[0:i+1].
+          # invariant : L[i] est un entier et S contient la somme de L[0:i].
           assert type(L[i]) == int
           S += L[i]
       # post-condition : S contient la somme de L.
@@ -214,7 +215,7 @@
 #slide[
   = Définitions
 
-  _Terminaison_ : On dit qu'un programme *termine* si son execution ne boucle *jamais* à l'infini, quelle que soit l'entrée.
+  _Terminaison_ : On dit qu'un programme *termine* si son exécution ne boucle *jamais* à l'infini, quelle que soit l'entrée.
 
   #show: later
 
@@ -245,5 +246,5 @@
 
   #show: later
 
-  _variant de boucle_ : quantité positive et strictement décroissante entre chaque tour de boucle.
+  _variant de boucle_ : quantité entière, positive ou nulle, et strictement décroissante entre chaque tour de boucle.
 ]

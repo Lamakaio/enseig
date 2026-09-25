@@ -5,6 +5,7 @@
 #import metropolis: focus, new-section
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
     #set page(header: none, footer: none, margin: 3em)
@@ -21,7 +22,7 @@
 
     MPSI
 
-    2025/2026
+    2026/2027
 ]
 
 #slide[
@@ -105,16 +106,16 @@
     ```py
     def recherche_dicho(L, x):
         """Si L est une liste triée dans l'ordre croissant, renvoie l'indice de x dans L, ou bien None si x n'est pas dans L."""
-        i = 0 #borne inf inclue
+        i = 0 #borne inf incluse
         j = len(L) #borne sup exclue
 
-        while (j - i) > 1:
+        while (j - i) > 0:
             milieu = (i + j) // 2
-            if L[milieu] > x:
+            if L[milieu] < x:
                 i = milieu + 1
-            elif L[milieu] < x:
+            elif L[milieu] > x:
                 j = milieu
-            else: #cas ou L[milieu] == x
+            else: #cas où L[milieu] == x
                 return milieu
         return None
     ```
@@ -123,7 +124,7 @@
 #slide[
     = Complexité
 
-    Combien de tour de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
+    Combien de tours de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
 
     #show: later
 
@@ -135,7 +136,7 @@
 #slide[
     = Recherche du 0 d'une fonction
 
-    Supposons qu'on ai une fonction $f$ quelconque et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, tel que $f(a) < 0$ et $f(b) > 0$.
+    Supposons qu'on ait une fonction $f$ quelconque et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, tel que $f(a) < 0$ et $f(b) > 0$.
 
     On peut appliquer le même principe !
 ]
@@ -145,9 +146,9 @@
 
     ```py
     def recherche_zero(f, a, b, eps):
-        """Si f(a) < 0 et f(b) > 0, renvoie un zero de f sur [a, b] à eps près."""
+        """Si f(a) < 0 et f(b) > 0, renvoie un zéro de f sur [a, b] à eps près."""
         while b - a > eps:
-            milieu = a + b / 2
+            milieu = (a + b) / 2
             if f(milieu) < 0:
                 a = milieu
             else:
@@ -162,7 +163,7 @@
     ```py
     def recherche_zero(f, a, b, eps):
         milieu = (a + b) / 2
-        if b-a < = eps:
+        if b-a <= eps:
             return milieu
         elif f(milieu) < 0:
             return recherche_zero(f, milieu, b, eps)
@@ -179,13 +180,13 @@
     def exp_rapide(x, n):
         """Calcule x^n en O(log(n))"""
         c = 1
-        while n ! = 0:
-            if n % 2 = = 0:
-                n / = 2
+        while n != 0:
+            if n % 2 == 0:
+                n //= 2
                 x *= x
             else:
                 c *= x
-                x -= 1
+                n -= 1
         return c
     ```
 
@@ -203,7 +204,7 @@
         i2 = 0
         while i1 < len(L1) or i2 < len(L2):
             if i1 < len(L1) and \
-                    (i2 = = len(L2) or L1[i1] < L2[i2]):
+                    (i2 == len(L2) or L1[i1] < L2[i2]):
                 resultat.append(L1[i1])
                 i1 += 1
             else:
@@ -220,7 +221,7 @@
 
     ```py
     def tri_fusion(L):
-        if len(L) < = 1:
+        if len(L) <= 1:
             return L[:]
         milieu = len(L)//2
 
@@ -244,7 +245,7 @@
 
     ```py
     def tri_rapide(L):
-        if len(L) < = 1:
+        if len(L) <= 1:
             return L[:]
         pivot = L[0]
         plus_petit = []

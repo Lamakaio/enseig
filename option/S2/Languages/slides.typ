@@ -4,13 +4,14 @@
 #import "../../../utils.typtp": *
 
 #show: metropolis.setup
+#show raw: set text(ligatures: false, features: (calt: 0))
 
 #slide[
   #set page(header: none, footer: none, margin: 3em)
 
 
   #text(size: 1.3em)[
-    *Languages et expressions régulières*
+    *Langages et expressions régulières*
   ]
 
   #metropolis.divider
@@ -18,7 +19,7 @@
   #set text(size: .8em, weight: "light")
   Ambre Le Berre
 
-  2025/2026
+  2026/2027
 
   MP option info
 ]
@@ -47,7 +48,7 @@
 
 
 #slide[
-  = Vocabulaires sur les mots
+  = Vocabulaire sur les mots
 
   Soit $m = m_1 m_2 dots m_n in Sigma^*$ un mot.
   - un _préfixe_ de $m$ est un mot $m_1 dots m_i$ avec $0 <= i <= n$.
@@ -56,7 +57,7 @@
   - un _suffixe_ de $m$ est un mot $m_(i+1) dots m_n$ avec $0 <= i <= n$.
   #show: later
 
-  - un _facteur_ de $m$ est un mot $m_i dots m_j$ avec $0 <= i, j <= n$.
+  - un _facteur_ de $m$ est un mot $m_i dots m_j$ avec $1 <= i <= j <= n$, ou le mot vide.
   #show: later
 
   - un _sous-mot_ de $m$ est un mot $m_(i_1) m_(i_2) ... m_(i_k)$ avec $i_1 < i_2 < dots < i_k in [|1, n|]$
@@ -67,27 +68,27 @@
 
 
 #slide[
-  = Languages
-  - Un _language_ est un ensemble $L subset.eq Sigma^*$ de mots sur un alphabet
+  = Langages
+  - Un _langage_ est un ensemble $L subset.eq Sigma^*$ de mots sur un alphabet
   #show: later
 
-  - On note $emptyset$ le language vide (à ne pas confondre avec ${epsilon}$ )
+  - On note $emptyset$ le langage vide (à ne pas confondre avec ${epsilon}$ )
 ]
 
-#new-section[Expression régulière, languages réguliers]
+#new-section[Expression régulière, langages réguliers]
 
 #slide[
-  = Opérations régulières sur les languages
+  = Opérations régulières sur les langages
 
-  On défini plusieurs _opérations_ dites _régulières_ sur les languages. Soit $L_1, L_2$ deux languages sur un alphabet $Sigma$.
+  On définit plusieurs _opérations_ dites _régulières_ sur les langages. Soit $L_1, L_2$ deux langages sur un alphabet $Sigma$.
 
-  - $L_1 union L_2 = {u | u in L_1 "ou" u in L_2}$ est l'_union_ des languages.
+  - $L_1 union L_2 = {u | u in L_1 "ou" u in L_2}$ est l'_union_ des langages.
   #show: later
 
-  - $L_1 L_2 = {u v | u in L_1, v in L_2}$ est la _concaténation_ des languages.
+  - $L_1 L_2 = {u v | u in L_1, v in L_2}$ est la _concaténation_ des langages.
   #show: later
 
-  - $L_1^* = {u_1 u_2 dots u_n | n in NN, u_1 dots u_n in L_1}$ l'_étoile de Kleene_ d'un language (ou juste _étoile_).
+  - $L_1^* = {u_1 u_2 dots u_n | n in NN, u_1 dots u_n in L_1}$ l'_étoile de Kleene_ d'un langage (ou juste _étoile_).
   #show: later
 
   - L'intersection et la soustraction ensembliste ne sont pas des opérations régulières !
@@ -97,18 +98,19 @@
   = Expressions régulières
 
 
-  On utilise _expressions régulières_ pour définir une partie des languages.
+  On utilise les _expressions régulières_ pour définir une partie des langages.
 
   *Définition inductive*
-  - Cas de bases :
-    - $epsilon$ est une expression régulière représentant le language ${epsilon}$
-    - si $a in Sigma$, $a$ est une expression régulière représentant le language ${a}$.
+  - Cas de base :
+    - $emptyset$ est une expression régulière représentant le langage vide $emptyset$
+    - $epsilon$ est une expression régulière représentant le langage ${epsilon}$
+    - si $a in Sigma$, $a$ est une expression régulière représentant le langage ${a}$.
   #show: later
 
-  - Cas inductifs : si $e_1, e_2$ sont des expressions regulières qui représentent des languages $L_1$ et $L_2$, alors
-    - $e_1^*$ représente le language $L_1^*$
-    - $e_1 | e_2$ représente le language $L_1 union L_2$
-    - $e_1 e_2$ représente le language $L_1 L_2$
+  - Cas inductifs : si $e_1, e_2$ sont des expressions régulières qui représentent des langages $L_1$ et $L_2$, alors
+    - $e_1^*$ représente le langage $L_1^*$
+    - $e_1 | e_2$ représente le langage $L_1 union L_2$
+    - $e_1 e_2$ représente le langage $L_1 L_2$
 ]
 
 #slide[
@@ -125,7 +127,7 @@
 #slide[
   = Quelques exemples
 
-  Décrivez, en quelques mots, les languages décrits par les expressions régulières suivantes sur l'alphabet $Sigma = {a, b}$:
+  Décrivez, en quelques mots, les langages décrits par les expressions régulières suivantes sur l'alphabet $Sigma = {a, b}$:
 
   - $(a|b)^*$
 
@@ -139,7 +141,7 @@
 #slide[
   = Dans l'autre sens
 
-  Donnez des expressions régulières pour les languages suivants :
+  Donnez des expressions régulières pour les langages suivants :
 
   - les mots qui contiennent "abba"
 
@@ -151,29 +153,29 @@
 ]
 
 #slide[
-  = Language régulier / rationnel
+  = Langage régulier / rationnel
 
-  Un language _régulier_ ou _rationnel_ est un language qui peut être représenté par une expression régulière.
+  Un langage _régulier_ ou _rationnel_ est un langage qui peut être représenté par une expression régulière.
 
-  Q : Est ce que tous les languages sont réguliers ?
+  Q : Est-ce que tous les langages sont réguliers ?
   #show: later
   Non !
 ]
 
 #slide[
-  = Un exemple de language non régulier
+  = Un exemple de langage non régulier
 
-  Le language $L_0 = {a^n b^n | n in NN}$ n'est pas régulier.
+  Le langage $L_0 = {a^n b^n | n in NN}$ n'est pas régulier.
 
   #show: later
 
-  *Intuition* : les expressions régulières ont toujours une "mémoire" finie. Entre autre, elle ne peuvent pas "compter" $n$ "a" pour attendre ensuite le même nombre de "b".
+  *Intuition* : les expressions régulières ont toujours une "mémoire" finie. Entre autres, elles ne peuvent pas "compter" $n$ "a" pour attendre ensuite le même nombre de "b".
 ]
 
 #slide[
   = _Lemme de l'étoile_ (première version)
 
-  Soit $L$ un language régulier. Alors il existe $N$, tel que pour tout mot $u in L$ avec $|u| >= N$, il existe une décomposition $u = x y z$, telle que :
+  Soit $L$ un langage régulier. Alors il existe $N$, tel que pour tout mot $u in L$ avec $|u| >= N$, il existe une décomposition $u = x y z$, telle que :
 
   - $ |x y| <= N $
 
@@ -183,23 +185,23 @@
 ]
 
 #slide[
-  = Montrer qu'un language n'est pas rationnel
+  = Montrer qu'un langage n'est pas rationnel
 
-  Montrons que $L_0$ n'est pas rationnel par l'absurde : si L_0 est rationnel, alors, soit $N in NN$ suffisemment grand pour appliquer le lemme de l'étoile.
+  Montrons que $L_0$ n'est pas rationnel par l'absurde : si $L_0$ est rationnel, alors, soit $N in NN$ suffisamment grand pour appliquer le lemme de l'étoile.
 
-  On prend le mot $u = a^(N+1) b^(N+1) in L_0$. Supposons qu'il existe $x y z = u$ tel que $ |x y| <= N, y != epsilon "et" x y^* z subset.eq L $
+  On prend le mot $u = a^(N+1) b^(N+1) in L_0$. Supposons qu'il existe $x y z = u$ tel que $ |x y| <= N, y != epsilon "et" x y^* z subset.eq L_0 $
 
   #show: later
 
   Alors, comme $|x y| <= N$, $x$ et $y$ sont de la forme $a^p$ et $a^k$, et $z$ est de la forme $a^l b^(p + k + l)$.
 
-  Donc, $a^p (a^k)^* a^l b^(p + k + l) subset.eq L_0$. Entre autre, $a^(p + 2k + l) b^(p + k + l) in L_0$. Absurde !
+  Donc, $a^p (a^k)^* a^l b^(p + k + l) subset.eq L_0$. Entre autres, $a^(p + 2k + l) b^(p + k + l) in L_0$. Absurde !
 ]
 
 #slide[
   = Exercice
 
-  Montrer que le language $L_p = {u_1 u_2 dots u_k | u_1 u_2 dots u_k = u_k dots u_2 u_1}$ le language des palindromes, n'est pas rationnel.
+  Montrer que le langage $L_p = {u_1 u_2 dots u_k | u_1 u_2 dots u_k = u_k dots u_2 u_1}$ le langage des palindromes, n'est pas rationnel.
 
   #show: later
 
@@ -208,7 +210,7 @@
 
 
 #slide[
-  = Expressions régulière en pratique
+  = Expressions régulières en pratique
 
   La plupart des éditeurs de texte vous permettent de rechercher des expressions régulières :
 
@@ -217,22 +219,22 @@
 
 
 #slide[
-  = Expressions régulière en pratique
+  = Expressions régulières en pratique
 
   Syntaxe :
-  - `.` $->$ n'importe que caractère (sauf `\n`)
+  - `.` $->$ n'importe quel caractère (sauf `\n`)
   - `\s` $->$ n'importe quel espace / tab / etc
-  - `\w` $->$ n'importe quelle lettre
-  - `[abfg ]` $->$ un des caractère parmis "a" "b" "f" "g" et " ".
-  - `[^ab ]` $->$ tout sauf un des caractères parmis "a" "b" " ".
-  - `*`, `+`, `?`, `|` $->$ comme ce qu'on a vous
+  - `\w` $->$ n'importe quelle lettre, chiffre ou `_`
+  - `[abfg ]` $->$ un des caractères parmi "a" "b" "f" "g" et " ".
+  - `[^ab ]` $->$ tout sauf un des caractères parmi "a" "b" " ".
+  - `*`, `+`, `?`, `|` $->$ comme ce qu'on a vu
 ]
 
 #slide[
-  = Expressions régulière en pratique
+  = Expressions régulières en pratique
 
   Remplacement :
   - `$0` $->$ tout
-  - `$1` $->$ la première partie entre parenthèse
+  - `$1` $->$ la première partie entre parenthèses
   - `$2` $->$ la deuxième, etc.
 ]

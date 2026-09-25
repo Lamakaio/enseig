@@ -52,28 +52,28 @@ On a vu comment on peut trier une liste. Comment utiliser ce tri pour chercher u
 ```py
 def recherche_dicho(L, x):
     """Si L est une liste triée dans l'ordre croissant, renvoie l'indice de x dans L, ou bien None si x n'est pas dans L."""
-    i = 0 #borne inf inclue
+    i = 0 #borne inf incluse
     j = len(L) #borne sup exclue
 
     while (j - i) > 0:
         milieu = (i + j) // 2
-        if L[milieu] > x:
+        if L[milieu] < x:
             i = milieu + 1
-        elif L[milieu] < x:
+        elif L[milieu] > x:
             j = milieu
-        else: #cas ou L[milieu] == x
+        else: #cas où L[milieu] == x
             return milieu
     return None
 ```
 
 
-Combien de tour de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
+Combien de tours de boucle au maximum pour une liste de taille 8 ? De taille 16 ? Et pour $2^n$ en général ?
 
 En fait, la complexité est _logarithmique_, soit  en $O(log(n))$.
 
 == Recherche du 0 d'une fonction
 
-Supposons qu'on ai une fonction $f$ croissante et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, avec $f(a) < 0$ et $f(b) > 0$.
+Supposons qu'on ait une fonction $f$ croissante et qu'on cherche où elle s'annule sur un intervalle $[a, b]$, avec $f(a) < 0$ et $f(b) > 0$.
 
 On peut appliquer le même principe !
 
@@ -84,9 +84,9 @@ Voir l'animation geogebra sur https://tpprepa.github.io/dichotomie.html .
 
 ```py
 def recherche_zero(f, a, b, eps):
-    """Si f(a) < 0 et f(b) > 0, renvoie un zero de f sur [a, b] à eps près."""
+    """Si f(a) < 0 et f(b) > 0, renvoie un zéro de f sur [a, b] à eps près."""
     while b - a > eps:
-        milieu = a + b / 2
+        milieu = (a + b) / 2
         if f(milieu) < 0:
             a = milieu
         else:
@@ -99,9 +99,9 @@ Le programme s'arrête quand :
 $ (b-a)/2^n <= "eps" $
 $ "Soit :" n >= log_2((b-a)/"eps") $
 
-On a donc, en ordre de grandeur de complexité, $O(log((b-a)/"eps"))$ tours de boucles (et opération, car chaque tour de boucle fait un nombre constant d'opérations.)
+On a donc, en ordre de grandeur de complexité, $O(log((b-a)/"eps"))$ tours de boucles (et d'opérations, car chaque tour de boucle fait un nombre constant d'opérations.)
 
-Les concepteurs de sujet aiment bien tout ce qui touche aux applications physique, donc c'est vraiment le genre d'algorithme qui tombe !
+Les concepteurs de sujet aiment bien tout ce qui touche aux applications physiques, donc c'est vraiment le genre d'algorithme qui tombe !
 
 == Exponentiation rapide
 
@@ -109,7 +109,7 @@ On peut appliquer ce même principe de "couper en deux" sur des problèmes où c
 
 Ici, en prenant x un flottant (= un nombre à virgule) et n un entier positif, on veut calculer $x^n$ de manière efficace.
 
-_méthode naive :_ on peut faire $ underbrace(x*x*x* dots *x*x, n "fois") $ pour un total de $n-1$ multiplications.
+_méthode naïve :_ on peut faire $ underbrace(x*x*x* dots *x*x, n "fois") $ pour un total de $n-1$ multiplications.
 
 Mais on peut faire mieux !
 
@@ -128,13 +128,13 @@ _ex_
 def exp_rapide(x, n):
     """Calcule x^n en O(log(n)), avec x un flottant et n un entier positif"""
     reste = 1
-    while n ! = 0:
-        if n % 2 = = 0:
-            n / = 2
+    while n != 0:
+        if n % 2 == 0:
+            n //= 2
             x *= x
         else:
             reste *= x
-            x -= 1
+            n -= 1
     return reste
 ```
 
@@ -148,7 +148,7 @@ def exp_rapide(x, n):
     [25], [3], [5],
     [25], [2], [125],
     [625], [1], [125],
-    [625], [0], text(fill: red.darken(20%))[125*635],
+    [625], [0], text(fill: red.darken(20%))[125*625],
 )
 
 
@@ -156,7 +156,7 @@ def exp_rapide(x, n):
 
 On va réutiliser l'idée de couper en deux, mais cette fois pour trier une liste. Le tri fusion (ou "partition-fusion") est en 3 étapes :
 
-+ Couper la liste à trier en deux part égales
++ Couper la liste à trier en deux parts égales
 + Trier chaque partie séparément
 + Fusionner les deux parties triées
 
@@ -196,9 +196,9 @@ def fusion(L1, L2):
     resultat = []
     i1 = 0
     i2 = 0
-    #On transfère les éléments tant qu'on a terminé aucune des deux listes
+    #On transfère les éléments tant qu'on n'a terminé aucune des deux listes
     while i1 < len(L1) and i2 < len(L2):
-        if L1[i1] < L2[i2]):
+        if L1[i1] < L2[i2]:
             resultat.append(L1[i1])
             i1 += 1
         else:
@@ -211,7 +211,7 @@ def fusion(L1, L2):
 
     resultat = resultat + reste1 + reste2
 
-    #Une seule des deux boucles "for" sera non-vide (grâce à la condition du "while")
+    #Un seul des deux restes sera non vide (grâce à la condition du "while")
 
     return resultat
 ```
@@ -221,10 +221,8 @@ def fusion(L1, L2):
 
 ```py
 def tri_fusion(L):
-    if len(L) < = 1:
+    if len(L) <= 1:
         return L[:]
-    milieu = len(L)//2
-
     #partition
     moitie_1, moitie_2 = partition(L)
 

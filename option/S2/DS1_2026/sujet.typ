@@ -7,11 +7,10 @@
 #align(center, text(17pt)[
     *Option Informatique MP, DS n°1*
 ])
-Dans ce sujet, $Sigma = {a, b}$.
 
 = Quelques exercices
 
-#question[Quels sont les langages reconnus par ces automates ? Déterminisez-les, et donnez une expression régulière correspondante.]
+#question[Quels sont les langages reconnus par ces automates ? Donnez une expression régulière correspondante.]
 
 a)
 #figure(caption: [$A_1$])[
@@ -23,7 +22,7 @@ a)
           2 [shape=doublecircle]
           "" [shape=none]
           "" -> 0
-          0 -> 0 [label="a, b"]
+          0 -> 0 [label="a"]
           0 -> 1 [label="b"]
           1 -> 2 [label="a, b"]
         }
@@ -43,12 +42,10 @@ b)
           "" -> 0
           0 -> 1 [label=a]
           0 -> 3 [label="b"]
-          0 -> 0 [label="a, b"]
-          1 -> 1 [label="a, b"]
-          3 -> 3 [label="a, b"]
+          1 -> 1 [label="b"]
+          3 -> 3 [label="a"]
           3 -> 2 [label="b"]
           1 -> 2 [label="a"]
-          
           
         }
         ```,
@@ -120,77 +117,114 @@ Ici, on fixe $L$ un langage rationnel sur un alphabet $Sigma$ et $A = (Q, Sigma,
 
 
 
-= Automates augmentés (CCP 2022)
+= Automates et reconnaissance de motifs (CCP 2024)
 
-L'objectif de cette partie est de proposer quelques éléments autour d'un automate, dit augmenté, construit autour d'un automate fini non déterministe et d'un sous-ensemble d'états.
 
-#def[Automate fini non déterministe][
-    Un _automate fini non déterministe_ est un quintuplet $cal(A) = (Q, Sigma, I, delta, F)$ avec :
-    - $Q$ un ensemble fini non vide d'états, de cardinal $|Q|$ ;
-    - $Sigma$ un alphabet ;
-    - $I subset Q$ l'ensemble des états initiaux ;
-    - $delta : Q times Sigma -> cal(P)(Q)$ une fonction de transition : si $q in Q$ et $a in Sigma$, $delta(q, a)$ désigne l'ensemble des états $q'$ de $Q$ tels qu'il existe une transition étiquetée par $a$ de $q$ vers $q'$ ;
-    - $F subset Q$ l'ensemble des états finaux.
-]
+Un alphabet $A$ est un ensemble fini non vide d'éléments appelés lettres. Un mot défini sur $A$ est une suite finie d'éléments de $A$. Le mot vide sera noté $epsilon$. L'ensemble des mots sur l'alphabet $A$ est noté $A^star$. La longueur d'un mot $x$, notée $|x|$, est le nombre de lettres de ce mot. Pour $i$ allant de $0$ à $|x| - 1$, $x_i$ désignera la lettre en position $i$. Ainsi, $a a b$ est un mot de longueur 3, sur tout alphabet contenant les lettres $a$ et $b$.
 
-#def[Automate augmenté][
-    Soient $cal(A) = (Q, Sigma, I, delta, F)$ un automate fini non déterministe et $O subset Q$ un sous-ensemble d'états de $Q$. On appelle _automate augmenté_ par $O$ la paire $(cal(A), O)$, que l'on notera par la suite $cal(A)_O$.
-]
+Un mot $x$ est un _facteur_ d'un mot $y$ s'il existe 2 mots $u$ et $v$ tels que $y = u x v$. Dans ce cas, on dit qu'il y a une _occurrence_ de $x$ dans $y$. Quand $u = epsilon$, $x$ est un _préfixe_ de $y$ et quand $v = epsilon$, $x$ est un _suffixe_ de $y$.
 
-La notion de calcul est la même entre $cal(A)$ et $cal(A)_O$ : un calcul dans $cal(A)$ est une séquence d'états $q_1 dots.c q_n$ de $Q$ telle qu'il existe toujours au moins une transition entre deux états successifs de cette séquence. Le mot construit par concaténation des étiquettes de chacune des transitions est alors reconnu par l'automate.
+Soit $x$ un mot non vide. Un entier $0 < p <= |x|$ est une _période_ de $x$ si $x_i = x_(i+p)$ pour $0 <= i <= |x| - p - 1$. On définit _la période_ de $x$ comme étant la plus petite des périodes.
 
-L'ensemble $O$ introduit la notion de _calcul réussi au seuil $s$_.
+Un _bord_ d'un mot non vide $x$ est un facteur de $x$, différent de $x$ et qui est à la fois un préfixe et un suffixe de la chaîne de caractères. Par exemple, $epsilon$, $a$, $a a$, $a a b a a$ sont les bords du mot $a a b a a b a a$. On note $"Bord"(x)$ le plus long bord de $x$. On constate que lorsqu'il est défini, le bord d'un bord d'un mot $x$ est aussi un bord de $x$. On le note $"Bord"^2 (x)$. On définit ainsi récursivement $"Bord"^n (x)$ avec $n$ un entier naturel.
 
-#def[Calcul réussi au seuil $s$][
-    Soit $cal(A)_O$ un automate augmenté. Un calcul passant par les états $q_i in Q$, $i in [|0, n|]$ est dit _réussi au seuil_ $s in NN$ si :
-    + $q_0 in I$ ;
-    + $q_n in F$ ;
-    + pour tout $i >= 0$ tel que $i + s <= n$, ${q_i, dots, q_(i+s)} inter O != emptyset$.
-]
+#question[Justifier le fait que tout mot non vide possède au moins une période.]
 
-#def[Langage reconnu par un automate augmenté au seuil $s$][
-    Soit $cal(A)_O$ un automate augmenté et $s in NN$. Le _langage reconnu par_ $cal(A)_O$ _au seuil_ $s$, noté $L_s (cal(A)_O)$, est l'ensemble des calculs réussis par $cal(A)_O$ au seuil $s$.
-]
-
-On considère, pour les questions 9 à 12, l'automate de la figure suivante, où $Q = {q_0, q_1, q_2}$, $Sigma = {a, b}$, $I = {q_0}$ et $F = {q_2}$.
-
-#figure(caption: [Automate exemple])[
-    #raw-render(
-        ```dot
-        digraph {
-          rankdir=LR
-          node [shape=circle]
-          q2 [shape=doublecircle]
-          "" [shape=none]
-          "" -> q0
-          q0 -> q0 [label=b]
-          q0 -> q1 [label=a]
-          q1 -> q2 [label=a]
-          q2 -> q2 [label=b]
-        }
-        ```,
-    )
-]
-
-#question[Donner sans justification $L_2 (cal(A)_{q_0})$.]
-
-#question[Donner, en justifiant votre réponse, $L_2 (cal(A)_{q_1})$.]
+#question[Déterminer la période du mot $x = a a b a a b a a$ défini sur l'alphabet $A = {a, b}$.]
 
 #question[
-    Soit $s in NN$. Donner, en justifiant votre réponse, le cardinal de $L_s (cal(A)_emptyset)$, où $emptyset$ est l'ensemble vide.
+    Soit $x$ une chaîne de caractères non vide et $p$ un entier naturel tel que $0 < p <= |x|$. Montrer que $p$ est une période de $x$ si et seulement s'il existe 3 chaînes de caractères $u, v, w$ telles que $x = u w = w v$ et $|u| = |v| = p$.
 ]
 
 #question[
-    Donner, sans justification, un majorant des calculs réussis au seuil $s$ ne passant par aucun état de $O$.
+    Soit $x$ une chaîne de caractères non vide et $n$ le plus grand entier tel que $"Bord"^n (x)$ est bien défini. On a donc $"Bord"^n (x) = epsilon$. Montrer par récurrence sur la longueur des mots que $"Bord"(x), "Bord"^2 (x), dots, "Bord"^n (x)$ est la suite des bords de $x$ dans l'ordre décroissant de leur longueur et que $|x| - |"Bord"(x)|, |x| - |"Bord"^2 (x)|, dots, |x| - |"Bord"^n (x)|$ est la suite des périodes de $x$ dans l'ordre croissant.
+]
+
+
+
+
+= Étude d'une famille d'automates (CCP 2023)
+
+Dans cette partie, l'alphabet $Sigma$ désigne l'ensemble ${0, 1}$, le symbole $epsilon$ désigne le mot vide et on rappelle que $Sigma^star$ désigne l'ensemble des mots sur l'alphabet $Sigma$.
+
+Étant donné un mot $w$, on rappelle que $|w|$ désigne la longueur du mot $w$ et l'indexation des lettres de $w$ commence par $0$. La première lettre de $w$ est donc $w_0$.
+
+La notation $"Card"(E)$ désigne le cardinal d'un ensemble $E$.
+
+Étant donnés un entier $n$ et un entier non nul $m$, la notation $n mod m$ désigne le reste de la division euclidienne de $n$ par $m$.
+
+== Définitions
+
+
+#def[Automate $A_(k,p)$, fonction indicatrice $L_(k,p)$][
+    Soient $p$ et $k$ deux entiers vérifiant $0 <= k <= p - 1$. L'automate $A_(k,p)$ est défini par :
+    - $Q = {0, 1, dots, p - 1} times {0, 1}$,
+    - $Sigma = {0, 1}$,
+    - $forall (c, e) in Q, delta((c, e), 0) = ((c + 1) mod p, e)$,
+    - $forall (c, e) in Q, delta((c, e), 1) = display(cases(
+            ((c + 1) mod p, 1 - e) & "si" c = k mod p,
+            ((c + 1) mod p, e) & "sinon."
+        ))$
+    - $q_0 = (0, 0)$,
+    - $F = {0, 1, dots, p - 1} times {1}$.
+
+    On note $L_(k,p)$ la fonction indicatrice de l'ensemble des mots reconnus par $A_(k,p)$. Soit autrement :
+    $
+        forall u in Sigma^star, L_(k,p) (u) = cases(
+            1 & "si" A_(k,p) "reconnaît" u,
+            0 & "sinon."
+        )
+    $
+]
+
+== Exemples et propriétés élémentaires des $A_(k,p)$
+
+#question[
+    Soit $w in Sigma^star$. Expliciter sans démonstration l'état $delta^star (q_0, w)$, la lecture du mot étant effectuée dans l'automate $A_(1,3)$. On pourra s'aider d'une représentation graphique de l'automate.
+]
+
+Dans les questions suivantes, $p$ et $k$ désignent des entiers tels que $p > 2$ et $k in {0, 1, dots, p - 1}$.
+
+#question[
+    Soit $w in Sigma^star$. Expliciter l'état $delta^star (q_0, w)$, la lecture du mot étant effectuée dans l'automate $A_(k,p)$. On ne demande pas de démonstration.
+]
+
+Un corollaire direct du résultat de la question précédente est que l'ensemble des mots reconnus par l'automate $A_(k,p)$ est égal à :
+$
+    {w in Sigma^star mid(|) "Card"({m in NN | p m + k <= |w| - 1 "et" w_(p m + k) = 1}) "est impair"}.
+$
+Dans la suite du problème, on admet ce résultat.
+
+#question[
+    Soit $w$ un mot reconnu par un automate $A_(k,p)$. Montrer que $w$ est reconnu par au moins un autre automate parmi $A_(0,2)$, $A_(1,2)$, $A_(l,p)$ avec $l != k$.
+]
+
+#def[Ou exclusif étendu aux mots binaires][
+    On rappelle que le _Ou exclusif_, qu'on note $xor$, est une opération définie sur ${0, 1}$ par :
+    $ 0 xor 0 = 1 xor 1 = 0 "et" 0 xor 1 = 1 xor 0 = 1. $
+    Soient $n in NN$, $u$ et $v$ deux éléments de ${0, 1}^n$. On définit le _Ou exclusif_ de $u$ et $v$, noté $u xor v$, le mot de longueur $n$ défini par :
+    $ forall i in {0, 1, dots, n - 1}, (u xor v)_i = u_i xor v_i. $
 ]
 
 #question[
-    Soit maintenant un calcul réussi au seuil $s$ qui passe au moins par un état de $O$. On note $tilde(q) = q_0 dots.c q_l$ la suite des états correspondants et $i_0 dots.c i_k in [|0, l|]$ la suite des indices dans $tilde(q)$ correspondant aux états de $O$. Donner, sans justification, en fonction de $s$ :
-    + une majoration de $i_0$ ;
-    + un encadrement de $i_k$ ;
-    + une majoration de $i_(j+1) - i_j$ pour $j in [|0, k-1|]$.
+    Soient $u$ et $v$ deux mots de $Sigma^star$ de même longueur. Montrer que :
+    $ L_(k,p) (u xor v) = L_(k,p) (u) xor L_(k,p) (v). $
 ]
 
 #question[
-    Soit $cal(A)_O$ un automate augmenté, avec $|Q| = p$, où $Q$ est l'ensemble des états de l'automate. Pour $s in NN$, construire, en justifiant votre construction, un automate fini à $(s+1) p$ états reconnaissant $L_s (cal(A)_O)$.
+    Soit $w$ un mot binaire vérifiant :
+    $ L_(0,2) (w) = L_(1,2) (w) = 0 "et" forall k in {1, 2, dots, p - 1}, L_(k,p) (w) = 0. $
+    + Montrer que $L_(0,p) (w) = 0$.
+    + En déduire que pour tout mot $w' in 0^star dot w$, on a :
+        $ L_(0,2) (w') = L_(1,2) (w') = 0 "et" forall k in {1, 2, dots, p - 1}, L_(k,p) (w') = 0. $
 ]
+
+#question[
+    Montrer que pour tout $w in Sigma^star$ et $w' in w dot 0^star$, on a $L_(k,p) (w) = L_(k,p) (w')$.
+]
+
+#rq[
+    _Ces égalités permettent la construction d'une relation d'équivalence sur les mots qui est utilisée pour montrer que deux mots de longueur $N$ peuvent être séparés par un automate de la forme $A_(k,p)$ ayant $O(sqrt(N) ln(N))$ états._
+]
+
+

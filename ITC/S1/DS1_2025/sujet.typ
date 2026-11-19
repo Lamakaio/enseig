@@ -19,7 +19,7 @@ Répondez succinctement aux questions suivantes :
 + Comment définit-on un commentaire en Python ?
 + Quelle notation permet d'indiquer qu'un programme a une complexité _linéaire_ en fonction de `n`?
 + Si un programme fait $(n^3 + 5 n^2 + 8) / (n + 10)$ opérations, quelle est sa complexité en fonction de `n` ?
-+ Citez trois algorithmes de tri. Le nom de l'un d'eux commence par un `i`. Détaillez les opérations effectuées par cet algorithme sur la liste `[3, 2, 5, 1]` lorsqu'on trie en ordre croissant.
++ Citez un algorithme de tri. Détaillez les opérations effectuées par cet algorithme sur la liste `[3, 2, 5, 1]` lorsqu'on trie en ordre croissant.
 
 = Préliminaires
 
